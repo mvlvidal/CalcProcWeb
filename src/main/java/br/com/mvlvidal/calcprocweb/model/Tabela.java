@@ -6,8 +6,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.OneToMany;
@@ -23,11 +21,14 @@ public class Tabela implements Serializable {
     @Column(name="nome")
     private String nome;
     
-    @Column(name="anoedic")
+    @Column(name="anoEdicao")
     private int anoEdicao;
 
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Porte> portes;
+    
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private List<Procedimento> procedimentos;
     
     public Long getId() {
         return id;
