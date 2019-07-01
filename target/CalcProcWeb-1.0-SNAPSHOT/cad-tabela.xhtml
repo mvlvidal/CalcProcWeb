@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="WEB-INF/template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form>
+        <p:panel header="Cadastro de Tabela">
+            <h:panelGrid columns="4">
+                <h:outputLabel value="Nome: "/>
+                <p:inputText value="#{tabBean.tab1.nome}" />
+                <p:commandButton actionListener="#{tabBean.salvar}" value="Gravar"/>  
+            </h:panelGrid>
+            <h:panelGrid columns="1">
+                <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabelas">
+                    <p:column headerText="#">
+                        <h:outputText value="#{tabela.id}" />
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{tabela.nome}" />
+                    </p:column>   
+                    <p:column headerText="Ação">
+                        <p:commandLink>
+                            
+                        </p:commandLink>
+                        <p:commandLink>
+                            
+                        </p:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+
+</ui:decorate>
+
+
+

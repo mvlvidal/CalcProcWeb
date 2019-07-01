@@ -35,5 +35,22 @@ public class PorteBean {
         }
         
     }
+
+    public Porte getPor1() {
+        return por1;
+    }
+
+    public void setPor1(Porte por1) {
+        this.por1 = por1;
+    }
+
+    public List<Porte> getPortes() {
+        return portes;
+    }
+
+    public void setPortes(List<Porte> portes) {
+        this.portes = portes;
+    }
+    
     
 }

@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.persistence.OneToMany;
@@ -16,18 +18,16 @@ import javax.persistence.Table;
 public class Tabela implements Serializable {
    
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(name="nome")
     private String nome;
-    
-    @Column(name="anoEdicao")
-    private int anoEdicao;
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tabela", targetEntity = Porte.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Porte> portes;
     
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tabela",targetEntity = Procedimento.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Procedimento> procedimentos;
     
     public Long getId() {
@@ -46,14 +46,6 @@ public class Tabela implements Serializable {
         this.nome = nome;
     }
 
-    public int getAnoEdicao() {
-        return anoEdicao;
-    }
-
-    public void setAnoEdicao(int anoEdicao) {
-        this.anoEdicao = anoEdicao;
-    }
-
     public List<Porte> getPortes() {
         return portes;
     }
@@ -62,5 +54,9 @@ public class Tabela implements Serializable {
         this.portes = portes;
     }
     
+    @Override
+    public String toString(){
+        return this.nome;
+    }
     
 }

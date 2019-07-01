@@ -24,6 +24,12 @@ public class Porte implements Serializable {
     @Column(name="nome")
     private String nome;
     
+    @Column(name="preco")
+    private float preco;
+    
+    @Column(name="anoEdicao")
+    private int anoEdicao;
+    
     @JoinColumn(name = "idTabela")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)       
     private Tabela tabela;
@@ -44,13 +50,28 @@ public class Porte implements Serializable {
         this.nome = nome;
     }
 
+    public float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(float preco) {
+        this.preco = preco;
+    }   
+
+    public int getAnoEdicao() {
+        return anoEdicao;
+    }
+
+    public void setAnoEdicao(int anoEdicao) {
+        this.anoEdicao = anoEdicao;
+    }
+
     public Tabela getTabela() {
         return tabela;
     }
 
     public void setTabela(Tabela tabela) {
         this.tabela = tabela;
-    }
-    
+    }    
     
 }
