@@ -1,7 +1,7 @@
 package br.com.mvlvidal.calcprocweb.bean;
 
-import br.com.mvlvidal.calcprocweb.dao.TabelaDao;
-import br.com.mvlvidal.calcprocweb.model.Tabela;
+import br.com.mvlvidal.calcprocweb.dao.EdicaoDao;
+import br.com.mvlvidal.calcprocweb.model.Edicao;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -10,17 +10,17 @@ import javax.faces.view.ViewScoped;
 
 @ViewScoped
 @ManagedBean(name = "tabBean")
-public class TabelaBean {
+public class EdicaoBean {
     
-    private Tabela tab1;
-    private TabelaDao tabDao;
-    private List<Tabela> tabelas;
+    private Edicao tab1;
+    private EdicaoDao tabDao;
+    private List<Edicao> tabelas;
     
     @PostConstruct
     public void init(){
         
-        tab1 = new Tabela();
-        tabDao = new TabelaDao();
+        tab1 = new Edicao();
+        tabDao = new EdicaoDao();
         tabelas = new ArrayList<>();
         tabelas = tabDao.listar();
         
@@ -28,7 +28,7 @@ public class TabelaBean {
     
     public void salvar(){
         
-        Tabela tab2 = tab1;
+        Edicao tab2 = tab1;
         
         if(tab2 != null){
             tabDao.salvar(tab1);
@@ -36,19 +36,19 @@ public class TabelaBean {
         
     }
 
-    public Tabela getTab1() {
+    public Edicao getTab1() {
         return tab1;
     }
 
-    public void setTab1(Tabela tab1) {
+    public void setTab1(Edicao tab1) {
         this.tab1 = tab1;
     }
 
-    public List<Tabela> getTabelas() {
+    public List<Edicao> getTabelas() {
         return tabelas;
     }
 
-    public void setTabelas(List<Tabela> tabelas) {
+    public void setTabelas(List<Edicao> tabelas) {
         this.tabelas = tabelas;
     }
     

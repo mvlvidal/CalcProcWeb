@@ -30,9 +30,9 @@ public class Porte implements Serializable {
     @Column(name="anoEdicao")
     private int anoEdicao;
     
-    @JoinColumn(name = "idTabela")
+    @JoinColumn(name = "idEdicao")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)       
-    private Tabela tabela;
+    private Edicao edicao;
 
     public Long getId() {
         return id;
@@ -56,7 +56,7 @@ public class Porte implements Serializable {
 
     public void setPreco(float preco) {
         this.preco = preco;
-    }   
+    }
 
     public int getAnoEdicao() {
         return anoEdicao;
@@ -66,12 +66,13 @@ public class Porte implements Serializable {
         this.anoEdicao = anoEdicao;
     }
 
-    public Tabela getTabela() {
-        return tabela;
+    public Edicao getEdicao() {
+        return edicao;
     }
 
-    public void setTabela(Tabela tabela) {
-        this.tabela = tabela;
-    }    
+    public void setEdicao(Edicao edicao) {
+        this.edicao = edicao;
+    }
+
     
 }

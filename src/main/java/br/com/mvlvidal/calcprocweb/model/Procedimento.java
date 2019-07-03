@@ -1,15 +1,13 @@
 package br.com.mvlvidal.calcprocweb.model;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -45,12 +43,14 @@ public class Procedimento implements Serializable {
     @Column(name="qtdFilme")
     private float qtdFilme;
     
-    @JoinColumn(name = "idTabela")
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)        
-    private Tabela tabela;
+    @Column(name="tipoProc")
+    @Enumerated(EnumType.STRING)
+    private TipoProcedimento tipoProc;
+    
+    @Column(name="classificacao")
+    @Enumerated(EnumType.STRING)
+    private Classificacao classificacao;
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -123,13 +123,21 @@ public class Procedimento implements Serializable {
         this.qtdFilme = qtdFilme;
     }
 
-    public Tabela getTabela() {
-        return tabela;
+    public TipoProcedimento getTipoProc() {
+        return tipoProc;
     }
 
-    public void setTabela(Tabela tabela) {
-        this.tabela = tabela;
+    public void setTipoProc(TipoProcedimento tipoProc) {
+        this.tipoProc = tipoProc;
     }
-    
+
+    public Classificacao getClassificacao() {
+        return classificacao;
+    }
+
+    public void setClassificacao(Classificacao classificacao) {
+        this.classificacao = classificacao;
+    }
+     
     
 }
