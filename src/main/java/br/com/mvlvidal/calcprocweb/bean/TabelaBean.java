@@ -35,4 +35,22 @@ public class TabelaBean {
         }
         
     }
+
+    public Tabela getTab1() {
+        return tab1;
+    }
+
+    public void setTab1(Tabela tab1) {
+        this.tab1 = tab1;
+    }
+
+    public List<Tabela> getTabelas() {
+        return tabelas;
+    }
+
+    public void setTabelas(List<Tabela> tabelas) {
+        this.tabelas = tabelas;
+    }
+    
+    
 }

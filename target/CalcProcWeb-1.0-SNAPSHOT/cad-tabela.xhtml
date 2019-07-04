@@ -9,29 +9,25 @@
 
     <h:form>
         <p:panel header="Cadastro de Tabela">
-            <h:panelGrid columns="4">
-                <h:outputLabel value="Nome: "/>
-                <p:inputText value="#{tabBean.tab1.nome}" />
-                <p:commandButton actionListener="#{tabBean.salvar}" value="Gravar"/>  
-            </h:panelGrid>
-            <h:panelGrid columns="1">
-                <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabelas">
-                    <p:column headerText="#">
-                        <h:outputText value="#{tabela.id}" />
-                    </p:column>
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{tabela.nome}" />
-                    </p:column>   
-                    <p:column headerText="Ação">
-                        <p:commandLink>
-                            
-                        </p:commandLink>
-                        <p:commandLink>
-                            
-                        </p:commandLink>
-                    </p:column>
-                </p:dataTable>
-            </h:panelGrid>
+            <p:panelGrid columns="3">
+                <p:outputLabel value="Nome:"/>
+                <p:inputText value="#{tabBean.tab1.nome}"/>
+                <p:commandButton value="Gravar" actionListener="#{tabBean.salvar}" />
+            </p:panelGrid>
+            
+            <p:separator />
+            
+            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabela">
+                <p:column headerText="#">
+                    <h:outputText value="#{tabela.id}" />
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{tabela.nome}" />
+                </p:column>
+                <p:column headerText="Ação">
+                    
+                </p:column>
+            </p:dataTable>
         </p:panel>
     </h:form>
 

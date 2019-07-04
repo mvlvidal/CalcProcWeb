@@ -9,39 +9,7 @@
     
     <h:form>
         <p:panel header="Cadastro de Porte Médico">
-            <h:panelGrid columns="6" >                
-                <p:outputLabel value="Tabela:" />
-                <p:selectOneMenu value="#{porBean.por1.tabela}">
-                    <f:selectItem itemLabel="Selecione" />
-                    <f:selectItems value="#{tabBean.tabelas}" itemLabel="#{tabBean.tab1.nome}"/>
-                </p:selectOneMenu>
-                <p:outputLabel value="Nome:" />
-                <p:inputText value="#{porBean.por1.nome}"/>
-                <p:outputLabel value="Ano Edição:" />
-                <p:inputText value="#{porBean.por1.anoEdicao}"/>
-                <p:outputLabel value="Preço:" />
-                <p:inputText value="#{porBean.por1.preco}"/>
-                <p:commandButton actionListener="#{porBean.salvar}" value="Gravar" />
-            </h:panelGrid>
-            <h:panelGrid>
-                <p:dataTable var="porte" value="#{porBean.portes}" id="tabPortes">
-                    <p:column headerText="#">
-                        <h:outputText value="#{porte.id}" />
-                    </p:column>
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{porte.nome}" />
-                    </p:column>
-                    <p:column headerText="Preço">
-                        <h:outputText value="#{porte.preco}" />
-                    </p:column>
-                    <p:column headerText="Tabela">
-                        <h:outputText value="#{porte.tabela.nome}" />
-                    </p:column>
-                    <p:column headerText="Ano Edição">
-                        <h:outputText value="#{porte.anoEdicao}" />
-                    </p:column>
-                </p:dataTable>
-            </h:panelGrid>
+            
         </p:panel>
     </h:form>
 </ui:decorate>

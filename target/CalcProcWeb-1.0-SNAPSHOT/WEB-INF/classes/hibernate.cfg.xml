@@ -54,6 +54,7 @@ Contributor(s):
     <mapping class="br.com.mvlvidal.calcprocweb.model.Tabela" />
     <mapping class="br.com.mvlvidal.calcprocweb.model.Porte" />
     <mapping class="br.com.mvlvidal.calcprocweb.model.Procedimento" />
+    <mapping class="br.com.mvlvidal.calcprocweb.model.Edicao" />
     
   </session-factory>
 </hibernate-configuration>
