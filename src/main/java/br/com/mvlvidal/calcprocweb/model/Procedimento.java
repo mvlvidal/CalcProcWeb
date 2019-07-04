@@ -1,13 +1,17 @@
 package br.com.mvlvidal.calcprocweb.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -51,6 +55,10 @@ public class Procedimento implements Serializable {
     @Enumerated(EnumType.STRING)
     private Classificacao classificacao;
 
+    @JoinColumn(name = "idTabela")
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Tabela tabela;
+    
     public Long getId() {
         return id;
     }
@@ -137,6 +145,14 @@ public class Procedimento implements Serializable {
 
     public void setClassificacao(Classificacao classificacao) {
         this.classificacao = classificacao;
+    }
+
+    public Tabela getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(Tabela tabela) {
+        this.tabela = tabela;
     }
      
     

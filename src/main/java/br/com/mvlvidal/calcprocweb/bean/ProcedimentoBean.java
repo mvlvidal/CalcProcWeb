@@ -9,12 +9,23 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
 @ViewScoped
-@ManagedBean
+@ManagedBean(name="proBean")
 public class ProcedimentoBean {
     
-    Procedimento proc1;
-    ProcedimentoDao procDao;
-    List<Procedimento> procedimentos;
+    private Procedimento proc1;
+    private ProcedimentoDao procDao;
+    private List<Procedimento> procedimentos;
+    
+    //Variáveis Calculo Geral
+    private float totalProc;
+    private float totalFilme;
+    private float valFilme;
+    
+    //Variáveis Calculo AMB
+    private float valCh;
+    
+    //Variáveis Calculo CBHPM
+    private float uco;
     
     @PostConstruct
     public void init(){
@@ -36,4 +47,69 @@ public class ProcedimentoBean {
         
     }
     
+    public void calcularAMB(){
+        
+       totalProc = proc1.getCh() * valCh;
+       totalFilme = proc1.getQtdFilme() * valFilme;
+       
+       totalProc += totalFilme;
+        
+    }
+
+    public Procedimento getProc1() {
+        return proc1;
+    }
+
+    public void setProc1(Procedimento proc1) {
+        this.proc1 = proc1;
+    }
+
+    public List<Procedimento> getProcedimentos() {
+        return procedimentos;
+    }
+
+    public void setProcedimentos(List<Procedimento> procedimentos) {
+        this.procedimentos = procedimentos;
+    }
+
+    public float getTotalProc() {
+        return totalProc;
+    }
+
+    public void setTotalProc(float totalProc) {
+        this.totalProc = totalProc;
+    }
+
+    public float getTotalFilme() {
+        return totalFilme;
+    }
+
+    public void setTotalFilme(float totalFilme) {
+        this.totalFilme = totalFilme;
+    }
+
+    public float getValFilme() {
+        return valFilme;
+    }
+
+    public void setValFilme(float valFilme) {
+        this.valFilme = valFilme;
+    }
+
+    public float getValCh() {
+        return valCh;
+    }
+
+    public void setValCh(float valCh) {
+        this.valCh = valCh;
+    }
+
+    public float getUco() {
+        return uco;
+    }
+
+    public void setUco(float uco) {
+        this.uco = uco;
+    }
+   
 }

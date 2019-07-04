@@ -9,48 +9,48 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
 @ViewScoped
-@ManagedBean(name = "tabBean")
+@ManagedBean(name = "ediBean")
 public class EdicaoBean {
     
-    private Edicao tab1;
-    private EdicaoDao tabDao;
-    private List<Edicao> tabelas;
+    private Edicao edi1;
+    private EdicaoDao ediDao;
+    private List<Edicao> edicoes;
     
     @PostConstruct
     public void init(){
         
-        tab1 = new Edicao();
-        tabDao = new EdicaoDao();
-        tabelas = new ArrayList<>();
-        tabelas = tabDao.listar();
+        edi1 = new Edicao();
+        ediDao = new EdicaoDao();
+        edicoes = new ArrayList<>();
+        edicoes = ediDao.listar();
         
     }
     
     public void salvar(){
         
-        Edicao tab2 = tab1;
+        Edicao edi2 = edi1;
         
-        if(tab2 != null){
-            tabDao.salvar(tab1);
+        if(edi2 != null){
+            ediDao.salvar(edi1);
         }
         
     }
 
-    public Edicao getTab1() {
-        return tab1;
+    public Edicao getEdi1() {
+        return edi1;
     }
 
-    public void setTab1(Edicao tab1) {
-        this.tab1 = tab1;
+    public void setEdi1(Edicao edi1) {
+        this.edi1 = edi1;
     }
 
-    public List<Edicao> getTabelas() {
-        return tabelas;
+    public List<Edicao> getEdicoes() {
+        return edicoes;
     }
 
-    public void setTabelas(List<Edicao> tabelas) {
-        this.tabelas = tabelas;
+    public void setEdicoes(List<Edicao> edicoes) {
+        this.edicoes = edicoes;
     }
-    
+
     
 }
