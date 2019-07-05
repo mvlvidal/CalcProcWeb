@@ -9,7 +9,38 @@
     
     <h:form>
         <p:panel header="Cadastro de Porte Médico">
+            <p:panelGrid columns="7">
+                <p:outputLabel value="Nome:"/>
+                <p:inputText />
+                <p:outputLabel value="Preço:"/>
+                <p:inputText />
+                <p:outputLabel value="Edição:"/>
+                <p:selectOneMenu value="#{porBean.por1.edicao}">
+                    <f:selectItem itemLabel="Selecione" />
+                    <f:selectItems value="#{ediBean.edicoes}" itemLabel="#{ediBean.edi1.nome}" />
+                </p:selectOneMenu>
+                <p:commandButton value="Gravar" />
+            </p:panelGrid>
             
+            <p:separator />
+            
+            <p:dataTable var="porte" value="#{porBean.portes}" id="tabPorte">
+                <p:column headerText="#">
+                    <h:outputText value="#{porte.id}" />
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{porte.nome}" />
+                </p:column>
+                <p:column headerText="Edição">
+                    <h:outputText value="#{porte.edicao.nome}" />
+                </p:column>
+                <p:column headerText="Preço">
+                    <h:outputText value="#{porte.preco}" />
+                </p:column>
+                <p:column headerText="Ação">
+                
+                </p:column>
+            </p:dataTable>
         </p:panel>
     </h:form>
 </ui:decorate>

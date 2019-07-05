@@ -34,7 +34,6 @@ public class ProcedimentoBean {
         procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
         procedimentos = procDao.listar();
-        
     }
     
     public void salvar(){
@@ -111,5 +110,5 @@ public class ProcedimentoBean {
     public void setUco(float uco) {
         this.uco = uco;
     }
-   
+
 }

@@ -3,9 +3,12 @@ C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\Edicao
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\bean\PorteBean.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\Edicao.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\Procedimento.java
+C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\ClassificacaoDao.java
+C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\bean\EnumBean.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\Porte.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\TipoProcedimento.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\ProcedimentoDao.java
+C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\TipoProcedimentoDao.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\Classificacao.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\HibernateUtil.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\TabelaDao.java

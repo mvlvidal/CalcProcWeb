@@ -51,5 +51,8 @@ public class Edicao implements Serializable {
         this.portes = portes;
     }
 
-    
+    @Override
+    public String toString(){
+        return nome;
+    }
 }
