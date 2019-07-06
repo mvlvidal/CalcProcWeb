@@ -1,24 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      template="WEB-INF/template.xhtml"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="WEB-INF/template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <h:form>
         <p:panel header="Cadastro de Procedimentos">
             <p:panelGrid>
                 <p:selectOneMenu value="#{proBean.proc1.tipoProc}" >
                     <f:selectItem itemLabel="Selecione" />
                     <f:selectItems value="#{enumBean.tipoProcDao.carregaTipos()}"/>
+                    <p:ajax update="@form" />
                 </p:selectOneMenu>
-                <p:commandButton value="Iniciar" update="@all" />
             </p:panelGrid>
-            
-            <p:outputLabel value="AMB" rendered="#{proBean.proc1.tipoProc == 'AMB'}"/>
-            <p:outputLabel value="CBHPM" rendered="#{proBean.proc1.tipoProc == 'CBHPM'}" />
+            <p:panel rendered="#{proBean.proc1.tipoProc == 'AMB'}" style="margin:0; padding:0; border:0;">  
+                <p:panelGrid columns="4">
+                    <p:outputLabel value="Descrição:"/>
+                    <p:inputText value="#{proBean.proc1.descricao}"/>
+                    <p:outputLabel value="CH:"/>
+                    <p:inputText value="#{proBean.proc1.ch}"/>
+                    <p:outputLabel value="Auxiliares:"/>
+                    <p:inputText value="#{proBean.proc1.aux}"/>
+                    <p:outputLabel value="Porte Anestésico:"/>
+                    <p:inputText value="#{proBean.proc1.getpAnestesico}"/> 
+                </p:panelGrid>               
+            </p:panel>
+            <p:panel rendered="#{proBean.proc1.tipoProc == 'CBHPM'}" style="margin:0; padding:0; border:0;"> 
+                <p:panelGrid>
+                    <p:outputLabel />
+                    <p:inputText />
+                    
+                </p:panelGrid>
+            </p:panel>
+            <p:commandButton value="Gravar" actionListener="#{proBean.salvar}" rendered="#{proBean.proc1.tipoProc == 'CBHPM'}"/>
         </p:panel>
     </h:form>
 </ui:decorate>
