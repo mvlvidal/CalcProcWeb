@@ -7,20 +7,22 @@
       template="WEB-INF/template.xhtml"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     
+    <ui:define name="title">CalcProc - Porte Médico</ui:define>
+    
     <h:form>
         <p:panel header="Cadastro de Porte Médico">
             <p:panelGrid columns="7">
                 <p:outputLabel value="Nome:"/>
-                <p:inputText />
+                <p:inputText value="#{porBean.por1.nome}"/>
                 <p:outputLabel value="Preço:"/>
-                <p:inputText />
+                <p:inputText value="#{porBean.por1.preco}"/>
                 <p:outputLabel value="Edição:"/>
                 <p:selectOneMenu value="#{porBean.por1.edicao}" converter="edicaoConversor">
                     <f:selectItem itemLabel="Selecione" />
                     <f:selectItems value="#{ediBean.edicoes}" var="edic" itemLabel="#{edic.nome}" itemValue="#{edic}"/>
                     
                 </p:selectOneMenu>
-                <p:commandButton value="Gravar" />
+                <p:commandButton value="Gravar" action="#{porBean.salvar}"/>
                 
             </p:panelGrid>
             

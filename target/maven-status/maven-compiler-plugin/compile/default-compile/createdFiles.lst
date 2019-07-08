@@ -1,0 +1,15 @@
+br\com\mvlvidal\calcprocweb\model\Tabela.class
+br\com\mvlvidal\calcprocweb\bean\EdicaoBean.class
+br\com\mvlvidal\calcprocweb\bean\ProcedimentoBean.class
+br\com\mvlvidal\calcprocweb\dao\ProcedimentoDao.class
+br\com\mvlvidal\calcprocweb\dao\HibernateUtil.class
+br\com\mvlvidal\calcprocweb\model\Procedimento.class
+br\com\mvlvidal\calcprocweb\util\EdicaoConversor.class
+br\com\mvlvidal\calcprocweb\bean\PorteBean.class
+br\com\mvlvidal\calcprocweb\model\Porte.class
+br\com\mvlvidal\calcprocweb\model\Edicao.class
+br\com\mvlvidal\calcprocweb\dao\GenericDao.class
+br\com\mvlvidal\calcprocweb\bean\TabelaBean.class
+br\com\mvlvidal\calcprocweb\dao\EdicaoDao.class
+br\com\mvlvidal\calcprocweb\dao\PorteDao.class
+br\com\mvlvidal\calcprocweb\dao\TabelaDao.class

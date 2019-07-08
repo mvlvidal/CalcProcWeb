@@ -9,29 +9,29 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
 @ViewScoped
-@ManagedBean(name="proBean")
+@ManagedBean(name = "proBean")
 public class ProcedimentoBean {
-    
+
     private Procedimento proc1;
     private ProcedimentoDao procDao;
     private List<Procedimento> procedimentos;
     private List<Procedimento> procedimentosAmb;
     private List<Procedimento> procedimentosCbhpm;
-    
+
     //Variáveis Calculo Geral
     private float totalProc;
     private float totalFilme;
     private float valFilme;
-    
+
     //Variáveis Calculo AMB
     private float valCh;
-    
+
     //Variáveis Calculo CBHPM
     private float uco;
-    
+
     @PostConstruct
-    public void init(){
-    
+    public void init() {
+
         proc1 = new Procedimento();
         procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
@@ -41,24 +41,44 @@ public class ProcedimentoBean {
         procedimentosAmb = procDao.listarAmb();
         procedimentosCbhpm = procDao.listarCbhpm();
     }
-    
-    public void salvar(){
-        
+
+    public void salvar() {
+
         Procedimento proc2 = proc1;
-        
-        if(proc2 != null){
+
+        if (proc2 != null) {
             procDao.salvar(proc1);
         }
-        
+
+    }
+
+    public void calcularAMB() {
+
+        totalProc = proc1.getCh() * valCh;
+        totalFilme = proc1.getQtdFilme() * valFilme;
+
+        totalProc += totalFilme;
+
+    }
+
+    public List<String> carregaTipos() {
+
+        List<String> lista = new ArrayList<>();
+
+        lista.add("AMB");
+        lista.add("CBHPM");
+
+        return lista;
     }
     
-    public void calcularAMB(){
+    public List<String> carregaClassif(){
         
-       totalProc = proc1.getCh() * valCh;
-       totalFilme = proc1.getQtdFilme() * valFilme;
+       List<String> lista = new ArrayList<>();
        
-       totalProc += totalFilme;
-        
+       lista.add("HM");
+       lista.add("SADT");
+       
+       return lista;
     }
 
     public Procedimento getProc1() {

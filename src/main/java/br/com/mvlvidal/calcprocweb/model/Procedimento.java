@@ -4,8 +4,6 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,17 +46,15 @@ public class Procedimento implements Serializable {
     private float qtdFilme;
     
     @Column(name="tipoProc")
-    @Enumerated(EnumType.STRING)
-    private TipoProcedimento tipoProc;
+    private String tipoProc;
     
     @Column(name="classificacao")
-    @Enumerated(EnumType.STRING)
-    private Classificacao classificacao;
+    private String classificacao;
 
     @JoinColumn(name = "idTabela")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Tabela tabela;
-    
+
     public Long getId() {
         return id;
     }
@@ -131,19 +127,19 @@ public class Procedimento implements Serializable {
         this.qtdFilme = qtdFilme;
     }
 
-    public TipoProcedimento getTipoProc() {
+    public String getTipoProc() {
         return tipoProc;
     }
 
-    public void setTipoProc(TipoProcedimento tipoProc) {
+    public void setTipoProc(String tipoProc) {
         this.tipoProc = tipoProc;
     }
 
-    public Classificacao getClassificacao() {
+    public String getClassificacao() {
         return classificacao;
     }
 
-    public void setClassificacao(Classificacao classificacao) {
+    public void setClassificacao(String classificacao) {
         this.classificacao = classificacao;
     }
 
@@ -154,6 +150,6 @@ public class Procedimento implements Serializable {
     public void setTabela(Tabela tabela) {
         this.tabela = tabela;
     }
-     
+    
     
 }
