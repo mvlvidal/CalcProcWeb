@@ -6,6 +6,11 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>       
         <title><ui:insert name="title" /></title>
+        <style type="text/css">
+            body{
+                background-color:#000;
+            }
+        </style>
     </h:head>
     <h:body>
         <div id="content" style="max-width: 80%; margin:0 auto;">
@@ -20,7 +25,9 @@
                         <p:menuitem value="Procedimento" outcome="cad-procedimento" icon="pi pi-angle-double-right"/>
                     </p:submenu>
                 </p:menubar>
+                <!-- CONTEUDO -->
                 <ui:insert />
+                <!-------------->
             </p:panel>
         </div>
     </h:body>

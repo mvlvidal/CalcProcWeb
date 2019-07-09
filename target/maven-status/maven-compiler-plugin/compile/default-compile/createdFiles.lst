@@ -3,6 +3,7 @@ br\com\mvlvidal\calcprocweb\bean\EdicaoBean.class
 br\com\mvlvidal\calcprocweb\bean\ProcedimentoBean.class
 br\com\mvlvidal\calcprocweb\dao\ProcedimentoDao.class
 br\com\mvlvidal\calcprocweb\dao\HibernateUtil.class
+br\com\mvlvidal\calcprocweb\util\TabelaConversor.class
 br\com\mvlvidal\calcprocweb\model\Procedimento.class
 br\com\mvlvidal\calcprocweb\util\EdicaoConversor.class
 br\com\mvlvidal\calcprocweb\bean\PorteBean.class
