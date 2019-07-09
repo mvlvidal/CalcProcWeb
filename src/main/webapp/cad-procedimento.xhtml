@@ -9,13 +9,120 @@
     <ui:define name="title">CalcProcWeb - Procedimentos</ui:define>
     <h:form>
         <p:panel header="Cadastro de Procedimentos">
-            <p:panelGrid>
+            <p:panelGrid columns="4">
+                <p:outputLabel value="Tipo:" />
                 <p:selectOneMenu value="#{proBean.proc1.tipoProc}">
-                    <f:selectItem itemLabel="Selecione" />
-                    <f:selectItems value="#{proBean.carregaTipos()}"/>
+                    <f:selectItem itemLabel="Selecione" />                    
+                    <f:selectItems value="#{proBean.carregaTipos()}"/>                 
+                </p:selectOneMenu>
+                <p:outputLabel value="Tabela:"/>
+                <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor">
+                    <f:selectItem  itemLabel="Selecione"/>                    
+                    <f:selectItems value="#{tabBean.tabelas}" var="t" itemLabel="#{t.nome}" itemValue="#{t}"/> 
                     <p:ajax update="@form" />
                 </p:selectOneMenu>
-            </p:panelGrid>               
+
+            </p:panelGrid> 
+            
+            <p:separator />
+            
+            <h:panelGroup rendered="#{proBean.proc1.tipoProc == 'AMB'}">
+                <p:panelGrid columns="4">
+                    <p:outputLabel value="Código:" />
+                    <p:inputText />
+                    <p:outputLabel value="Descrição:" />
+                    <p:inputText />
+                    <p:outputLabel value="CH:" />
+                    <p:inputText />
+                    <p:outputLabel value="Aux:" />
+                    <p:inputText />
+                    <p:outputLabel value="Porte Anest.:" />
+                    <p:inputText />
+                    <p:outputLabel value="Filme m²:" />
+                    <p:inputText />
+                    
+                    <p:commandButton value="Gravar" />
+                </p:panelGrid>
+                
+                <p:separator />
+                
+                <p:dataTable >
+                    <p:column headerText="#">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Código">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="CH">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Aux.">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Porte Anest.">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Filme m²">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Ação">
+                        
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{proBean.proc1.tipoProc == 'CBHPM'}">
+                <p:panelGrid columns="4">
+                    <p:outputLabel value="Código:" />
+                    <p:inputText />
+                    <p:outputLabel value="Descrição:" />
+                    <p:inputText />
+                    <p:outputLabel value="Custo Op.:" />
+                    <p:inputText />
+                    <p:outputLabel value="% Porte.:" />
+                    <p:inputText />
+                    <p:outputLabel value="Porte Med.:" />
+                    <p:inputText />
+                    <p:outputLabel value="Aux:" />
+                    <p:inputText />
+                    <p:outputLabel value="Porte Anest.:" />
+                    <p:inputText />
+                    <p:outputLabel value="Filme m²:" />
+                    <p:inputText />
+                    <p:commandButton value="Gravar" />
+                </p:panelGrid>
+                
+                <p:separator />
+                
+                <p:dataTable >
+                    <p:column headerText="#">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Código">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="CH">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Aux.">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Porte Anest.">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Filme m²">
+                        <h:outputText value="" />
+                    </p:column>
+                    <p:column headerText="Ação">
+                        
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
         </p:panel>       
     </h:form>
 </ui:decorate>
