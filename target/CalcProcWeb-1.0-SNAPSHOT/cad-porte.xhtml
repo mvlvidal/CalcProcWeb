@@ -15,11 +15,13 @@
                 <p:outputLabel value="Preço:"/>
                 <p:inputText />
                 <p:outputLabel value="Edição:"/>
-                <p:selectOneMenu value="#{porBean.por1.edicao}">
+                <p:selectOneMenu value="#{porBean.por1.edicao}" converter="edicaoConversor">
                     <f:selectItem itemLabel="Selecione" />
-                    <f:selectItems value="#{ediBean.edicoes}" itemLabel="#{ediBean.edi1.nome}" />
+                    <f:selectItems value="#{ediBean.edicoes}" var="edic" itemLabel="#{edic.nome}" itemValue="#{edic}"/>
+                    
                 </p:selectOneMenu>
                 <p:commandButton value="Gravar" />
+                
             </p:panelGrid>
             
             <p:separator />

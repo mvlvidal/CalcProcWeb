@@ -15,6 +15,8 @@ public class ProcedimentoBean {
     private Procedimento proc1;
     private ProcedimentoDao procDao;
     private List<Procedimento> procedimentos;
+    private List<Procedimento> procedimentosAmb;
+    private List<Procedimento> procedimentosCbhpm;
     
     //Variáveis Calculo Geral
     private float totalProc;
@@ -33,7 +35,11 @@ public class ProcedimentoBean {
         proc1 = new Procedimento();
         procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
+        procedimentosAmb = new ArrayList<>();
+        procedimentosCbhpm = new ArrayList<>();
         procedimentos = procDao.listar();
+        procedimentosAmb = procDao.listarAmb();
+        procedimentosCbhpm = procDao.listarCbhpm();
     }
     
     public void salvar(){
@@ -69,6 +75,22 @@ public class ProcedimentoBean {
 
     public void setProcedimentos(List<Procedimento> procedimentos) {
         this.procedimentos = procedimentos;
+    }
+
+    public List<Procedimento> getProcedimentosAmb() {
+        return procedimentosAmb;
+    }
+
+    public void setProcedimentosAmb(List<Procedimento> procedimentosAmb) {
+        this.procedimentosAmb = procedimentosAmb;
+    }
+
+    public List<Procedimento> getProcedimentosCbhpm() {
+        return procedimentosCbhpm;
+    }
+
+    public void setProcedimentosCbhpm(List<Procedimento> procedimentosCbhpm) {
+        this.procedimentosCbhpm = procedimentosCbhpm;
     }
 
     public float getTotalProc() {

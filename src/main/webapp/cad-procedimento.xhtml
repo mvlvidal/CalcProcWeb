@@ -17,7 +17,7 @@
                 </p:selectOneMenu>
             </p:panelGrid>
             <p:panel rendered="#{proBean.proc1.tipoProc == 'AMB'}" style="margin:0; padding:0; border:0;">  
-                <p:panelGrid columns="4">
+                <p:panelGrid columns="5">
                     <p:outputLabel value="Descrição:"/>
                     <p:inputText value="#{proBean.proc1.descricao}"/>
                     <p:outputLabel value="CH:"/>
@@ -26,16 +26,39 @@
                     <p:inputText value="#{proBean.proc1.aux}"/>
                     <p:outputLabel value="Porte Anestésico:"/>
                     <p:inputText value="#{proBean.proc1.getpAnestesico}"/> 
-                </p:panelGrid>               
+                    <p:commandButton value="Gravar" actionListener="#{proBean.salvar}"/>
+                </p:panelGrid>
+                <p:dataTable var="amb" value="#{proBean.procedimentosAmb}">
+                    <p:column headerText="#">
+                        <h:outputText value="#{amb.id}" />
+                    </p:column>
+                    <p:column headerText="Código">
+                        <h:outputText value="#{amb.codigo}" />
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{amb.descricao}" />
+                    </p:column>
+                </p:dataTable>
             </p:panel>
             <p:panel rendered="#{proBean.proc1.tipoProc == 'CBHPM'}" style="margin:0; padding:0; border:0;"> 
-                <p:panelGrid>
+                <p:panelGrid columns="3">
                     <p:outputLabel />
                     <p:inputText />
-                    
+                    <p:commandButton value="Gravar" actionListener="#{proBean.salvar}"/>
                 </p:panelGrid>
+                <p:dataTable var="cbhpm" value="#{proBean.procedimentosCbhpm}">
+                    <p:column headerText="#">
+                        <h:outputText value="#{cbhpm.id}" />
+                    </p:column>
+                    <p:column headerText="Código">
+                        <h:outputText value="#{cbhpm.codigo}" />
+                    </p:column>
+                    <p:column headerText="Descrição">
+                        <h:outputText value="#{cbhpm.descricao}" />
+                    </p:column>
+                </p:dataTable>
             </p:panel>
-            <p:commandButton value="Gravar" actionListener="#{proBean.salvar}" rendered="#{proBean.proc1.tipoProc == 'CBHPM'}"/>
+            
         </p:panel>
     </h:form>
 </ui:decorate>
