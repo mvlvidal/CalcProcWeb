@@ -12,21 +12,12 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> {
         super(Procedimento.class);
     }
 
-    public List<Procedimento> listarAmb() {
+    public List<Procedimento> listar(String tipo) {
 
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
 
         Criteria criteria = sessao.createCriteria(Procedimento.class);
-        criteria.add(Restrictions.eq("tipoProc","AMB"));
-        
-        return criteria.list();
-    }
-    public List<Procedimento> listarCbhpm() {
-
-        Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
-
-        Criteria criteria = sessao.createCriteria(Procedimento.class);
-        criteria.add(Restrictions.eq("tipoProc","CBPHM"));
+        criteria.add(Restrictions.eq("tipoProc",tipo));
         
         return criteria.list();
     }

@@ -38,8 +38,8 @@ public class ProcedimentoBean {
         procedimentosAmb = new ArrayList<>();
         procedimentosCbhpm = new ArrayList<>();
         procedimentos = procDao.listar();
-        procedimentosAmb = procDao.listarAmb();
-        procedimentosCbhpm = procDao.listarCbhpm();
+        procedimentosAmb = procDao.listar("AMB");
+        procedimentosCbhpm = procDao.listar("CBHPM");
     }
 
     public void salvar() {

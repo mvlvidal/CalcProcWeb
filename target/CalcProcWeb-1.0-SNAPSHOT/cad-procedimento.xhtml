@@ -13,21 +13,22 @@
                 <p:outputLabel value="Tipo:" />
                 <p:selectOneMenu value="#{proBean.proc1.tipoProc}">
                     <f:selectItem itemLabel="Selecione" />                    
-                    <f:selectItems value="#{proBean.carregaTipos()}"/>                 
-                </p:selectOneMenu>
-                <p:outputLabel value="Tabela:"/>
-                <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor">
-                    <f:selectItem  itemLabel="Selecione"/>                    
-                    <f:selectItems value="#{tabBean.tabelas}" var="t" itemLabel="#{t.nome}" itemValue="#{t}"/> 
+                    <f:selectItems value="#{proBean.carregaTipos()}"/>  
                     <p:ajax update="@form" />
                 </p:selectOneMenu>
 
             </p:panelGrid> 
-            
+
             <p:separator />
-            
+
             <h:panelGroup rendered="#{proBean.proc1.tipoProc == 'AMB'}">
-                <p:panelGrid columns="4">
+                <p:panelGrid columns="6">
+                    <p:outputLabel value="Tabela:"/>
+                    <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor">
+                        <f:selectItem  itemLabel="Selecione"/>                    
+                        <f:selectItems value="#{tabBean.tabelas}" var="tAmb" itemLabel="#{tAmb.nome}" itemValue="#{tAmb}"/> 
+                        <p:ajax update="tabAmb" />
+                    </p:selectOneMenu>
                     <p:outputLabel value="Código:" />
                     <p:inputText />
                     <p:outputLabel value="Descrição:" />
@@ -40,13 +41,12 @@
                     <p:inputText />
                     <p:outputLabel value="Filme m²:" />
                     <p:inputText />
-                    
                     <p:commandButton value="Gravar" />
                 </p:panelGrid>
-                
+
                 <p:separator />
-                
-                <p:dataTable >
+
+                <p:dataTable id="tabAmb">
                     <p:column headerText="#">
                         <h:outputText value="" />
                     </p:column>
@@ -69,12 +69,18 @@
                         <h:outputText value="" />
                     </p:column>
                     <p:column headerText="Ação">
-                        
+
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>
             <h:panelGroup rendered="#{proBean.proc1.tipoProc == 'CBHPM'}">
-                <p:panelGrid columns="4">
+                <p:panelGrid columns="6">
+                    <p:outputLabel value="Tabela:"/>
+                    <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor">
+                        <f:selectItem  itemLabel="Selecione"/>                    
+                        <f:selectItems value="#{tabBean.tabelas}" var="tCbhpm" itemLabel="#{tCbhpm.nome}" itemValue="#{tCbhpm}"/>   
+                        <p:ajax update="tabCbhpm" process="@this"/>
+                    </p:selectOneMenu>
                     <p:outputLabel value="Código:" />
                     <p:inputText />
                     <p:outputLabel value="Descrição:" />
@@ -93,30 +99,39 @@
                     <p:inputText />
                     <p:commandButton value="Gravar" />
                 </p:panelGrid>
-                
+
                 <p:separator />
-                
-                <p:dataTable >
-                    <p:column headerText="#">
-                        <h:outputText value="" />
+
+                <p:dataTable var="cbhpm" value="#{proBean.procedimentosCbhpm}" id="tabCbhpm" widgetVar="tabCbhpm" rows="5" paginator="true" filterBy="#{proBean.proc1.tabela}" filterEvent="enter">
+                    <p:column headerText="#" resizable="true">
+                        <h:outputText value="#{cbhpm.id}" />
                     </p:column>
                     <p:column headerText="Código">
-                        <h:outputText value="" />
+                        <h:outputText value="#{cbhpm.codigo}" />
                     </p:column>
-                    <p:column headerText="Descrição">
-                        <h:outputText value="" />
-                    </p:column>
-                    <p:column headerText="CH">
-                        <h:outputText value="" />
-                    </p:column>
+                    <p:column headerText="Descrição" resizable="true">
+                        <h:outputText value="#{cbhpm.descricao}" />
+                    </p:column>          
+                    <p:column headerText="C.O">
+                        <h:outputText value="#{cbhpm.co}" />
+                    </p:column> 
+                    <p:column headerText="% Porte">
+                        <h:outputText value="#{cbhpm.percentPorte}" />
+                    </p:column>                  
+                    <p:column headerText="Porte Med.">
+                        <h:outputText value="#{cbhpm.pMedico}" />
+                    </p:column>          
                     <p:column headerText="Aux.">
-                        <h:outputText value="" />
+                        <h:outputText value="#{cbhpm.aux}" />
                     </p:column>
                     <p:column headerText="Porte Anest.">
-                        <h:outputText value="" />
+                        <h:outputText value="#{cbhpm.pAnestesico}" />
                     </p:column>
                     <p:column headerText="Filme m²">
-                        <h:outputText value="" />
+                        <h:outputText value="#{cbhpm.qtdFilme}" />
+                    </p:column>
+                    <p:column headerText="Tabela">
+                        <h:outputText value="#{cbhpm.tabela.nome}" />
                     </p:column>
                     <p:column headerText="Ação">
                         

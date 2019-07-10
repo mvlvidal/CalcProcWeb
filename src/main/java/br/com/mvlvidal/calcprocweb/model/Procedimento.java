@@ -39,6 +39,9 @@ public class Procedimento implements Serializable {
     @Column(name="porteAnest")
     private int pAnestesico;
     
+    @Column(name="percentPorte")
+    private float percentPorte;
+    
     @Column(name="porteMedic", length = 3)
     private String pMedico;
     
@@ -110,6 +113,14 @@ public class Procedimento implements Serializable {
     public void setpAnestesico(int pAnestesico) {
         this.pAnestesico = pAnestesico;
     }
+
+    public float getPercentPorte() {
+        return percentPorte;
+    }
+
+    public void setPercentPorte(float percentPorte) {
+        this.percentPorte = percentPorte;
+    }      
 
     public String getpMedico() {
         return pMedico;
