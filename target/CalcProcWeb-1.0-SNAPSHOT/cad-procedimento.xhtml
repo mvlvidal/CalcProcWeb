@@ -7,8 +7,8 @@
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="title">CalcProcWeb - Procedimentos</ui:define>
-    <h:form>
-        <p:panel header="Cadastro de Procedimentos">
+    <p:panel header="Cadastro de Procedimentos">
+        <h:form>
             <p:panelGrid columns="4">
                 <p:outputLabel value="Tipo:" />
                 <p:selectOneMenu value="#{proBean.proc1.tipoProc}">
@@ -18,6 +18,7 @@
                 </p:selectOneMenu>
 
             </p:panelGrid> 
+
 
             <p:separator />
 
@@ -73,6 +74,7 @@
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>
+
             <h:panelGroup rendered="#{proBean.proc1.tipoProc == 'CBHPM'}">
                 <p:panelGrid columns="6">
                     <p:outputLabel value="Tabela:"/>
@@ -82,34 +84,34 @@
                         <p:ajax update="tabCbhpm" process="@this"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="Código:" />
-                    <p:inputText />
+                    <p:inputText value="#{proBean.proc1.codigo}"/>
                     <p:outputLabel value="Descrição:" />
-                    <p:inputText />
+                    <p:inputText value="#{proBean.proc1.descricao}"/>
                     <p:outputLabel value="Custo Op.:" />
-                    <p:inputText />
+                    <p:inputText value="#{proBean.proc1.co}"/>
                     <p:outputLabel value="% Porte.:" />
-                    <p:inputText />
+                    <p:inputText value="#{proBean.proc1.percentPorte}"/>
                     <p:outputLabel value="Porte Med.:" />
-                    <p:inputText />
+                    <p:inputText value="#{proBean.proc1.pMedico}"/>
                     <p:outputLabel value="Aux:" />
-                    <p:inputText />
+                    <p:inputText value="#{proBean.proc1.aux}"/>
                     <p:outputLabel value="Porte Anest.:" />
-                    <p:inputText />
+                    <p:inputText value="#{proBean.proc1.pAnestesico}"/>
                     <p:outputLabel value="Filme m²:" />
-                    <p:inputText />
-                    <p:commandButton value="Gravar" />
+                    <p:inputText value="#{proBean.proc1.qtdFilme}"/>
+                    <p:commandButton value="Gravar" action="#{proBean.salvar()}" update="tabCbhpm"/>
                 </p:panelGrid>
 
                 <p:separator />
 
-                <p:dataTable var="cbhpm" value="#{proBean.procedimentosCbhpm}" id="tabCbhpm" widgetVar="tabCbhpm" rows="5" paginator="true" filterBy="#{proBean.proc1.tabela}" filterEvent="enter">
-                    <p:column headerText="#" resizable="true">
+                <p:dataTable var="cbhpm" value="#{proBean.procedimentosCbhpm}" id="tabCbhpm" rows="5" paginator="true">
+                    <p:column headerText="#">
                         <h:outputText value="#{cbhpm.id}" />
                     </p:column>
                     <p:column headerText="Código">
                         <h:outputText value="#{cbhpm.codigo}" />
                     </p:column>
-                    <p:column headerText="Descrição" resizable="true">
+                    <p:column headerText="Descrição">
                         <h:outputText value="#{cbhpm.descricao}" />
                     </p:column>          
                     <p:column headerText="C.O">
@@ -134,11 +136,12 @@
                         <h:outputText value="#{cbhpm.tabela.nome}" />
                     </p:column>
                     <p:column headerText="Ação">
-                        
+
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>
-        </p:panel>       
-    </h:form>
+        </h:form>
+    </p:panel>       
+
 </ui:decorate>
 
