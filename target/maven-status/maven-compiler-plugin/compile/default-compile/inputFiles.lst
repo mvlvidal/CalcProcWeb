@@ -1,12 +1,16 @@
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\GenericDao.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\EdicaoDao.java
+C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\util\EnumConversor.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\util\TabelaConversor.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\bean\PorteBean.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\Edicao.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\Procedimento.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\util\EdicaoConversor.java
+C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\bean\EnumBean.java
+C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\TipoTabelaDao.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\Porte.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\ProcedimentoDao.java
+C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\model\TipoTabela.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\HibernateUtil.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\dao\TabelaDao.java
 C:\DEV\NetBeans\CalcProcWeb\src\main\java\br\com\mvlvidal\calcprocweb\bean\EdicaoBean.java

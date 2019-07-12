@@ -23,6 +23,9 @@ public class Tabela implements Serializable {
     @Column(name="nome", length = 40)
     private String nome;
     
+    @Column(name="tipoTab")   
+    private String tipoTab;
+    
     @OneToMany(mappedBy = "tabela", targetEntity = Procedimento.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private List<Procedimento> procedimentos;
 
@@ -40,6 +43,14 @@ public class Tabela implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getTipoTab() {
+        return tipoTab;
+    }
+
+    public void setTipoTab(String tipoTab) {
+        this.tipoTab = tipoTab;
     }
 
     public List<Procedimento> getProcedimentos() {

@@ -11,20 +11,28 @@
 
     <h:form>
         <p:panel header="Cadastro de Tabela">
-            <p:panelGrid columns="3">
+            <p:panelGrid columns="5">
+                <p:outputLabel value="Tipo:" />
+                <p:selectOneMenu value="#{tabBean.tab1.tipoTab}">
+                    <f:selectItem itemLabel="Selecione" />                    
+                    <f:selectItems value="#{tabBean.tiposTabela}"/>  
+                </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{tabBean.tab1.nome}"/>
-                <p:commandButton value="Gravar" actionListener="#{tabBean.salvar}" />
+                <p:commandButton value="Gravar" update="@form" actionListener="#{tabBean.salvar}" />
             </p:panelGrid>
             
             <p:separator />
             
-            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabela">
+            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabela" >
                 <p:column headerText="#">
                     <h:outputText value="#{tabela.id}" />
                 </p:column>
                 <p:column headerText="Nome">
                     <h:outputText value="#{tabela.nome}" />
+                </p:column>
+                <p:column headerText="Tipo Tabela">
+                    <h:outputText value="#{tabela.tipoTab}" />
                 </p:column>
                 <p:column headerText="Ação">
                     

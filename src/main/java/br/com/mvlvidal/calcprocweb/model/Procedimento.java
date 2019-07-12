@@ -47,10 +47,7 @@ public class Procedimento implements Serializable {
     
     @Column(name="qtdFilme")
     private float qtdFilme;
-    
-    @Column(name="tipoProc")
-    private String tipoProc;
-    
+ 
     @Column(name="classificacao")
     private String classificacao;
 
@@ -136,14 +133,6 @@ public class Procedimento implements Serializable {
 
     public void setQtdFilme(float qtdFilme) {
         this.qtdFilme = qtdFilme;
-    }
-
-    public String getTipoProc() {
-        return tipoProc;
-    }
-
-    public void setTipoProc(String tipoProc) {
-        this.tipoProc = tipoProc;
     }
 
     public String getClassificacao() {

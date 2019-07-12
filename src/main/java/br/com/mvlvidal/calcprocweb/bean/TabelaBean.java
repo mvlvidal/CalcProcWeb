@@ -15,6 +15,7 @@ public class TabelaBean {
     private Tabela tab1;
     private TabelaDao tabDao;
     private List<Tabela> tabelas;
+    private List<String> tiposTabela;
     
     @PostConstruct
     public void init(){
@@ -23,6 +24,8 @@ public class TabelaBean {
         tabDao = new TabelaDao();
         tabelas = new ArrayList<>();
         tabelas = tabDao.listar();
+        tiposTabela = new ArrayList<>();
+        tiposTabela = carregaTipos();
         
     }
     
@@ -36,6 +39,24 @@ public class TabelaBean {
         
     }
 
+    public List<String> carregaTipos(){
+        
+        List<String> lista = new ArrayList<>();
+  
+        lista.add("AMB");
+        lista.add("CBHPM");
+        
+        return lista;
+    }
+    
+    public List<Tabela> carregaTabelas(String tipo){
+        List<Tabela> lista = new ArrayList<>();
+        
+        lista = tabDao.listar(tipo);
+        
+        return lista;
+    }
+    
     public Tabela getTab1() {
         return tab1;
     }
@@ -50,6 +71,14 @@ public class TabelaBean {
 
     public void setTabelas(List<Tabela> tabelas) {
         this.tabelas = tabelas;
+    }
+
+    public List<String> getTiposTabela() {
+        return tiposTabela;
+    }
+
+    public void setTiposTabela(List<String> tiposTabela) {
+        this.tiposTabela = tiposTabela;
     }
     
     

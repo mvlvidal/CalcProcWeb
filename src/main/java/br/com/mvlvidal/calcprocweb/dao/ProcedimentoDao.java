@@ -1,6 +1,7 @@
 package br.com.mvlvidal.calcprocweb.dao;
 
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
+import br.com.mvlvidal.calcprocweb.model.Tabela;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -11,13 +12,14 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> {
     public ProcedimentoDao(){
         super(Procedimento.class);
     }
-
-    public List<Procedimento> listar(String tipo) {
-
+  
+    public List<Procedimento> listar(Tabela tab) {
+        
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
 
         Criteria criteria = sessao.createCriteria(Procedimento.class);
-        criteria.add(Restrictions.eq("tipoProc",tipo));
+               
+        criteria.add(Restrictions.eq("tabela",tab));
         
         return criteria.list();
     }

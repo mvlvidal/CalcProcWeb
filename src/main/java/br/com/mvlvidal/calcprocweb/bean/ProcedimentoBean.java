@@ -2,6 +2,7 @@ package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
+import br.com.mvlvidal.calcprocweb.model.Tabela;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -15,8 +16,6 @@ public class ProcedimentoBean {
     private Procedimento proc1;
     private ProcedimentoDao procDao;
     private List<Procedimento> procedimentos;
-    private List<Procedimento> procedimentosAmb;
-    private List<Procedimento> procedimentosCbhpm;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -33,13 +32,14 @@ public class ProcedimentoBean {
     public void init() {
 
         proc1 = new Procedimento();
-        procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
-        procedimentosAmb = new ArrayList<>();
-        procedimentosCbhpm = new ArrayList<>();
-        procedimentos = procDao.listar();
-        procedimentosAmb = procDao.listar("AMB");
-        procedimentosCbhpm = procDao.listar("CBHPM");
+
+        //VALORES PADRÃO
+        proc1.setAux(0);
+        proc1.setCo(0.0f);
+        proc1.setQtdFilme(0.0f);
+        proc1.setpAnestesico(0);
+        proc1.setCh(0.0f);
     }
 
     public void salvar() {
@@ -61,24 +61,24 @@ public class ProcedimentoBean {
 
     }
 
-    public List<String> carregaTipos() {
+    public List<String> carregaClassif() {
 
         List<String> lista = new ArrayList<>();
 
-        lista.add("AMB");
-        lista.add("CBHPM");
+        lista.add("HM");
+        lista.add("SADT");
 
         return lista;
     }
-    
-    public List<String> carregaClassif(){
+
+    public void carregaProcedimentos(Tabela tab) {
         
-       List<String> lista = new ArrayList<>();
-       
-       lista.add("HM");
-       lista.add("SADT");
-       
-       return lista;
+        procDao = new ProcedimentoDao();
+        
+        if (tab != null) {
+            procedimentos = procDao.listar(tab);
+        }
+
     }
 
     public Procedimento getProc1() {
@@ -95,22 +95,6 @@ public class ProcedimentoBean {
 
     public void setProcedimentos(List<Procedimento> procedimentos) {
         this.procedimentos = procedimentos;
-    }
-
-    public List<Procedimento> getProcedimentosAmb() {
-        return procedimentosAmb;
-    }
-
-    public void setProcedimentosAmb(List<Procedimento> procedimentosAmb) {
-        this.procedimentosAmb = procedimentosAmb;
-    }
-
-    public List<Procedimento> getProcedimentosCbhpm() {
-        return procedimentosCbhpm;
-    }
-
-    public void setProcedimentosCbhpm(List<Procedimento> procedimentosCbhpm) {
-        this.procedimentosCbhpm = procedimentosCbhpm;
     }
 
     public float getTotalProc() {
