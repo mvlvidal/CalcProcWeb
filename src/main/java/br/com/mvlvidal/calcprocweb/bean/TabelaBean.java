@@ -30,28 +30,32 @@ public class TabelaBean {
     }
     
     public void salvar(){
-        
-        Tabela tab2 = tab1;
-        
-        if(tab2 != null){
-            tabDao.salvar(tab1);
+
+        if(tab1 != null){
+            
+            if(tab1.getId() != null){
+                tabDao.update(tab1);                
+            }else{
+                tabDao.salvar(tab1);
+            }
+            
         }
         
     }
     
     public void selecionar(Tabela tab){
         
+        tab.setId(tab.getId());
+        
         if(tab != null){
             tab1 = tab;
         }
     }
     
-    public void excluir(Tabela tab){
+    public void excluir(Long id){
  
-        if(tab1 != null){            
-            tabDao.deletar(tab1.getId());
-        }else{
-            System.out.println("@@ ID NULO! @@");
+        if(id != null){            
+            tabDao.deletar(id);
         }
     }
 

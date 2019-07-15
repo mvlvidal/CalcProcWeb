@@ -45,6 +45,29 @@ public abstract class GenericDao<T, Type extends Serializable> {
         }
         return retorno;
     }
+    public void update(T entity) {
+
+        Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
+        Transaction tx = null;
+
+        try {
+
+            tx = sessao.beginTransaction();
+            sessao.update(entity);
+            tx.commit();
+
+        } catch (Exception e) {
+
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw e;
+        }finally{
+            sessao.clear();
+            sessao.close();
+        }
+
+    }
 
     public T find(Long id) {
 

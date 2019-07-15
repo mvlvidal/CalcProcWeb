@@ -19,7 +19,7 @@
                 </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{tabBean.tab1.nome}"/>
-                <p:commandButton value="Gravar" update="@form" actionListener="#{tabBean.salvar}" />
+                <p:commandButton value="Gravar" update="@form" actionListener="#{tabBean.salvar()}" />
             </p:panelGrid>
 
             <p:separator />
@@ -36,33 +36,26 @@
                 </p:column>
                 <p:column headerText="Ação">
                     <center>
-                        <p:commandLink actionListener="#{tabBean.selecionar(tabela)}" update="@form">
+                        <p:commandLink actionListener="#{tabBean.selecionar(tabela)}" type="button" update="@form">
                             <h:graphicImage url="/img/edit_icon.png" alt="Editar"/>
                         </p:commandLink>
-                        <p:commandLink update="formDialog" onclick="PF('dialogDeletar').show();" type="button">
-                            <f:setPropertyActionListener target="#{tabBean.tab1}" value="#{tabela}" />
+                        <p:commandLink action="#{tabBean.excluir(tabela.id)}" type="button" update="@form">                           
                             <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
+                            <p:confirm header="Excluir Tabela" message="Deseja realmente excluir a tabela de ID #{tabela.id}?" icon="pi pi-exclamation-triangle"/>
                         </p:commandLink>
                     </center>
                 </p:column>
             </p:dataTable>
         </p:panel>
-    </h:form>
 
-    <p:dialog widgetVar="dialogDeletar" header="Excluir Tabela" modal="true" resizable="false" draggable="false">
-        <h:form id="formDialog">
-            <p:outputLabel value="Deseja realmente excluir o item selecionado?"/>
-            <p:panelGrid columns="2">              
-                <p:outputLabel value="ID:" />
-                <p:inputText value="#{tabBean.tab1.id}" disabled="true"/>
-                <p:outputLabel value="Nome:" />
-                <p:inputText value="#{tabBean.tab1.nome}" disabled="true"/>
-            </p:panelGrid>
-            <p:separator />
-            <p:commandButton value="Sim" actionListener="#{tabBean.excluir(tabBean.tab1)}" process="@this" update="formCadTabela" oncomplete="PF('dialogDeletar').hide();"/>
-            <p:commandButton value="Não" onclick="PF('dialogDeletar').hide();"/>
-        </h:form>
-    </p:dialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <center>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
+            </center>
+        </p:confirmDialog>
+
+    </h:form>
 
 </ui:decorate>
 
