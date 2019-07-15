@@ -6,24 +6,24 @@
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <ui:define name="title">CalcProc - Tabela</ui:define>
 
-    <h:form>
+    <h:form id="formCadTabela">
         <p:panel header="Cadastro de Tabela">
             <p:panelGrid columns="5">
                 <p:outputLabel value="Tipo:" />
                 <p:selectOneMenu value="#{tabBean.tab1.tipoTab}">
-                    <f:selectItem itemLabel="Selecione" />                    
+                    <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
                     <f:selectItems value="#{tabBean.tiposTabela}"/>  
                 </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{tabBean.tab1.nome}"/>
                 <p:commandButton value="Gravar" update="@form" actionListener="#{tabBean.salvar}" />
             </p:panelGrid>
-            
+
             <p:separator />
-            
+
             <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabela" >
                 <p:column headerText="#">
                     <h:outputText value="#{tabela.id}" />
@@ -35,11 +35,34 @@
                     <h:outputText value="#{tabela.tipoTab}" />
                 </p:column>
                 <p:column headerText="Ação">
-                    
+                    <center>
+                        <p:commandLink actionListener="#{tabBean.selecionar(tabela)}" update="@form">
+                            <h:graphicImage url="/img/edit_icon.png" alt="Editar"/>
+                        </p:commandLink>
+                        <p:commandLink update="formDialog" onclick="PF('dialogDeletar').show();" type="button">
+                            <f:setPropertyActionListener target="#{tabBean.tab1}" value="#{tabela}" />
+                            <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
+                        </p:commandLink>
+                    </center>
                 </p:column>
             </p:dataTable>
         </p:panel>
     </h:form>
+
+    <p:dialog widgetVar="dialogDeletar" header="Excluir Tabela" modal="true" resizable="false" draggable="false">
+        <h:form id="formDialog">
+            <p:outputLabel value="Deseja realmente excluir o item selecionado?"/>
+            <p:panelGrid columns="2">              
+                <p:outputLabel value="ID:" />
+                <p:inputText value="#{tabBean.tab1.id}" disabled="true"/>
+                <p:outputLabel value="Nome:" />
+                <p:inputText value="#{tabBean.tab1.nome}" disabled="true"/>
+            </p:panelGrid>
+            <p:separator />
+            <p:commandButton value="Sim" actionListener="#{tabBean.excluir(tabBean.tab1)}" process="@this" update="formCadTabela" oncomplete="PF('dialogDeletar').hide();"/>
+            <p:commandButton value="Não" onclick="PF('dialogDeletar').hide();"/>
+        </h:form>
+    </p:dialog>
 
 </ui:decorate>
 

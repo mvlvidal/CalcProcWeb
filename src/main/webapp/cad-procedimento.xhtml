@@ -40,7 +40,7 @@
             </p:panelGrid>
 
             <p:separator />
-            
+
             <h:panelGroup rendered="#{proBean.proc1.tabela.tipoTab != null}">
                 <p:dataTable var="proc" value="#{proBean.procedimentos}" rows="5" paginator="true" id="tabProc">
                     <p:column headerText="#" >
@@ -74,7 +74,14 @@
                         <h:outputText value="#{proc.qtdFilme}" />
                     </p:column>
                     <p:column headerText="Ação">
-
+                        <center>
+                            <p:commandLink>
+                                <h:graphicImage url="/img/edit_icon.png" />
+                            </p:commandLink>
+                            <p:commandLink>
+                                <h:graphicImage url="/img/delete_icon.png" />
+                            </p:commandLink>
+                        </center>
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>

@@ -38,6 +38,22 @@ public class TabelaBean {
         }
         
     }
+    
+    public void selecionar(Tabela tab){
+        
+        if(tab != null){
+            tab1 = tab;
+        }
+    }
+    
+    public void excluir(Tabela tab){
+ 
+        if(tab1 != null){            
+            tabDao.deletar(tab1.getId());
+        }else{
+            System.out.println("@@ ID NULO! @@");
+        }
+    }
 
     public List<String> carregaTipos(){
         

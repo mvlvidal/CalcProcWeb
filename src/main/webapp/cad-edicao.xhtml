@@ -25,7 +25,14 @@
                     <h:outputText value="#{edicao.nome}" />
                 </p:column>
                 <p:column headerText="Ação">
-
+                    <center>
+                        <p:commandLink>
+                            <h:graphicImage url="/img/edit_icon.png" />
+                        </p:commandLink>
+                        <p:commandLink>
+                            <h:graphicImage url="/img/delete_icon.png" />
+                        </p:commandLink>
+                    </center>
                 </p:column>
             </p:dataTable>
         </p:panel>
