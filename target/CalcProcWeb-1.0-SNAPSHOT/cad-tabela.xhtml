@@ -11,7 +11,8 @@
 
     <h:form id="formCadTabela">
         <p:panel header="Cadastro de Tabela">
-            <p:panelGrid columns="5">
+            <p:panelGrid columns="5"> 
+                <p:inputText value="#{tabBean.tab1.id}" required="true" rendered="#{tabBean.tab1.id != null}" readonly="true"/>
                 <p:outputLabel value="Tipo:" />
                 <p:selectOneMenu value="#{tabBean.tab1.tipoTab}">
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
@@ -19,14 +20,15 @@
                 </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{tabBean.tab1.nome}"/>
-                <p:commandButton value="Gravar" update="@form" actionListener="#{tabBean.salvar()}" />
+                <p:commandButton value="Gravar" actionListener="#{tabBean.salvar}" update="tabTabelas"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabela" >
+            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabelas" rowKey="#{tabela.id}">
+                <p:autoUpdate />
                 <p:column headerText="#">
-                    <h:outputText value="#{tabela.id}" />
+                    <h:outputText value="#{tabela.id}"/>
                 </p:column>
                 <p:column headerText="Nome">
                     <h:outputText value="#{tabela.nome}" />
@@ -36,10 +38,10 @@
                 </p:column>
                 <p:column headerText="Ação">
                     <center>
-                        <p:commandLink actionListener="#{tabBean.selecionar(tabela)}" type="button" update="@form">
+                        <p:commandLink action="#{tabBean.editar(tabela.id)}" type="button" update="@all" >
                             <h:graphicImage url="/img/edit_icon.png" alt="Editar"/>
                         </p:commandLink>
-                        <p:commandLink action="#{tabBean.excluir(tabela.id)}" type="button" update="@form">                           
+                        <p:commandLink actionListener="#{tabBean.excluir(tabela.id)}" update="tabTabelas">                           
                             <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
                             <p:confirm header="Excluir Tabela" message="Deseja realmente excluir a tabela de ID #{tabela.id}?" icon="pi pi-exclamation-triangle"/>
                         </p:commandLink>
