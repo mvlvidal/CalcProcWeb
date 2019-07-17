@@ -11,7 +11,8 @@
 
     <h:form id="formCadTabela">
         <p:panel header="Cadastro de Tabela">
-            <p:panelGrid columns="5"> 
+            <p:panelGrid columns="8" id="painel"> 
+                <p:outputLabel value="ID:" rendered="#{tabBean.tab1.id != null}"/>
                 <p:inputText value="#{tabBean.tab1.id}" required="true" rendered="#{tabBean.tab1.id != null}" readonly="true"/>
                 <p:outputLabel value="Tipo:" />
                 <p:selectOneMenu value="#{tabBean.tab1.tipoTab}">
@@ -20,7 +21,8 @@
                 </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{tabBean.tab1.nome}"/>
-                <p:commandButton value="Gravar" actionListener="#{tabBean.salvar}" update="tabTabelas"/>
+                <p:commandButton value="Gravar" actionListener="#{tabBean.salvar}" update="formCadTabela:tabTabelas"/>
+                <p:button value="Cancelar" outcome="cad-tabela" rendered="#{tabBean.tab1.id != null}"/>
             </p:panelGrid>
 
             <p:separator />

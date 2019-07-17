@@ -7,29 +7,29 @@
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="title">CalcProcWeb - Procedimentos</ui:define>
-    <h:form>
+    <h:form id="formCadProc">
         <p:panel header="Cadastro de Procedimentos">
             <p:panelGrid columns="4">
                 <p:outputLabel value="Tabela:"/>
                 <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor" required="true">
                     <f:selectItem  itemLabel="Selecione" noSelectionOption="true"/>                    
-                    <f:selectItems var="t" itemLabel="#{t.nome}" itemValue="#{t}" value="#{tabBean.tabelas}"/>
-                    <p:ajax listener="#{proBean.carregaProcedimentos(proBean.proc1.tabela)}" update="@form" />
+                    <f:selectItems var="t" itemLabel="#{t.nome}" itemValue="#{t}" value="#{tabBean.tabelas}" />        
+                    <p:ajax update="@form" listener="#{proBean.carregaProcedimentos(proBean.proc1.tabela)}" />
                 </p:selectOneMenu>
             </p:panelGrid> 
-            <p:panelGrid columns="6" rendered="#{proBean.proc1.tabela.tipoTab != null}">               
+            <p:panelGrid columns="6">               
                 <p:outputLabel value="Código:" />
                 <p:inputText />
                 <p:outputLabel value="Descrição:" />
                 <p:inputText />
                 <p:outputLabel value="CH:" />
-                <p:inputText disabled="#{proBean.proc1.tabela.tipoTab == 'CBHPM'}"/>
+                <p:inputText/>
                 <p:outputLabel value="CO:" />
-                <p:inputText disabled="#{proBean.proc1.tabela.tipoTab == 'AMB'}"/>
+                <p:inputText />
                 <p:outputLabel value="% Porte.:"/>
-                <p:inputText  placeholder="Ex: 0.8 (80%)" disabled="#{proBean.proc1.tabela.tipoTab == 'AMB'}"/>
+                <p:inputText  placeholder="Ex: 0.8 (80%)"/>
                 <p:outputLabel value="Porte Med.:" />
-                <p:inputText disabled="#{proBean.proc1.tabela.tipoTab == 'AMB'}"/>
+                <p:inputText/>
                 <p:outputLabel value="Classificação:" />
                 <p:inputText />
                 <p:outputLabel value="Porte Anest.:" />
@@ -41,7 +41,7 @@
 
             <p:separator />
 
-            <h:panelGroup rendered="#{proBean.proc1.tabela.tipoTab != null}">
+            <h:panelGroup>
                 <p:dataTable var="proc" value="#{proBean.procedimentos}" rows="5" paginator="true" id="tabProc">
                     <p:column headerText="#" >
                         <h:outputText value="#{proc.id}" />
@@ -52,16 +52,16 @@
                     <p:column headerText="Descrição">
                         <h:outputText value="#{proc.descricao}" />
                     </p:column>          
-                    <p:column headerText="CH" rendered="#{proBean.proc1.tabela.tipoTab == 'AMB'}">
+                    <p:column headerText="CH" >
                         <h:outputText value="#{proc.ch}" />
                     </p:column>          
-                    <p:column headerText="C.O" rendered="#{proBean.proc1.tabela.tipoTab == 'CBHPM'}">
+                    <p:column headerText="C.O" >
                         <h:outputText value="#{proc.co}" />
                     </p:column> 
-                    <p:column headerText="% Porte" rendered="#{proBean.proc1.tabela.tipoTab == 'CBHPM'}">
+                    <p:column headerText="% Porte">
                         <h:outputText value="#{proc.percentPorte}" />
                     </p:column>                  
-                    <p:column headerText="Porte Med." rendered="#{proBean.proc1.tabela.tipoTab == 'CBHPM'}">
+                    <p:column headerText="Porte Med." >
                         <h:outputText value="#{proc.pMedico}" />
                     </p:column>          
                     <p:column headerText="Aux.">
