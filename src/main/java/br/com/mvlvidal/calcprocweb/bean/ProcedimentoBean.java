@@ -17,6 +17,7 @@ public class ProcedimentoBean {
     private Procedimento proc1;
     private ProcedimentoDao procDao;
     private List<Procedimento> procedimentos;
+    private List<String> classificacoes;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -34,7 +35,9 @@ public class ProcedimentoBean {
 
         proc1 = new Procedimento();
         procedimentos = new ArrayList<>();
-
+        classificacoes = new ArrayList<>();
+        classificacoes = carregaClassif();
+        
         //VALORES PADRÃO
         proc1.setAux(0);
         proc1.setCo(0.0f);
@@ -73,9 +76,9 @@ public class ProcedimentoBean {
     }
 
     public void carregaProcedimentos(Tabela tab) {
-        
+
         procDao = new ProcedimentoDao();
-        
+
         if (tab != null) {
             procedimentos = procDao.listar(tab);
         }
@@ -98,6 +101,14 @@ public class ProcedimentoBean {
         this.procedimentos = procedimentos;
     }
 
+    public List<String> getClassificacoes() {
+        return classificacoes;
+    }
+
+    public void setClassificacoes(List<String> classificacoes) {
+        this.classificacoes = classificacoes;
+    }
+   
     public float getTotalProc() {
         return totalProc;
     }

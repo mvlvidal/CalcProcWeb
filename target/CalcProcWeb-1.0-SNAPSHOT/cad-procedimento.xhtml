@@ -11,32 +11,34 @@
         <p:panel header="Cadastro de Procedimentos">
             <p:panelGrid columns="4">
                 <p:outputLabel value="Tabela:"/>
-                <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor" required="true">
-                    <f:selectItem  itemLabel="Selecione" noSelectionOption="true"/>                    
-                    <f:selectItems var="t" itemLabel="#{t.nome}" itemValue="#{t}" value="#{tabBean.tabelas}" />        
-                    <p:ajax update="@form" listener="#{proBean.carregaProcedimentos(proBean.proc1.tabela)}" />
+                <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor">                   
+                    <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
+                    <f:selectItems var="t" itemLabel="#{t.nome}" itemValue="#{t}" value="#{tabBean.tabelas}" /> 
+                    <p:ajax listener="#{proBean.carregaProcedimentos(t)}" update="@form"/>
                 </p:selectOneMenu>
             </p:panelGrid> 
             <p:panelGrid columns="6">               
                 <p:outputLabel value="Código:" />
-                <p:inputText />
+                <p:inputText value="#{proBean.proc1.codigo}"/>
                 <p:outputLabel value="Descrição:" />
-                <p:inputText />
+                <p:inputText value="#{proBean.proc1.descricao}"/>
                 <p:outputLabel value="CH:" />
-                <p:inputText/>
+                <p:inputText value="#{proBean.proc1.ch}"/>
                 <p:outputLabel value="CO:" />
-                <p:inputText />
+                <p:inputText value="#{proBean.proc1.co}" />
                 <p:outputLabel value="% Porte.:"/>
-                <p:inputText  placeholder="Ex: 0.8 (80%)"/>
+                <p:inputText value="#{proBean.proc1.percentPorte}"  placeholder="Ex: 0.8 (80%)"/>
                 <p:outputLabel value="Porte Med.:" />
-                <p:inputText/>
+                <p:inputText value="#{proBean.proc1.pMedico}" />
                 <p:outputLabel value="Classificação:" />
-                <p:inputText />
+                <p:selectOneRadio value="#{proBean.proc1.classificacao}">
+                    <f:selectItems value="#{proBean.classificacoes}" />
+                </p:selectOneRadio>
                 <p:outputLabel value="Porte Anest.:" />
-                <p:inputText />
+                <p:inputText value="#{proBean.proc1.pAnestesico}"/>
                 <p:outputLabel value="Filme m²:" />
-                <p:inputText />
-                <p:commandButton value="Gravar" />
+                <p:inputText value="#{proBean.proc1.qtdFilme}"/>
+                <p:commandButton value="Gravar"/>
             </p:panelGrid>
 
             <p:separator />
