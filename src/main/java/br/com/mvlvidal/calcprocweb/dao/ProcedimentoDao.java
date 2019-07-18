@@ -11,8 +11,8 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> {
    
     public ProcedimentoDao(){
         super(Procedimento.class);
-    }
-  
+    } 
+    
     public List<Procedimento> listar(Tabela tab) {
         
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
@@ -23,4 +23,5 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> {
         
         return criteria.list();
     }
+    
 }

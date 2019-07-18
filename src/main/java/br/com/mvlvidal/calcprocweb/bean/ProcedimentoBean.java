@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-
 @ViewScoped
 @ManagedBean(name = "proBean")
 public class ProcedimentoBean {
@@ -34,10 +33,12 @@ public class ProcedimentoBean {
     public void init() {
 
         proc1 = new Procedimento();
+        procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
+        procedimentos = procDao.listar();
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
-        
+
         //VALORES PADRÃO
         proc1.setAux(0);
         proc1.setCo(0.0f);
@@ -46,6 +47,7 @@ public class ProcedimentoBean {
         proc1.setCh(0.0f);
     }
 
+    //MÉTODOS
     public void salvar() {
 
         Procedimento proc2 = proc1;
@@ -75,16 +77,7 @@ public class ProcedimentoBean {
         return lista;
     }
 
-    public void carregaProcedimentos(Tabela tab) {
-
-        procDao = new ProcedimentoDao();
-
-        if (tab != null) {
-            procedimentos = procDao.listar(tab);
-        }
-
-    }
-
+    //GETS e SETS
     public Procedimento getProc1() {
         return proc1;
     }
@@ -108,7 +101,7 @@ public class ProcedimentoBean {
     public void setClassificacoes(List<String> classificacoes) {
         this.classificacoes = classificacoes;
     }
-   
+
     public float getTotalProc() {
         return totalProc;
     }
