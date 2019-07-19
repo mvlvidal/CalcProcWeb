@@ -7,89 +7,19 @@
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="title">CalcProcWeb - Procedimentos</ui:define>
-    <h:form id="formCadProc">
-        <p:panel header="Cadastro de Procedimentos">
-            <p:panelGrid columns="4">
+    <h:form>
+        <p:panel header="Cadastro de Procedimentos" >
+            <p:panelGrid columns="4" id="cad">
                 <p:outputLabel value="Tabela:"/>
-                <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor" onchange="PF">             
+                <p:selectOneMenu value="#{proBean.proc1.tabela}" converter="tabelaConversor" id="selectTabela">             
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
-                    <f:selectItems var="t" itemLabel="#{t.nome}" itemValue="#{t}" value="#{tabBean.tabelas}" />      
+                    <f:selectItems var="t" itemLabel="#{t.nome}" value="#{tabBean.tabelas}" />  
+                    <p:ajax process="selectTabela" update="cadastro" />
                 </p:selectOneMenu>
-
-                <p:inputText value="#{proBean.proc1.tabela.nome}" id="txt"/>
-            </p:panelGrid> 
-            <p:panel id="tab">
-                <p:panelGrid columns="6">               
-                    <p:outputLabel value="Código:" />
-                    <p:inputText value="#{proBean.proc1.codigo}"/>
-                    <p:outputLabel value="Descrição:" />
-                    <p:inputText value="#{proBean.proc1.descricao}"/>
-                    <p:outputLabel value="CH:" />
-                    <p:inputText value="#{proBean.proc1.ch}"/>
-                    <p:outputLabel value="CO:" />
-                    <p:inputText value="#{proBean.proc1.co}" />
-                    <p:outputLabel value="% Porte.:"/>
-                    <p:inputText value="#{proBean.proc1.percentPorte}"  placeholder="Ex: 0.8 (80%)"/>
-                    <p:outputLabel value="Porte Med.:" />
-                    <p:inputText value="#{proBean.proc1.pMedico}" />
-                    <p:outputLabel value="Classificação:" />
-                    <p:selectOneRadio value="#{proBean.proc1.classificacao}">
-                        <f:selectItems value="#{proBean.classificacoes}" />
-                    </p:selectOneRadio>
-                    <p:outputLabel value="Porte Anest.:" />
-                    <p:inputText value="#{proBean.proc1.pAnestesico}"/>
-                    <p:outputLabel value="Filme m²:" />
-                    <p:inputText value="#{proBean.proc1.qtdFilme}"/>
-                    <p:commandButton value="Gravar"/>
-                </p:panelGrid>
-
-                <p:separator />
-
-                <h:panelGroup>
-                    <p:dataTable var="proc" value="#{proBean.procedimentos}" rows="5" paginator="true" id="tabProced">
-                        <p:column headerText="#" >
-                            <h:outputText value="#{proc.id}" />
-                        </p:column>
-                        <p:column headerText="Código">
-                            <h:outputText value="#{proc.codigo}" />
-                        </p:column>
-                        <p:column headerText="Descrição">
-                            <h:outputText value="#{proc.descricao}" />
-                        </p:column>          
-                        <p:column headerText="CH" >
-                            <h:outputText value="#{proc.ch}" />
-                        </p:column>          
-                        <p:column headerText="C.O" >
-                            <h:outputText value="#{proc.co}" />
-                        </p:column> 
-                        <p:column headerText="% Porte">
-                            <h:outputText value="#{proc.percentPorte}" />
-                        </p:column>                  
-                        <p:column headerText="Porte Med." >
-                            <h:outputText value="#{proc.pMedico}" />
-                        </p:column>          
-                        <p:column headerText="Aux.">
-                            <h:outputText value="#{proc.aux}" />
-                        </p:column>
-                        <p:column headerText="Porte Anest.">
-                            <h:outputText value="#{proc.pAnestesico}" />
-                        </p:column>
-                        <p:column headerText="Filme m²">
-                            <h:outputText value="#{proc.qtdFilme}" />
-                        </p:column>
-                        <p:column headerText="Ação">
-                            <center>
-                                <p:commandLink>
-                                    <h:graphicImage url="/img/edit_icon.png" />
-                                </p:commandLink>
-                                <p:commandLink>
-                                    <h:graphicImage url="/img/delete_icon.png" />
-                                </p:commandLink>
-                            </center>
-                        </p:column>
-                    </p:dataTable>
-                </h:panelGroup>
-            </p:panel>
+            </p:panelGrid>  
+            <p:panelGrid columns="2" id="cadastro">
+                <p:inputText value="#{proBean.proc1.tabela.id}" />
+            </p:panelGrid>
         </p:panel>       
     </h:form>
 </ui:decorate>

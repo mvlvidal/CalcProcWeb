@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 
 @ViewScoped
 @ManagedBean(name = "proBean")
@@ -35,7 +36,7 @@ public class ProcedimentoBean {
         proc1 = new Procedimento();
         procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
-        procedimentos = procDao.listar();
+        //procedimentos = procDao.listar();
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
 
@@ -75,6 +76,12 @@ public class ProcedimentoBean {
         lista.add("SADT");
 
         return lista;
+    }
+    
+    public void carregaProcsTabela(){
+       
+        procedimentos = procDao.listar(proc1.getTabela().getId());
+           
     }
 
     //GETS e SETS
