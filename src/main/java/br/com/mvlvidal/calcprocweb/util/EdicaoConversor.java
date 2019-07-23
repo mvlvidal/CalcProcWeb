@@ -17,17 +17,15 @@ public class EdicaoConversor implements Converter {
 
         if (value != null) {
 
-            int cod = Integer.parseInt(value);
+            Long cod = Long.parseLong(value);
 
-            System.out.println("@@@@@@@ VALOR: " + cod);
-            
-            Edicao edicao = new Edicao();
-            List<Edicao> edicoes = new ArrayList<>();           
-            EdicaoDao ediDao = new EdicaoDao();           
+            Edicao edicao = new Edicao();                     
+            EdicaoDao ediDao = new EdicaoDao(); 
+            List<Edicao> edicoes = new ArrayList<>();
             edicoes = ediDao.listar();
             
             for(Edicao e: edicoes){
-                if(e.getId() == cod){
+                if(e.getId().equals(cod)){
                     edicao = e;
                 }
             }

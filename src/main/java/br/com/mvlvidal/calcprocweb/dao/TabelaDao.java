@@ -1,12 +1,13 @@
 package br.com.mvlvidal.calcprocweb.dao;
 
 import br.com.mvlvidal.calcprocweb.model.Tabela;
+import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-public class TabelaDao extends GenericDao<Tabela, Long>{
+public class TabelaDao extends GenericDao<Tabela, Long> implements Serializable{
 
     public TabelaDao() {
         super(Tabela.class);

@@ -14,19 +14,22 @@ public class TabelaConversor implements Converter {
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        if (value != null && !value.equals("Selecione")) {
-            int id = Integer.parseInt(value);
-            List<Tabela> tabelas = new ArrayList<>();
-            TabelaDao tabDao = new TabelaDao();
-            tabelas = tabDao.listar();
+        
+        if (value != null) {
+            
+            Long cod = Long.parseLong(value);
+            
+            TabelaDao tabDao = new TabelaDao();           
             Tabela tab = new Tabela();
-
-            for (Tabela t : tabelas) {
-                if (t.getId() == id) {
+            
+            List<Tabela> tabelas = tabDao.listar();
+            
+            for (Tabela t: tabelas) {
+                if(t.getId().equals(cod)){
                     tab = t;
                 }
             }
-
+            
             return tab;
         }
         return null;

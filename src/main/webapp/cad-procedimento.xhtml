@@ -7,25 +7,18 @@
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="title">CalcProcWeb - Procedimentos</ui:define>
-    <h:form>
-        <p:panel header="Cadastro de Procedimentos" >
-            <p:panelGrid columns="4" id="cad">
-                <p:outputLabel value="Tabela:"/>
-                <p:selectOneMenu value="#{proBean.proc1.tabela}"  converter="tabelaConversor" id="selectTabela">  
-                    <f:ajax render="tabProc" />
-                    <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
-                    <f:selectItems var="t" itemLabel="#{t.nome}" value="#{tabBean.tabelas}" />  
-                    <p:ajax process="@this" listener="#{proBean.carregaProcsTabela}" update="tabProc">
-                        <f:setPropertyActionListener value="#{t}" target="#{proBean.proc1.tabela}" />
-                    </p:ajax>
-                    
-                </p:selectOneMenu> 
+    <p:panel header="Procedimentos" >
+        <h:form id="info">
+            <p:panelGrid columns="11">
+                <f:facet name="header">
+                    Filtro
+                </f:facet>
+                <p:outputLabel value="Tabela:" />
+                <p:inputText value="#{proBean.tabela.id}" />
+                <p:commandButton value="Pesquisar" actionListener="#{proBean.filtrarTabela}" update="tabProc"/>
             </p:panelGrid>  
-            <p:panelGrid columns="2" id="cadastro">
-                
-            </p:panelGrid>
-            <p:panelGrid>
-                <p:dataTable var="procedimento" value="#{proBean.procedimentos}" id="tabProc" rendered="#{proBean.proc1.tabela != null}">
+            <p:panelGrid columns="11">
+                <p:dataTable var="procedimento" value="#{proBean.procedimentos}" widgetVar="tabelaProc" id="tabProc">
                     <p:column headerText="#">
                         <h:outputText value="#{procedimento.id}"/>
                     </p:column>                    
@@ -58,26 +51,42 @@
                     </p:column>
                     <p:column headerText="Ação">
                         <center>
-                        <p:commandLink  type="button" update="@all" > <!-- Action -->
-                            <h:graphicImage url="/img/edit_icon.png" alt="Editar"/>
-                        </p:commandLink>
-                        <p:commandLink  update="tabTabelas"> <!-- Action Listener -->                           
-                            <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
-                            <p:confirm header="Excluir Procedimento" message="Deseja realmente excluir o procedimento de ID #{procedimento.id}?" icon="pi pi-exclamation-triangle"/>
-                        </p:commandLink>
-                    </center>
+                            <p:commandLink  type="button" update="@all" > <!-- Action -->
+                                <h:graphicImage url="/img/edit_icon.png" alt="Editar"/>
+                            </p:commandLink>
+                            <p:commandLink  update="tabProc"> <!-- Action Listener -->                           
+                                <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
+                                <p:confirm header="Excluir Procedimento" message="Deseja realmente excluir o procedimento de ID #{procedimento.id}?" icon="pi pi-exclamation-triangle"/>
+                            </p:commandLink>
+                        </center>
                     </p:column>
                 </p:dataTable>
             </p:panelGrid>
-        </p:panel>       
-        
-        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-            <center>
-                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
-            </center>
-        </p:confirmDialog>
-        
-    </h:form>
+
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <center>
+                    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
+                </center>
+            </p:confirmDialog>       
+        </h:form>
+        <h:form id="cadProc">
+            <p:panelGrid columns="11">
+                <f:facet name="header">
+                    Cadastro
+                </f:facet>
+                <p:outputLabel value="Tabela:" />
+                <p:selectOneMenu value="#{proBean.proc1.tabela}"  converter="tabelaConversor">                     
+                    <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
+                    <f:selectItems var="t" itemLabel="#{t.nome}" value="#{tabBean.tabelas}" />
+                </p:selectOneMenu> 
+                <p:outputLabel value="Código:" />
+                <p:inputText value="#{proBean.proc1.codigo}"/>
+            </p:panelGrid>
+        </h:form>
+    </p:panel>
+
+
 </ui:decorate>
 

@@ -2,6 +2,7 @@ package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.TabelaDao;
 import br.com.mvlvidal.calcprocweb.model.Tabela;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -10,8 +11,10 @@ import javax.faces.bean.ViewScoped;
 
 @ViewScoped
 @ManagedBean(name="tabBean")
-public class TabelaBean {
+public class TabelaBean implements Serializable{
 
+    private static final long serialVersionUID = 1L;
+    
     private Tabela tab1;
     private TabelaDao tabDao;
     private List<Tabela> tabelas;
@@ -62,9 +65,8 @@ public class TabelaBean {
     }
     
     public List<Tabela> carregaTabelas(String tipo){
-        List<Tabela> lista = new ArrayList<>();
         
-        lista = tabDao.listar(tipo);
+        List<Tabela> lista = tabDao.listar(tipo);
         
         return lista;
     }

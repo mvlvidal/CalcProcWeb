@@ -3,21 +3,24 @@ package br.com.mvlvidal.calcprocweb.bean;
 import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
 import br.com.mvlvidal.calcprocweb.model.Tabela;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.AjaxBehaviorEvent;
 
 @ViewScoped
 @ManagedBean(name = "proBean")
-public class ProcedimentoBean {
+public class ProcedimentoBean implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Procedimento proc1;
     private ProcedimentoDao procDao;
-    private List<Procedimento> procedimentos;
+    private List<Procedimento> procedimentos;  
     private List<String> classificacoes;
+    private Tabela tabela;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -39,6 +42,7 @@ public class ProcedimentoBean {
         //procedimentos = procDao.listar();
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
+        tabela = new Tabela();
 
         //VALORES PADRÃO
         proc1.setAux(0);
@@ -77,11 +81,12 @@ public class ProcedimentoBean {
 
         return lista;
     }
-    
-    public void carregaProcsTabela(){
+
+    public String filtrarTabela() {            
        
-        procedimentos = procDao.listar(proc1.getTabela().getId());
-           
+        procedimentos = procDao.listar(tabela.getId());
+        
+        return "cad-procedimento";
     }
 
     //GETS e SETS
@@ -149,4 +154,12 @@ public class ProcedimentoBean {
         this.uco = uco;
     }
 
+    public Tabela getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(Tabela tabela) {
+        this.tabela = tabela;
+    }
+    
 }
