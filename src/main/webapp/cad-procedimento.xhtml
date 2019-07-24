@@ -14,7 +14,11 @@
                     Filtro
                 </f:facet>
                 <p:outputLabel value="Tabela:" />
-                <p:inputText value="#{proBean.tabela.id}" />
+                <p:selectOneMenu value="#{proBean.tabela.id}" id="selectFiltro">                     
+                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/>                    
+                    <f:selectItems var="t" value="#{tabBean.tabelas}" itemLabel="#{t.id} - #{t.nome}" itemValue="#{t.id}"/>
+                </p:selectOneMenu> 
+                <!-- <p:inputText /> -->
                 <p:commandButton value="Pesquisar" actionListener="#{proBean.filtrarTabela}" update="tabProc"/>
             </p:panelGrid>  
             <p:panelGrid columns="11">
@@ -62,7 +66,6 @@
                     </p:column>
                 </p:dataTable>
             </p:panelGrid>
-
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                 <center>

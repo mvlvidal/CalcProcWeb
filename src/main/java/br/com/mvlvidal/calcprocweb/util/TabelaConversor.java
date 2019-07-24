@@ -2,7 +2,6 @@ package br.com.mvlvidal.calcprocweb.util;
 
 import br.com.mvlvidal.calcprocweb.dao.TabelaDao;
 import br.com.mvlvidal.calcprocweb.model.Tabela;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -15,7 +14,7 @@ public class TabelaConversor implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         
-        if (value != null) {
+        if (value != null || !value.equals("")) {
             
             Long cod = Long.parseLong(value);
             
@@ -26,7 +25,7 @@ public class TabelaConversor implements Converter {
             
             for (Tabela t: tabelas) {
                 if(t.getId().equals(cod)){
-                    tab = t;
+                    tab.setId(cod);
                 }
             }
             
@@ -39,9 +38,10 @@ public class TabelaConversor implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object value) {
 
         if (value != null) {
-            Tabela tab = new Tabela();
-            tab = (Tabela) value;
-            return tab.getId().toString();
+            
+            Tabela tab = (Tabela) value;   
+            
+            return String.valueOf(tab.getId());
         }
 
         return null;

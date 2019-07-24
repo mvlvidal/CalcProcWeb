@@ -39,7 +39,7 @@ public class ProcedimentoBean implements Serializable {
         proc1 = new Procedimento();
         procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
-        //procedimentos = procDao.listar();
+        procedimentos = procDao.listar();
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
         tabela = new Tabela();
@@ -84,10 +84,17 @@ public class ProcedimentoBean implements Serializable {
 
     public String filtrarTabela() {            
        
-        procedimentos = procDao.listar(tabela.getId());
+        Tabela tab2 = tabela;
+        
+        if(tab2.getId() == 0){            
+            procedimentos = procDao.listar();
+        }else{
+            procedimentos = procDao.listar(tabela.getId());
+        }
         
         return "cad-procedimento";
     }
+    
 
     //GETS e SETS
     public Procedimento getProc1() {
