@@ -7,19 +7,21 @@
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:define name="title">CalcProcWeb - Procedimentos</ui:define>
-    <p:panel header="Procedimentos" >
+    <p:panel>
+        <f:facet name="header">
+             Procedimentos
+        </f:facet>
         <h:form id="info">
             <p:panelGrid columns="11">
                 <f:facet name="header">
-                    Filtro
+                    <i class="pi pi-filter"></i>Filtro
                 </f:facet>
                 <p:outputLabel value="Tabela:" />
                 <p:selectOneMenu value="#{proBean.tabela.id}" id="selectFiltro">                     
                     <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/>                    
                     <f:selectItems var="t" value="#{tabBean.tabelas}" itemLabel="#{t.id} - #{t.nome}" itemValue="#{t.id}"/>
                 </p:selectOneMenu> 
-                <!-- <p:inputText /> -->
-                <p:commandButton value="Pesquisar" actionListener="#{proBean.filtrarTabela}" update="tabProc"/>
+                <p:commandButton actionListener="#{proBean.filtrarTabela}" update="tabProc" icon="pi pi-search"/>
             </p:panelGrid>  
             <p:panelGrid columns="11">
                 <p:dataTable var="procedimento" value="#{proBean.procedimentos}" widgetVar="tabelaProc" id="tabProc">
@@ -34,6 +36,9 @@
                     </p:column>                    
                     <p:column headerText="CH">
                         <h:outputText value="#{procedimento.ch}"/>
+                    </p:column>                    
+                    <p:column headerText="CO">
+                        <h:outputText value="#{procedimento.co}"/>
                     </p:column>                    
                     <p:column headerText="Aux">
                         <h:outputText value="#{procedimento.aux}"/>
@@ -55,8 +60,8 @@
                     </p:column>
                     <p:column headerText="Ação">
                         <center>
-                            <p:commandLink  type="button" update="@all" > <!-- Action -->
-                                <h:graphicImage url="/img/edit_icon.png" alt="Editar"/>
+                            <p:commandLink type="button" action="#{proBean.editar(procedimento.id)}" update="cadProc" > <!-- Action -->
+                                <h:graphicImage url="/img/edit_icon.png" alt="Editar"/> 
                             </p:commandLink>
                             <p:commandLink  update="tabProc"> <!-- Action Listener -->                           
                                 <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
@@ -75,17 +80,39 @@
             </p:confirmDialog>       
         </h:form>
         <h:form id="cadProc">
-            <p:panelGrid columns="11">
+            <p:panelGrid columns="6">
                 <f:facet name="header">
-                    Cadastro
+                    <i class="pi pi-save"></i>Cadastro
                 </f:facet>
                 <p:outputLabel value="Tabela:" />
-                <p:selectOneMenu value="#{proBean.proc1.tabela}"  converter="tabelaConversor">                     
+                <p:selectOneMenu value="#{proBean.proc1.tabela}" required="true">                     
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
-                    <f:selectItems var="t" itemLabel="#{t.nome}" value="#{tabBean.tabelas}" />
+                    <f:selectItems var="t" itemLabel="#{t.nome}" itemValue="#{t}" value="#{tabBean.tabelas}"/>
                 </p:selectOneMenu> 
                 <p:outputLabel value="Código:" />
                 <p:inputText value="#{proBean.proc1.codigo}"/>
+                <p:outputLabel value="Descrição:" />
+                <p:inputText value="#{proBean.proc1.descricao}"/>
+                <p:outputLabel value="CH:" />
+                <p:inputText value="#{proBean.proc1.ch}"/>
+                <p:outputLabel value="CO:" />
+                <p:inputText value="#{proBean.proc1.co}"/>
+                <p:outputLabel value="Aux.:" />
+                <p:inputText value="#{proBean.proc1.aux}"/>
+                <p:outputLabel value="Porte Anest.:" />
+                <p:inputText value="#{proBean.proc1.pAnestesico}"/>
+                <p:outputLabel value="Porte Med.:" />
+                <p:inputText value="#{proBean.proc1.pMedico}"/>
+                <p:outputLabel value="% Porte Med.:" />
+                <p:inputText value="#{proBean.proc1.percentPorte}"/>
+                <p:outputLabel value="Qtd. Filme:" />
+                <p:inputText value="#{proBean.proc1.qtdFilme}"/>
+                <p:outputLabel value="Classific.:" />
+                <p:selectOneMenu value="#{proBean.proc1.classificacao}">
+                    <f:selectItem noSelectionOption="true" itemLabel="Selecione" />
+                    <f:selectItems value="#{proBean.classificacoes}" noSelectionValue="Selecione"/>
+                </p:selectOneMenu>
+                <p:commandButton value="Gravar" actionListener="#{proBean.salvar}" update="info:tabProc" />
             </p:panelGrid>
         </h:form>
     </p:panel>

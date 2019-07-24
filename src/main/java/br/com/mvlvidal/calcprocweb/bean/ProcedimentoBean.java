@@ -62,6 +62,12 @@ public class ProcedimentoBean implements Serializable {
         }
 
     }
+    
+    public void editar(Long id){
+        if(id != 0 || id != null){
+            proc1 = procDao.find(id);
+        }
+    }
 
     public void calcularAMB() {
 
@@ -90,6 +96,7 @@ public class ProcedimentoBean implements Serializable {
             procedimentos = procDao.listar();
         }else{
             procedimentos = procDao.listar(tabela.getId());
+            //TODO Mensagem tabela sem procedimentos cadastrados
         }
         
         return "cad-procedimento";

@@ -25,7 +25,7 @@ public class TabelaConversor implements Converter {
             
             for (Tabela t: tabelas) {
                 if(t.getId().equals(cod)){
-                    tab.setId(cod);
+                    tab = t;
                 }
             }
             
@@ -36,12 +36,13 @@ public class TabelaConversor implements Converter {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-
-        if (value != null) {
+        
+        Tabela tabela = (Tabela)value;
+        
+        if (tabela != null) {  
             
-            Tabela tab = (Tabela) value;   
+            return tabela.getId().toString();
             
-            return String.valueOf(tab.getId());
         }
 
         return null;
