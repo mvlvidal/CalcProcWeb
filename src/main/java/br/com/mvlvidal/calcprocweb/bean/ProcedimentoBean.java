@@ -21,6 +21,7 @@ public class ProcedimentoBean implements Serializable {
     private List<Procedimento> procedimentos;  
     private List<String> classificacoes;
     private Tabela tabela;
+    private boolean edit = false;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -59,6 +60,7 @@ public class ProcedimentoBean implements Serializable {
         Procedimento proc2 = procDao.salvar(proc1);
 
         if (proc2 != null) {
+            this.edit = false;
             proc1 = proc2; 
             return "cad-procedimento";
         }
@@ -67,6 +69,7 @@ public class ProcedimentoBean implements Serializable {
     
     public String editar(Long id){
         if(id != 0 || id != null){
+            this.edit = true;
             proc1 = procDao.find(id);
             tabela = proc1.getTabela();
             return "cad-procedimento";
@@ -80,15 +83,6 @@ public class ProcedimentoBean implements Serializable {
             return "cad-procedimento";
         }
         return "";
-    }
-
-    public void calcularAMB() {
-
-        totalProc = proc1.getCh() * valCh;
-        totalFilme = proc1.getQtdFilme() * valFilme;
-
-        totalProc += totalFilme;
-
     }
 
     public List<String> carregaClassif() {
@@ -115,6 +109,9 @@ public class ProcedimentoBean implements Serializable {
         return "cad-procedimento";
     }
     
+    public void calcularProcedimento(){
+    
+    }
 
     //GETS e SETS
     public Procedimento getProc1() {
@@ -188,5 +185,9 @@ public class ProcedimentoBean implements Serializable {
     public void setTabela(Tabela tabela) {
         this.tabela = tabela;
     }
-    
+
+    public boolean isEdit() {
+        return edit;
+    }
+
 }
