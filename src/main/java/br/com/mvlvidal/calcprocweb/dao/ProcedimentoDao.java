@@ -24,4 +24,19 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements S
         return criteria.list();
     }
     
+    public float calcularAMB() {
+
+        return 0.0f;
+    }
+    
+    public float calcularCbhpm(){
+        
+        return 0.0f;
+    }
+   
+    public float calcularFilme(){
+    
+        return 0.0f;
+    }
+    
 }
