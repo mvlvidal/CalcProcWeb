@@ -53,20 +53,33 @@ public class ProcedimentoBean implements Serializable {
     }
 
     //MÉTODOS
-    public void salvar() {
-
-        Procedimento proc2 = proc1;
+    public String salvar() {
+        
+        proc1.setTabela(tabela);
+        Procedimento proc2 = procDao.salvar(proc1);
 
         if (proc2 != null) {
-            procDao.salvar(proc1);
+            proc1 = proc2; 
+            return "cad-procedimento";
         }
-
+        return "";
     }
     
-    public void editar(Long id){
+    public String editar(Long id){
         if(id != 0 || id != null){
             proc1 = procDao.find(id);
+            tabela = proc1.getTabela();
+            return "cad-procedimento";
         }
+        return "";
+    }
+    
+    public String excluir(Long id){
+        if(id != null || id != 0){
+            procDao.deletar(id);
+            return "cad-procedimento";
+        }
+        return "";
     }
 
     public void calcularAMB() {

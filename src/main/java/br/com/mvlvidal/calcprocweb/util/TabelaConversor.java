@@ -14,21 +14,13 @@ public class TabelaConversor implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         
-        if (value != null || !value.equals("")) {
+        if (value != null || value.contains(null)) {
             
             Long cod = Long.parseLong(value);
             
             TabelaDao tabDao = new TabelaDao();           
-            Tabela tab = new Tabela();
-            
-            List<Tabela> tabelas = tabDao.listar();
-            
-            for (Tabela t: tabelas) {
-                if(t.getId().equals(cod)){
-                    tab = t;
-                }
-            }
-            
+            Tabela tab = tabDao.find(cod);
+           
             return tab;
         }
         return null;
@@ -41,11 +33,11 @@ public class TabelaConversor implements Converter {
         
         if (tabela != null) {  
             
-            return tabela.getId().toString();
+            return String.valueOf(tabela.getId());
             
+        }else{
+            return "";
         }
-
-        return null;
     }
 
 }
