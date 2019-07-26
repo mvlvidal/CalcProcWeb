@@ -33,6 +33,7 @@ public class PorteBean implements Serializable {
     }
 
     public String salvar() {
+        
         por1.setEdicao(edicao);
         Porte por2 = porDao.salvar(por1);
 
