@@ -7,13 +7,16 @@
              template="WEB-INF/template.xhtml">
 
     <ui:define name="title">CalcProc - Edição</ui:define>
-    
-    <h:form>
+
+    <h:form id="cadEdi">
         <p:panel header="Cadastro de Edição">
-            <p:panelGrid columns="3">
+            <p:panelGrid columns="6">
+                <p:outputLabel value="ID:"/>
+                <p:inputText value="#{ediBean.edi1.id}" readonly="true"/>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{ediBean.edi1.nome}" />
-                <p:commandButton value="Gravar" actionListener="#{ediBean.salvar}" update="@form"/>
+                <p:commandButton value="Gravar" actionListener="#{ediBean.salvar}" update="cadEdi"/>
+                <p:button value="Cancelar" outcome="cad-edicao" rendered="#{ediBean.editar == true}"/>
             </p:panelGrid>
             <p:separator />
 
@@ -26,16 +29,24 @@
                 </p:column>
                 <p:column headerText="Ação">
                     <center>
-                        <p:commandLink>
+                        <p:commandLink actionListener="#{ediBean.editar(edicao.id)}" update="cadEdi">
                             <h:graphicImage url="/img/edit_icon.png" />
                         </p:commandLink>
-                        <p:commandLink>
+                        <p:commandLink actionListener="#{ediBean.excluir(edicao.id)}" update="cadEdi">
                             <h:graphicImage url="/img/delete_icon.png" />
+                            <p:confirm header="Excluir Edição" message="Deseja realmente excluir edição de ID #{procedimento.id}?" icon="pi pi-exclamation-triangle"/>
                         </p:commandLink>
                     </center>
                 </p:column>
             </p:dataTable>
         </p:panel>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <center>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update="cadEdi"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+            </center>
+        </p:confirmDialog>    
     </h:form>
 
 </ui:decorate>

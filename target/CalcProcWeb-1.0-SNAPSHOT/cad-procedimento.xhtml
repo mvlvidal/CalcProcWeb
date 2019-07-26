@@ -122,7 +122,7 @@
                     <f:selectItems value="#{proBean.classificacoes}" noSelectionValue="Selecione"/>
                 </p:selectOneMenu>
                 <p:commandButton value="Gravar" actionListener="#{proBean.salvar}" update="cadProc" />
-                <p:button value="Cancelar" outcome="cad-procedimento" rendered="#{proBean.edit == true}"/>
+                <p:button value="Cancelar" outcome="cad-procedimento" rendered="#{proBean.editar == true}"/>
             </p:panelGrid>
         </h:form>
     </p:panel>
