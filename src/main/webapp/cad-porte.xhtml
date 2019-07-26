@@ -1,33 +1,37 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      template="WEB-INF/template.xhtml"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="WEB-INF/template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <ui:define name="title">CalcProc - Porte Médico</ui:define>
-    
-    <h:form>
+
+    <h:form id="cadPorte">
         <p:panel header="Cadastro de Porte Médico">
-            <p:panelGrid columns="7">
+            <p:panelGrid columns="3">
+                <p:outputLabel value="Edição:"/>
+                <p:selectOneMenu value="#{porBean.edicao.id}">
+                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/>
+                    <f:selectItems value="#{ediBean.edicoes}" var="edic" itemLabel="#{edic.nome}" itemValue="#{edic.id}"/>                    
+                </p:selectOneMenu>
+                 <p:commandButton value="Selecionar" actionListener="#{porBean.filtrarEdicao}" update="tabPorte" /> 
+            </p:panelGrid>
+            <p:panelGrid columns="8">
+                <p:outputLabel value="ID:"/>
+                <p:inputText value="#{porBean.por1.id}" readonly="true"/>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{porBean.por1.nome}"/>
                 <p:outputLabel value="Preço:"/>
-                <p:inputText value="#{porBean.por1.preco}"/>
-                <p:outputLabel value="Edição:"/>
-                <p:selectOneMenu value="#{porBean.por1.edicao}" converter="edicaoConversor">
-                    <f:selectItem itemLabel="Selecione" />
-                    <f:selectItems value="#{ediBean.edicoes}" var="edic" itemLabel="#{edic.nome}" itemValue="#{edic}"/>
-                    
-                </p:selectOneMenu>
-                <p:commandButton value="Gravar" action="#{porBean.salvar}"/>
-                
+                <p:inputText value="#{porBean.por1.preco}"/>               
+                <p:commandButton value="Gravar" action="#{porBean.salvar}" update="cadPorte"/>
+                <p:button value="Cancelar" outcome="cad-porte" rendered="#{porBean.editar == true}"/>                
             </p:panelGrid>
-            
+
             <p:separator />
-            
+
             <p:dataTable var="porte" value="#{porBean.portes}" id="tabPorte">
                 <p:column headerText="#">
                     <h:outputText value="#{porte.id}" />
@@ -35,24 +39,30 @@
                 <p:column headerText="Nome">
                     <h:outputText value="#{porte.nome}" />
                 </p:column>
-                <p:column headerText="Edição">
-                    <h:outputText value="#{porte.edicao.nome}" />
-                </p:column>
                 <p:column headerText="Preço">
                     <h:outputText value="#{porte.preco}" />
                 </p:column>
                 <p:column headerText="Ação">
                     <center>
-                        <p:commandLink>
+                        <p:commandLink actionListener="#{porBean.editar(porte.id)}" update="cadPorte">
                             <h:graphicImage url="/img/edit_icon.png" />
                         </p:commandLink>
-                        <p:commandLink>
+                        <p:commandLink actionListener="#{porBean.excluir(porte.id)}">
                             <h:graphicImage url="/img/delete_icon.png" />
+                            <p:confirm header="Excluir Porte" message="Deseja realmente excluir porte de ID #{porte.id}?" icon="pi pi-exclamation-triangle"/>
+                            <p:ajax update="cadPorte" />
                         </p:commandLink>
                     </center>
                 </p:column>
             </p:dataTable>
         </p:panel>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <center>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+            </center>
+        </p:confirmDialog>   
     </h:form>
 </ui:decorate>
 
