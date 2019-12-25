@@ -1,0 +1,34 @@
+Inserir o Resource a seguir dentro da tag <GlobalNamingResources></GlobalNamingResources> no arquivo SERVER.XML
+que encontra-se na pasta CONF do TOMCAT
+
+Inserir tambem o JAR do JTDS na pasta LIB do TOMCAT
+
+<Resource 
+		
+	name="jdbc/cProcDataSource" 
+		
+	global="jdbc/cProcDataSource"
+		
+	auth="Container" 
+		
+	type="javax.sql.DataSource" 
+		
+	driverClassName="net.sourceforge.jtds.jdbc.Driver" 
+        
+	url="jdbc:jtds:sqlserver://localhost:1433/procdados"
+		
+	username="sa" 
+		
+	password="123456" 
+      
+		
+	validationQuery="select 1"
+		
+	maxActive="100" 
+		
+	maxIdle="20" 
+		
+	minIdle="5" 
+		
+	maxWait="10000"
+/>	

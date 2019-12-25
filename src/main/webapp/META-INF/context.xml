@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/CalcProcWeb"/>
+<Context path="/CalcProcWeb">
+  <ResourceLink auth="Container" global="jdbc/cProcDataSource" name="jdbc/cProcDataSource" type="javax.sql.DataSource"/>
+</Context>
