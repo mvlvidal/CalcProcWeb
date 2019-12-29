@@ -9,7 +9,7 @@
 
     <ui:define name="title">CalcProc - Tabela</ui:define>
 
-    #{tabBean.editar()}
+    #{tabelaProcedimentosBean.editar()}
 
     <h:form id="formCadTabela">
 
@@ -24,14 +24,14 @@
             </f:facet>
             <p:panelGrid columns="8" id="painel"> 
                 <p:outputLabel value="Tipo:" />
-                <p:selectOneMenu value="#{tabBean.tab1.tipoTab}">
+                <p:selectOneMenu value="#{tabelaProcedimentosBean.tab1.tipoTab}">
                     <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
-                    <f:selectItems value="#{tabBean.tiposTabela}"/>  
+                    <f:selectItems value="#{tabelaProcedimentosBean.tiposTabela}"/>  
                 </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
-                <p:inputText value="#{tabBean.tab1.nome}"/>
-                <p:commandButton value="Gravar" actionListener="#{tabBean.salvar}"/>
-                <p:button value="Cancelar" outcome="tabela_pesquisa" rendered="#{tabBean.editar == true}"/>
+                <p:inputText value="#{tabelaProcedimentosBean.tab1.nome}"/>
+                <p:commandButton value="Gravar" actionListener="#{tabelaProcedimentosBean.salvar}"/>
+                <p:button value="Cancelar" outcome="tabela_pesquisa" rendered="#{tabelaProcedimentosBean.editar == true}"/>
             </p:panelGrid>
         </p:panel>   
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">

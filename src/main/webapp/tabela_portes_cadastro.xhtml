@@ -6,35 +6,35 @@
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
              template="WEB-INF/template.xhtml">
 
-    <ui:define name="title">CalcProc - Edição</ui:define>
+    <ui:define name="title">CalcProc - Tabelas Portes</ui:define>
 
-    <h:form id="cadEdi">
-        <p:panel header="Cadastro de Edição">
+    <h:form id="cadTabelasPortes">
+        <p:panel header="Cadastro de TabelasPortesção">
             <p:panelGrid columns="6">
                 <p:outputLabel value="ID:"/>
-                <p:inputText value="#{ediBean.edi1.id}" readonly="true"/>
+                <p:inputText value="#{tabelaPortesBean.edi1.id}" readonly="true"/>
                 <p:outputLabel value="Nome:"/>
-                <p:inputText value="#{ediBean.edi1.nome}" />
-                <p:commandButton value="Gravar" actionListener="#{ediBean.salvar}" update="cadEdi"/>
-                <p:button value="Cancelar" outcome="cad-edicao" rendered="#{ediBean.editar == true}"/>
+                <p:inputText value="#{tabelaPortesBean.edi1.nome}" />
+                <p:commandButton value="Gravar" actionListener="#{tabelaPortesBean.salvar}" update="cadTabelasPortes"/>
+                <p:button value="Cancelar" outcome="cad-tabelaPortes" rendered="#{tabelaPortesBean.editar == true}"/>
             </p:panelGrid>
             <p:separator />
 
-            <p:dataTable var="edicao" value="#{ediBean.edicoes}" id="tabEdicao">
+            <p:dataTable var="tabelaPortes" value="#{tabelaPortesBean.tabelasPortes}" id="tabTabelasPortescao">
                 <p:column headerText="#">
-                    <h:outputText value="#{edicao.id}" />
+                    <h:outputText value="#{tabelaPortes.id}" />
                 </p:column>
                 <p:column headerText="Nome">
-                    <h:outputText value="#{edicao.nome}" />
+                    <h:outputText value="#{tabelaPortes.nome}" />
                 </p:column>
                 <p:column headerText="Ação">
                     <center>
-                        <p:commandLink actionListener="#{ediBean.editar(edicao.id)}" update="cadEdi">
+                        <p:commandLink actionListener="#{tabelaPortesBean.editar(tabelaPortes.id)}" update="cadTabelasPortes">
                             <h:graphicImage url="/img/edit_icon.png" />
                         </p:commandLink>
-                        <p:commandLink actionListener="#{ediBean.excluir(edicao.id)}" update="cadEdi">
+                        <p:commandLink actionListener="#{tabelaPortesBean.excluir(tabelaPortes.id)}" update="cadTabelasPortes">
                             <h:graphicImage url="/img/delete_icon.png" />
-                            <p:confirm header="Excluir Edição" message="Deseja realmente excluir edição de ID #{procedimento.id}?" icon="pi pi-exclamation-triangle"/>
+                            <p:confirm header="Excluir TabelasPortesção" message="Deseja realmente excluir edição de ID #{procedimento.id}?" icon="pi pi-exclamation-triangle"/>
                         </p:commandLink>
                     </center>
                 </p:column>
@@ -43,7 +43,7 @@
 
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
             <center>
-                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update="cadEdi"/>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update="cadTabelasPortes"/>
                 <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
             </center>
         </p:confirmDialog>    

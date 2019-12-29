@@ -1,6 +1,7 @@
 package br.com.mvlvidal.calcprocweb.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.Table;
 @Table(name="porte")
 public class Porte implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +30,9 @@ public class Porte implements Serializable {
     @Column(name="preco")
     private float preco;
     
-    @JoinColumn(name = "idEdicao")
+    @JoinColumn(name = "idTabelaPortes")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)       
-    private Edicao edicao;
+    private TabelaPortes tabelaPortes;
 
     public Long getId() {
         return id;
@@ -55,12 +58,45 @@ public class Porte implements Serializable {
         this.preco = preco;
     }
 
-    public Edicao getEdicao() {
-        return edicao;
+    public TabelaPortes getTabelaPortes() {
+        return tabelaPortes;
     }
 
-    public void setEdicao(Edicao edicao) {
-        this.edicao = edicao;
+    public void setTabelaPortes(TabelaPortes tabelaPortes) {
+        this.tabelaPortes = tabelaPortes;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.nome);
+        hash = 89 * hash + Float.floatToIntBits(this.preco);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Porte other = (Porte) obj;
+        if (Float.floatToIntBits(this.preco) != Float.floatToIntBits(other.preco)) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
     

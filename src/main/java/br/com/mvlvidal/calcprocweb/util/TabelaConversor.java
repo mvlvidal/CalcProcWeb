@@ -1,7 +1,7 @@
 package br.com.mvlvidal.calcprocweb.util;
 
 import br.com.mvlvidal.calcprocweb.dao.TabelaDao;
-import br.com.mvlvidal.calcprocweb.model.Tabela;
+import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.component.UIComponent;
@@ -9,13 +9,13 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(forClass = Tabela.class, value = "tabelaConversor")
+@FacesConverter(forClass = TabelaProcedimentos.class, value = "tabelaConversor")
 public class TabelaConversor implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 
-        Tabela tabela;
+        TabelaProcedimentos tabela;
 
         if (value != null) {
 
@@ -33,7 +33,7 @@ public class TabelaConversor implements Converter {
     @Override
     public String getAsString(FacesContext fc, UIComponent uic, Object objeto) {
         if (objeto != null) {
-            Tabela tabela = (Tabela) objeto;
+            TabelaProcedimentos tabela = (TabelaProcedimentos) objeto;
             return tabela.getId().toString();
         }
 

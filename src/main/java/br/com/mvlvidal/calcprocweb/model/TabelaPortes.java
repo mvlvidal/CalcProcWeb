@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.mvlvidal.calcprocweb.model;
 
 import java.io.Serializable;
@@ -13,24 +18,29 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="tabela")
-public class Tabela implements Serializable {
+/**
+ *
+ * @author mvlvidal
+ */
 
+@Entity
+@Table(name = "tabelaPortes")
+public class TabelaPortes implements Serializable{
+    
     private static final long serialVersionUID = 1L;
     
-    @Id @Column(name="id")
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name="nome", length = 40)
+    @Column(name = "nome")
     private String nome;
     
-    @Column(name="tipoTab")   
-    private String tipoTab;
+    @OneToMany(mappedBy = "tabelaPortes", cascade = CascadeType.MERGE, targetEntity = Convenio.class, fetch = FetchType.LAZY)
+    private List<Convenio> convenios;
     
-    @OneToMany(mappedBy = "tabela", targetEntity = Procedimento.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    private List<Procedimento> procedimentos;
+    @OneToMany(mappedBy = "tabelaPortes", cascade = CascadeType.MERGE, targetEntity = Porte.class, fetch = FetchType.LAZY)
+    private List<Porte> portes;
 
     public Long getId() {
         return id;
@@ -48,28 +58,27 @@ public class Tabela implements Serializable {
         this.nome = nome;
     }
 
-    public String getTipoTab() {
-        return tipoTab;
+    public List<Convenio> getConvenios() {
+        return convenios;
     }
 
-    public void setTipoTab(String tipoTab) {
-        this.tipoTab = tipoTab;
+    public void setConvenios(List<Convenio> convenios) {
+        this.convenios = convenios;
     }
 
-    public List<Procedimento> getProcedimentos() {
-        return procedimentos;
+    public List<Porte> getPortes() {
+        return portes;
     }
 
-    public void setProcedimentos(List<Procedimento> procedimentos) {
-        this.procedimentos = procedimentos;
-    } 
+    public void setPortes(List<Porte> portes) {
+        this.portes = portes;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.nome);
-        hash = 97 * hash + Objects.hashCode(this.tipoTab);
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.nome);
         return hash;
     }
 
@@ -84,11 +93,8 @@ public class Tabela implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Tabela other = (Tabela) obj;
+        final TabelaPortes other = (TabelaPortes) obj;
         if (!Objects.equals(this.nome, other.nome)) {
-            return false;
-        }
-        if (!Objects.equals(this.tipoTab, other.tipoTab)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
@@ -96,6 +102,5 @@ public class Tabela implements Serializable {
         }
         return true;
     }
-    
-    
+        
 }

@@ -2,7 +2,7 @@ package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
-import br.com.mvlvidal.calcprocweb.model.Tabela;
+import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class ProcedimentoBean implements Serializable {
     private ProcedimentoDao procDao;
     private List<Procedimento> procedimentos;
     private List<String> classificacoes;
-    private Tabela tabela;
+    private TabelaProcedimentos tabela;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -45,7 +45,7 @@ public class ProcedimentoBean implements Serializable {
         listar();
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
-        tabela = new Tabela();
+        tabela = new TabelaProcedimentos();
         
         //VALORES PADRÃO
         proc1.setAux(0);
@@ -102,7 +102,7 @@ public class ProcedimentoBean implements Serializable {
 
         procedimentos = new ArrayList<>();
         
-        Tabela tab2 = tabela;
+        TabelaProcedimentos tab2 = tabela;
 
         if (tab2.getId() == 0) {
             listar();
@@ -189,11 +189,11 @@ public class ProcedimentoBean implements Serializable {
         this.uco = uco;
     }
 
-    public Tabela getTabela() {
+    public TabelaProcedimentos getTabela() {
         return tabela;
     }
 
-    public void setTabela(Tabela tabela) {
+    public void setTabela(TabelaProcedimentos tabela) {
         this.tabela = tabela;
     }
 

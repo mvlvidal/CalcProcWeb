@@ -16,17 +16,17 @@
                 <p:button icon="pi pi-plus" outcome="tabela_cadastro" styleClass="btnNovo" title="Cadastrar nova tabela"/>
             </f:facet>
             <p:panelGrid columns="8" id="painel">               
-                <p:outputLabel value="ID:" rendered="#{tabBean.tab1.id != null}"/>
-                <p:inputText value="#{tabBean.tab1.id}" required="true" rendered="#{tabBean.tab1.id != null}" readonly="true"/>
+                <p:outputLabel value="ID:" rendered="#{tabelaProcedimentosBean.tab1.id != null}"/>
+                <p:inputText value="#{tabelaProcedimentosBean.tab1.id}" required="true" rendered="#{tabelaProcedimentosBean.tab1.id != null}" readonly="true"/>
                 <p:outputLabel value="Nome:"/>
-                <p:inputText value="#{tabBean.tab1.nome}"/>
+                <p:inputText value="#{tabelaProcedimentosBean.tab1.nome}"/>
                 <p:commandButton icon="pi pi-search" update="formCadTabela:tabTabelas"/>
-                <p:button value="Cancelar" outcome="cad-tabela" rendered="#{tabBean.tab1.id != null}"/>
+                <p:button value="Cancelar" outcome="cad-tabela" rendered="#{tabelaProcedimentosBean.tab1.id != null}"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabelas" rowKey="#{tabela.id}" style="text-align: center;">
+            <p:dataTable var="tabela" value="#{tabelaProcedimentosBean.tabelas}" id="tabTabelas" rowKey="#{tabela.id}" style="text-align: center;">
                 <p:autoUpdate />
                 <p:column headerText="Editar">
                     <p:link outcome="tabela_cadastro">
@@ -43,7 +43,7 @@
                 <p:column headerText="Excluir">
                     <center>
 
-                        <p:commandLink actionListener="#{tabBean.excluir(tabela.id)}" update="tabTabelas">                           
+                        <p:commandLink actionListener="#{tabelaProcedimentosBean.excluir(tabela.id)}" update="tabTabelas">                           
                             <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
                             <p:confirm header="Excluir Tabela" message="Deseja realmente excluir a tabela de ID #{tabela.id}?" icon="pi pi-exclamation-triangle"/>
                         </p:commandLink>

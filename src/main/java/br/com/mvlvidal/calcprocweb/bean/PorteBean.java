@@ -1,7 +1,7 @@
 package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.PorteDao;
-import br.com.mvlvidal.calcprocweb.model.Edicao;
+import br.com.mvlvidal.calcprocweb.model.TabelaPortes;
 import br.com.mvlvidal.calcprocweb.model.Porte;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class PorteBean implements Serializable {
     private PorteDao porDao;
     private List<Porte> portes;
     private boolean editar;
-    private Edicao edicao;
+    private TabelaPortes tabelaPortes;
 
     @PostConstruct
     public void init() {
@@ -27,20 +27,20 @@ public class PorteBean implements Serializable {
         porDao = new PorteDao();
         portes = new ArrayList<>();
         portes = porDao.listar();
-        edicao = new Edicao();
+        tabelaPortes = new TabelaPortes();
         this.editar = false;
 
     }
 
     public String salvar() {
         
-        por1.setEdicao(edicao);
+        por1.setTabelaPortes(tabelaPortes);
         Porte por2 = porDao.salvar(por1);
 
         if (por2 != null) {           
             por1 = por2;
             this.editar = false;
-            filtrarEdicao();
+            filtrarTabelaPortes();
             return "cad-porte";
         } else {
             return "cad-porte";
@@ -52,7 +52,7 @@ public class PorteBean implements Serializable {
         if (id != null || id != 0) {
             this.editar = true;
             por1 = porDao.find(id);
-            edicao = por1.getEdicao();
+            tabelaPortes = por1.getTabelaPortes();
             return "cad-porte";
         } else {
             return "";
@@ -62,21 +62,21 @@ public class PorteBean implements Serializable {
     public String excluir(Long id) {
         if (id != null || id != 0) {
             por1 = porDao.deletar(id);
-            filtrarEdicao();
+            filtrarTabelaPortes();
             return "cad-porte";
         } else {
             return "";
         }
     }
 
-    public String filtrarEdicao() {
+    public String filtrarTabelaPortes() {
 
-        Edicao edi = edicao;
+        TabelaPortes edi = tabelaPortes;
         if (edi.getId() == 0) {
             portes = porDao.listar();
             return "cad-porte";
         } else {
-            portes = porDao.listar(edicao.getId());
+            portes = porDao.listar(tabelaPortes.getId());
             return "cad-porte";
         }
     }
@@ -101,12 +101,12 @@ public class PorteBean implements Serializable {
         return editar;
     }
 
-    public Edicao getEdicao() {
-        return edicao;
+    public TabelaPortes getTabelaPortes() {
+        return tabelaPortes;
     }
 
-    public void setEdicao(Edicao edicao) {
-        this.edicao = edicao;
+    public void setTabelaPortes(TabelaPortes tabelaPortes) {
+        this.tabelaPortes = tabelaPortes;
     }
 
 }

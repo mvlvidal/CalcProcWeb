@@ -1,7 +1,7 @@
 package br.com.mvlvidal.calcprocweb.bean;
 
-import br.com.mvlvidal.calcprocweb.dao.EdicaoDao;
-import br.com.mvlvidal.calcprocweb.model.Edicao;
+import br.com.mvlvidal.calcprocweb.dao.TabelaPortesDao;
+import br.com.mvlvidal.calcprocweb.model.TabelaPortes;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,34 +10,34 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 @ViewScoped
-@ManagedBean(name = "ediBean")
-public class EdicaoBean implements Serializable{
+@ManagedBean(name = "tabelaPortesBean")
+public class TabelaPortesBean implements Serializable{
     
-    private Edicao edi1;
-    private EdicaoDao ediDao;
-    private List<Edicao> edicoes;
+    private TabelaPortes edi1;
+    private TabelaPortesDao ediDao;
+    private List<TabelaPortes> tabelasPortes;
     private boolean editar;
     
     @PostConstruct
     public void init(){
         
-        edi1 = new Edicao();
-        ediDao = new EdicaoDao();
-        edicoes = new ArrayList<>();
-        edicoes = ediDao.listar();
+        edi1 = new TabelaPortes();
+        ediDao = new TabelaPortesDao();
+        tabelasPortes = new ArrayList<>();
+        tabelasPortes = ediDao.listar();
         this.editar = false;
         
     }
     
     public String salvar(){
         
-        Edicao edi2 = ediDao.salvar(edi1);
+        TabelaPortes edi2 = ediDao.salvar(edi1);
         
         if(edi2 != null){
             edi1 = edi2;
             this.editar = false;
-            edicoes = ediDao.listar();
-            return "cad-edicao";
+            tabelasPortes = ediDao.listar();
+            return "cad-tabelaPortes";
         }else{
             return "";
         }
@@ -49,7 +49,7 @@ public class EdicaoBean implements Serializable{
         if(id != null || id != 0){
             this.editar = true;
             edi1 = ediDao.find(id);            
-            return "cad-edicao";
+            return "cad-tabelaPortes";
         }else{
             return "";
         }
@@ -59,27 +59,27 @@ public class EdicaoBean implements Serializable{
         
         if(id != null || id != 0){
             ediDao.deletar(id);
-            edicoes = ediDao.listar();
-            return "cad-edicao";
+            tabelasPortes = ediDao.listar();
+            return "cad-tabelaPortes";
         }else{
             return "";
         }
     }
 
-    public Edicao getEdi1() {
+    public TabelaPortes getEdi1() {
         return edi1;
     }
 
-    public void setEdi1(Edicao edi1) {
+    public void setEdi1(TabelaPortes edi1) {
         this.edi1 = edi1;
     }
 
-    public List<Edicao> getEdicoes() {
-        return edicoes;
+    public List<TabelaPortes> getTabelasPortes() {
+        return tabelasPortes;
     }
 
-    public void setEdicoes(List<Edicao> edicoes) {
-        this.edicoes = edicoes;
+    public void setTabelasPortes(List<TabelaPortes> tabelasPortes) {
+        this.tabelasPortes = tabelasPortes;
     }
 
     public boolean isEditar() {

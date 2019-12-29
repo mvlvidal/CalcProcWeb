@@ -60,10 +60,11 @@ Contributor(s):
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
     
-        <mapping class="br.com.mvlvidal.calcprocweb.model.Tabela" />
+        <mapping class="br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos" />
         <mapping class="br.com.mvlvidal.calcprocweb.model.Porte" />
+        <mapping class="br.com.mvlvidal.calcprocweb.model.Convenio" />
         <mapping class="br.com.mvlvidal.calcprocweb.model.Procedimento" />
-        <mapping class="br.com.mvlvidal.calcprocweb.model.Edicao" />
+        <mapping class="br.com.mvlvidal.calcprocweb.model.TabelaPortes" />
     
     </session-factory>
 </hibernate-configuration>

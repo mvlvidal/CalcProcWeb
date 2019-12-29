@@ -54,7 +54,7 @@ public class Procedimento implements Serializable {
 
     @JoinColumn(name = "idTabela")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private Tabela tabela;
+    private TabelaProcedimentos tabela;
 
     public Long getId() {
         return id;
@@ -144,11 +144,11 @@ public class Procedimento implements Serializable {
         this.classificacao = classificacao;
     }
 
-    public Tabela getTabela() {
+    public TabelaProcedimentos getTabela() {
         return tabela;
     }
 
-    public void setTabela(Tabela tabela) {
+    public void setTabela(TabelaProcedimentos tabela) {
         this.tabela = tabela;
     }
 
