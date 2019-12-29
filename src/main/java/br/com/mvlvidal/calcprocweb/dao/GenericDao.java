@@ -87,7 +87,7 @@ public abstract class GenericDao<T, Type extends Serializable> {
 
     public List<T> listar() {
 
-        Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
+        Session sessao = HibernateUtil.getSession();
 
         Criteria criteria = sessao.createCriteria(persistenceClass);
 

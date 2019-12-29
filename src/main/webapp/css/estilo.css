@@ -1,0 +1,12 @@
+body{
+    background-color:#000;
+}
+
+.btnNovo{
+    float:right;
+}
+
+.tituloPrincipal{
+    float:left;
+    padding:5px;
+}

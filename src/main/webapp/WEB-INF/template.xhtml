@@ -6,13 +6,10 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>       
         <title><ui:insert name="title" /></title>
-        <style type="text/css">
-            body{
-                background-color:#000;
-            }
-        </style>
-        
+
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+        <link rel="stylesheet" type="text/css"  href="#{facesContext.externalContext.requestContextPath}/css/estilo.css" media="screen"/>
+
     </h:head>
     <h:body>
         <div id="content" style="max-width: 90%; margin:0 auto;">
@@ -21,10 +18,10 @@
                 <p:menubar>
                     <p:menuitem value="Início" outcome="index" icon="pi pi-home"/>
                     <p:submenu label="Cadastros" icon="pi pi-tags">
-                        <p:menuitem value="Edição" outcome="cad-edicao" icon="pi pi-angle-double-right"/>
-                        <p:menuitem value="Tabela" outcome="cad-tabela" icon="pi pi-angle-double-right"/>
-                        <p:menuitem value="Porte" outcome="cad-porte" icon="pi pi-angle-double-right"/>
-                        <p:menuitem value="Procedimento" outcome="cad-procedimento" icon="pi pi-angle-double-right"/>
+                        <p:menuitem value="Edição" outcome="edicao_pesquisa" icon="pi pi-angle-double-right"/>
+                        <p:menuitem value="Tabela" outcome="tabela_pesquisa" icon="pi pi-angle-double-right"/>
+                        <p:menuitem value="Porte" outcome="porte_pesquisa" icon="pi pi-angle-double-right"/>
+                        <p:menuitem value="Procedimento" outcome="procedimento_pesquisa" icon="pi pi-angle-double-right"/>
                     </p:submenu>
                 </p:menubar>
                 <!-- CONTEUDO -->

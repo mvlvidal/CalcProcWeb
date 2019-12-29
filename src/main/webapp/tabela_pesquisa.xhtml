@@ -10,27 +10,29 @@
     <ui:define name="title">CalcProc - Tabela</ui:define>
 
     <h:form id="formCadTabela">
-        <p:panel header="Cadastro de Tabela">
-            <p:panelGrid columns="8" id="painel"> 
+        <p:panel>
+            <f:facet name="header">
+                <h:outputLabel value="Pesquisa de Tabelas" styleClass="tituloPrincipal"/>
+                <p:button icon="pi pi-plus" outcome="tabela_cadastro" styleClass="btnNovo" title="Cadastrar nova tabela"/>
+            </f:facet>
+            <p:panelGrid columns="8" id="painel">               
                 <p:outputLabel value="ID:" rendered="#{tabBean.tab1.id != null}"/>
                 <p:inputText value="#{tabBean.tab1.id}" required="true" rendered="#{tabBean.tab1.id != null}" readonly="true"/>
-                <p:outputLabel value="Tipo:" />
-                <p:selectOneMenu value="#{tabBean.tab1.tipoTab}">
-                    <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>                    
-                    <f:selectItems value="#{tabBean.tiposTabela}"/>  
-                </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{tabBean.tab1.nome}"/>
-                <p:commandButton value="Gravar" actionListener="#{tabBean.salvar}" update="formCadTabela:tabTabelas"/>
+                <p:commandButton icon="pi pi-search" update="formCadTabela:tabTabelas"/>
                 <p:button value="Cancelar" outcome="cad-tabela" rendered="#{tabBean.tab1.id != null}"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabelas" rowKey="#{tabela.id}">
+            <p:dataTable var="tabela" value="#{tabBean.tabelas}" id="tabTabelas" rowKey="#{tabela.id}" style="text-align: center;">
                 <p:autoUpdate />
-                <p:column headerText="#">
-                    <h:outputText value="#{tabela.id}"/>
+                <p:column headerText="Editar">
+                    <p:link outcome="tabela_cadastro">
+                        <i class="pi pi-pencil" style="font-size: 2em"></i> 
+                        <f:param name="id" value="#{tabela.id}"/>
+                    </p:link>
                 </p:column>
                 <p:column headerText="Nome">
                     <h:outputText value="#{tabela.nome}" />
@@ -38,11 +40,9 @@
                 <p:column headerText="Tipo Tabela">
                     <h:outputText value="#{tabela.tipoTab}" />
                 </p:column>
-                <p:column headerText="Ação">
+                <p:column headerText="Excluir">
                     <center>
-                        <p:commandLink action="#{tabBean.editar(tabela.id)}" type="button" update="@all" >
-                            <h:graphicImage url="/img/edit_icon.png" alt="Editar"/>
-                        </p:commandLink>
+
                         <p:commandLink actionListener="#{tabBean.excluir(tabela.id)}" update="tabTabelas">                           
                             <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
                             <p:confirm header="Excluir Tabela" message="Deseja realmente excluir a tabela de ID #{tabela.id}?" icon="pi pi-exclamation-triangle"/>

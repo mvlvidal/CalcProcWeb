@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 @ViewScoped
 @ManagedBean(name="tabBean")
@@ -19,6 +21,7 @@ public class TabelaBean implements Serializable{
     private TabelaDao tabDao;
     private List<Tabela> tabelas;
     private List<String> tiposTabela;
+    private boolean editar;
     
     @PostConstruct
     public void init(){
@@ -26,10 +29,10 @@ public class TabelaBean implements Serializable{
         tab1 = new Tabela();
         tabDao = new TabelaDao();
         tabelas = new ArrayList<>();
-        tabelas = tabDao.listar();
+        listar();
         tiposTabela = new ArrayList<>();
         tiposTabela = carregaTipos();
-        
+        this.editar = false;
     }
     
     public void salvar(){
@@ -38,12 +41,19 @@ public class TabelaBean implements Serializable{
         
         if (tab2 != null){
             tab1 = tab2;
+            listar();
         }
     }
     
-    public void editar(Long id){
+    public void editar(){
         
-        tab1 = tabDao.find(id);
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String id = request.getParameter("id");
+        
+        if(id != null){
+            tab1 = tabDao.find(Long.parseLong(id));
+            this.editar = true;
+        }
         
     }
     
@@ -71,6 +81,12 @@ public class TabelaBean implements Serializable{
         return lista;
     }
     
+    public void listar(){
+    
+        tabelas = tabDao.listar();
+        
+    }
+    
     public Tabela getTab1() {
         return tab1;
     }
@@ -93,6 +109,14 @@ public class TabelaBean implements Serializable{
 
     public void setTiposTabela(List<String> tiposTabela) {
         this.tiposTabela = tiposTabela;
+    }
+
+    public boolean getEditar() {
+        return editar;
+    }
+
+    public void setEditar(boolean editar) {
+        this.editar = editar;
     }
     
     

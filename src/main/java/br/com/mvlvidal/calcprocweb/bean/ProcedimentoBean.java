@@ -7,8 +7,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 @ViewScoped
 @ManagedBean(name = "proBean")
@@ -18,10 +21,9 @@ public class ProcedimentoBean implements Serializable {
 
     private Procedimento proc1;
     private ProcedimentoDao procDao;
-    private List<Procedimento> procedimentos;  
+    private List<Procedimento> procedimentos;
     private List<String> classificacoes;
     private Tabela tabela;
-    private boolean editar;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -40,12 +42,11 @@ public class ProcedimentoBean implements Serializable {
         proc1 = new Procedimento();
         procDao = new ProcedimentoDao();
         procedimentos = new ArrayList<>();
-        procedimentos = procDao.listar();
+        listar();
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
         tabela = new Tabela();
-        this.editar = false;
-
+        
         //VALORES PADRÃO
         proc1.setAux(0);
         proc1.setCo(0.0f);
@@ -55,32 +56,32 @@ public class ProcedimentoBean implements Serializable {
     }
 
     //MÉTODOS
-    public String salvar() {
+    public void salvar() {
         
-        proc1.setTabela(tabela);
         Procedimento proc2 = procDao.salvar(proc1);
 
-        if (proc2 != null) {          
-            proc1 = proc2; 
-            this.editar = false;
-            procedimentos = procDao.listar(proc1.getTabela().getId());
-            return "cad-procedimento";
+        if (proc2 != null) {
+            proc1 = proc2;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Procedimento salvo."));
+            procedimentos = new ArrayList<>();
+            listar();
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Erro ao tentar salvar o procedimento."));
         }
-        return "";
     }
-    
-    public String editar(Long id){
-        if(id != 0 || id != null){
-            this.editar = true;
-            proc1 = procDao.find(id);
-            tabela = proc1.getTabela();
-            return "cad-procedimento";
+
+    public void editar() {
+        
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String id = request.getParameter("id");
+        
+        if(id != null){
+            proc1 = procDao.find(Long.parseLong(id));
         }
-        return "";
     }
-    
-    public String excluir(Long id){
-        if(id != null || id != 0){
+
+    public String excluir(Long id) {
+        if (id != null || id != 0) {
             procDao.deletar(id);
             return "cad-procedimento";
         }
@@ -97,22 +98,30 @@ public class ProcedimentoBean implements Serializable {
         return lista;
     }
 
-    public String filtrarTabela() {            
-       
-        Tabela tab2 = tabela;
+    public String filtrarTabela() {
+
+        procedimentos = new ArrayList<>();
         
-        if(tab2.getId() == 0){            
-            procedimentos = procDao.listar();
-        }else{
+        Tabela tab2 = tabela;
+
+        if (tab2.getId() == 0) {
+            listar();
+        } else {
             procedimentos = procDao.listar(tabela.getId());
             //TODO Mensagem tabela sem procedimentos cadastrados
         }
-        
+
         return "cad-procedimento";
     }
     
-    public void calcularProcedimento(){
-    
+    public void listar(){
+     
+        procedimentos = procDao.listar();
+        
+    }
+
+    public void calcularProcedimento() {
+
     }
 
     //GETS e SETS
@@ -186,10 +195,6 @@ public class ProcedimentoBean implements Serializable {
 
     public void setTabela(Tabela tabela) {
         this.tabela = tabela;
-    }
-
-    public boolean isEditar() {
-        return editar;
     }
 
 }
