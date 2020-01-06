@@ -49,8 +49,8 @@ Sistema tem como objetivo principal, facilitar o calculo de procedimentos AMB e 
       <td>2.1</td>
     </tr>
     <tr>
-      <td>MySQL</td>
-      <td>5</td>
+      <td>SQL Server</td>
+      <td>2014</td>
     </tr>
   </tbody>
 </table>
