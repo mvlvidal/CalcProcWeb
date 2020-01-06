@@ -23,10 +23,16 @@ public class TabelaPortes extends AbstractModel {
 
     @Column(name = "nome")
     private String nome;
+    
+    @Column(name = "ativo")
+    private boolean ativo;
 
-    @OneToMany(mappedBy = "tabelaPortes", cascade = CascadeType.MERGE, targetEntity = Convenio.class, fetch = FetchType.LAZY)
-    private List<Convenio> convenios;
+    @OneToMany(mappedBy = "tabelaPortesHm", cascade = CascadeType.MERGE, targetEntity = Convenio.class, fetch = FetchType.LAZY)
+    private List<Convenio> conveniosHm;
 
+    @OneToMany(mappedBy = "tabelaPortesSadt", cascade = CascadeType.MERGE, targetEntity = Convenio.class, fetch = FetchType.LAZY)
+    private List<Convenio> conveniosSadt;
+    
     @OneToMany(mappedBy = "tabelaPortes", cascade = CascadeType.MERGE, targetEntity = Porte.class, fetch = FetchType.LAZY)
     private List<Porte> portes;
 
@@ -38,12 +44,28 @@ public class TabelaPortes extends AbstractModel {
         this.nome = nome;
     }
 
-    public List<Convenio> getConvenios() {
-        return convenios;
+    public boolean isAtivo() {
+        return ativo;
     }
 
-    public void setConvenios(List<Convenio> convenios) {
-        this.convenios = convenios;
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }    
+    
+    public List<Convenio> getConveniosHm() {
+        return conveniosHm;
+    }
+
+    public void setConveniosHm(List<Convenio> conveniosHm) {
+        this.conveniosHm = conveniosHm;
+    }
+
+    public List<Convenio> getConveniosSadt() {
+        return conveniosSadt;
+    }
+
+    public void setConveniosSadt(List<Convenio> conveniosSadt) {
+        this.conveniosSadt = conveniosSadt;
     }
 
     public List<Porte> getPortes() {
