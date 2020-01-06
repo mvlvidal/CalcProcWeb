@@ -9,8 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(forClass = TabelaProcedimentos.class, value = "tabelaConversor")
-public class TabelaConversor implements Converter {
+@FacesConverter(forClass = TabelaProcedimentos.class, value = "conversorTabelaProcedimentos")
+public class ConversorTabelaProcedimentos implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {

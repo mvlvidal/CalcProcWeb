@@ -14,55 +14,42 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="procedimento")
-public class Procedimento implements Serializable {
-  
-    @Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(name="codigo")
+@Table(name = "procedimento")
+public class Procedimento extends AbstractModel {
+
+    @Column(name = "codigo")
     private Long codigo;
-    
-    @Column(name="descricao")
+
+    @Column(name = "descricao")
     private String descricao;
-    
-    @Column(name="ch")
+
+    @Column(name = "ch")
     private float ch;
-    
-    @Column(name="co")
+
+    @Column(name = "co")
     private float co;
-    
-    @Column(name="aux")
+
+    @Column(name = "aux")
     private int aux;
-    
-    @Column(name="porteAnest")
+
+    @Column(name = "porteAnest")
     private int pAnestesico;
-    
-    @Column(name="percentPorte")
+
+    @Column(name = "percentPorte")
     private float percentPorte;
-    
-    @Column(name="porteMedic", length = 3)
+
+    @Column(name = "porteMedic", length = 3)
     private String pMedico;
-    
-    @Column(name="qtdFilme")
+
+    @Column(name = "qtdFilme")
     private float qtdFilme;
- 
-    @Column(name="classificacao")
+
+    @Column(name = "classificacao")
     private String classificacao;
 
     @JoinColumn(name = "idTabela")
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private TabelaProcedimentos tabela;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getCodigo() {
         return codigo;
@@ -118,7 +105,7 @@ public class Procedimento implements Serializable {
 
     public void setPercentPorte(float percentPorte) {
         this.percentPorte = percentPorte;
-    }      
+    }
 
     public String getpMedico() {
         return pMedico;
@@ -152,74 +139,4 @@ public class Procedimento implements Serializable {
         this.tabela = tabela;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.codigo);
-        hash = 37 * hash + Objects.hashCode(this.descricao);
-        hash = 37 * hash + Float.floatToIntBits(this.ch);
-        hash = 37 * hash + Float.floatToIntBits(this.co);
-        hash = 37 * hash + this.aux;
-        hash = 37 * hash + this.pAnestesico;
-        hash = 37 * hash + Float.floatToIntBits(this.percentPorte);
-        hash = 37 * hash + Objects.hashCode(this.pMedico);
-        hash = 37 * hash + Float.floatToIntBits(this.qtdFilme);
-        hash = 37 * hash + Objects.hashCode(this.classificacao);
-        hash = 37 * hash + Objects.hashCode(this.tabela);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Procedimento other = (Procedimento) obj;
-        if (Float.floatToIntBits(this.ch) != Float.floatToIntBits(other.ch)) {
-            return false;
-        }
-        if (Float.floatToIntBits(this.co) != Float.floatToIntBits(other.co)) {
-            return false;
-        }
-        if (this.aux != other.aux) {
-            return false;
-        }
-        if (this.pAnestesico != other.pAnestesico) {
-            return false;
-        }
-        if (Float.floatToIntBits(this.percentPorte) != Float.floatToIntBits(other.percentPorte)) {
-            return false;
-        }
-        if (Float.floatToIntBits(this.qtdFilme) != Float.floatToIntBits(other.qtdFilme)) {
-            return false;
-        }
-        if (!Objects.equals(this.descricao, other.descricao)) {
-            return false;
-        }
-        if (!Objects.equals(this.pMedico, other.pMedico)) {
-            return false;
-        }
-        if (!Objects.equals(this.classificacao, other.classificacao)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.codigo, other.codigo)) {
-            return false;
-        }
-        if (!Objects.equals(this.tabela, other.tabela)) {
-            return false;
-        }
-        return true;
-    }
-    
-    
 }
