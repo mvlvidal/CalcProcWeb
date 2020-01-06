@@ -4,37 +4,45 @@
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:p="http://primefaces.org/ui"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="WEB-INF/template.xhtml">
+             template="WEB-INF/template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="title">CalcProc - Edição</ui:define>
+    <ui:define name="title">CalcProc - Tabela de Portes</ui:define>
 
-    <h:form id="cadEdi">
-        <p:panel header="Cadastro de Edição">
-            <p:panelGrid columns="6">
-                <p:outputLabel value="ID:"/>
-                <p:inputText value="#{ediBean.edi1.id}" readonly="true"/>
+    <h:form id="formListaTabelasPortes">
+        <p:panel>
+            <f:facet name="header">
+                <h:outputLabel value="Pesquisa Tabela de Portes" styleClass="tituloPrincipal"/>
+                <p:button icon="pi pi-plus" value="Tabela de Portes" outcome="tabela_portes_cadastro" styleClass="btnNovo" title="Nova Tabela de Portes"/>
+            </f:facet>
+            <p:panelGrid columns="8" id="painel">               
                 <p:outputLabel value="Nome:"/>
-                <p:inputText value="#{ediBean.edi1.nome}" />
-                <p:commandButton value="Gravar" actionListener="#{ediBean.salvar}" update="cadEdi"/>
-                <p:button value="Cancelar" outcome="cad-edicao" rendered="#{ediBean.editar == true}"/>
+                <p:inputText value="#{tabelaPortesBean.tp1.nome}"/>
+                <p:commandButton icon="pi pi-search" update="formListaTabelasPortes:tabTabelasPortes"/>
+                <p:button value="Cancelar" outcome="cad-porte" rendered="#{tabelaPortesBean.tp1.id != null}"/>
             </p:panelGrid>
+
             <p:separator />
 
-            <p:dataTable var="edicao" value="#{ediBean.edicoes}" id="tabEdicao">
-                <p:column headerText="#">
-                    <h:outputText value="#{edicao.id}" />
+            <p:dataTable var="tabela_portes" value="#{tabelaPortesBean.tabelasPortes}" id="tabTabelasPortes" rowKey="#{tabela_portes.id}" style="text-align: center;">
+                <p:autoUpdate />
+                <p:column headerText="Editar">
+                    <p:link outcome="tabela_portes_cadastro">
+                        <i class="pi pi-pencil" style="font-size: 2em"></i> 
+                        <f:param name="id" value="#{tabela_portes.id}"/>
+                    </p:link>
                 </p:column>
                 <p:column headerText="Nome">
-                    <h:outputText value="#{edicao.nome}" />
+                    <h:outputText value="#{tabela_portes.nome}" />
                 </p:column>
-                <p:column headerText="Ação">
+                <p:column headerText="Situação">
+                    <h:outputText value="#{tabela_portes.ativo?'Ativo':'Inativo'}" />
+                </p:column>               
+                <p:column headerText="Excluir">
                     <center>
-                        <p:commandLink actionListener="#{ediBean.editar(edicao.id)}" update="cadEdi">
-                            <h:graphicImage url="/img/edit_icon.png" />
-                        </p:commandLink>
-                        <p:commandLink actionListener="#{ediBean.excluir(edicao.id)}" update="cadEdi">
-                            <h:graphicImage url="/img/delete_icon.png" />
-                            <p:confirm header="Excluir Edição" message="Deseja realmente excluir edição de ID #{procedimento.id}?" icon="pi pi-exclamation-triangle"/>
+                        <p:commandLink actionListener="#{tabelaPortesBean.excluir(porte.id)}" update="tabTabelasPortes">                           
+                            <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
+                            <p:confirm header="Excluir Tabela Portes" message="Deseja realmente excluir a tabela de portes selecionada?" icon="pi pi-exclamation-triangle"/>
                         </p:commandLink>
                     </center>
                 </p:column>
@@ -43,10 +51,11 @@
 
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
             <center>
-                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update="cadEdi"/>
-                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
             </center>
-        </p:confirmDialog>    
-    </h:form>
+        </p:confirmDialog>
 
+    </h:form>
+    
 </ui:decorate>

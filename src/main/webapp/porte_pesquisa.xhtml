@@ -9,48 +9,43 @@
 
     <ui:define name="title">CalcProc - Porte Médico</ui:define>
 
-    <h:form id="cadPorte">
-        <p:panel header="Cadastro de Porte Médico">
-            <p:panelGrid columns="3">
-                <p:outputLabel value="Edição:"/>
-                <p:selectOneMenu value="#{porBean.edicao.id}">
-                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/>
-                    <f:selectItems value="#{ediBean.edicoes}" var="edic" itemLabel="#{edic.nome}" itemValue="#{edic.id}"/>                    
-                </p:selectOneMenu>
-                 <p:commandButton value="Selecionar" actionListener="#{porBean.filtrarEdicao}" update="tabPorte" /> 
-            </p:panelGrid>
-            <p:panelGrid columns="8">
-                <p:outputLabel value="ID:"/>
-                <p:inputText value="#{porBean.por1.id}" readonly="true"/>
+    <h:form id="formListaPortes">
+        <p:panel>
+            <f:facet name="header">
+                <h:outputLabel value="Pesquisa de Portes" styleClass="tituloPrincipal"/>
+                <p:button icon="pi pi-plus" value="Novo Porte" outcome="porte_cadastro" styleClass="btnNovo" title="Novo Porte"/>
+            </f:facet>
+            <p:panelGrid columns="8" id="painel">               
                 <p:outputLabel value="Nome:"/>
-                <p:inputText value="#{porBean.por1.nome}"/>
-                <p:outputLabel value="Preço:"/>
-                <p:inputText value="#{porBean.por1.preco}"/>               
-                <p:commandButton value="Gravar" action="#{porBean.salvar}" update="cadPorte"/>
-                <p:button value="Cancelar" outcome="cad-porte" rendered="#{porBean.editar == true}"/>                
+                <p:inputText value="#{porteBean.por1.nome}"/>
+                <p:commandButton icon="pi pi-search" update="formListaPortes:tabPortes"/>
+                <p:button value="Cancelar" outcome="cad-porte" rendered="#{porteBean.por1.id != null}"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="porte" value="#{porBean.portes}" id="tabPorte">
-                <p:column headerText="#">
-                    <h:outputText value="#{porte.id}" />
+            <p:dataTable var="porte" value="#{porteBean.portes}" id="tabPortes" rowKey="#{porte.id}" style="text-align: center;">
+                <p:autoUpdate />
+                <p:column headerText="Editar">
+                    <p:link outcome="porte_cadastro">
+                        <i class="pi pi-pencil" style="font-size: 2em"></i> 
+                        <f:param name="id" value="#{porte.id}"/>
+                    </p:link>
                 </p:column>
                 <p:column headerText="Nome">
                     <h:outputText value="#{porte.nome}" />
                 </p:column>
-                <p:column headerText="Preço">
+                <p:column headerText="Tipo Porte">
                     <h:outputText value="#{porte.preco}" />
                 </p:column>
-                <p:column headerText="Ação">
+                <p:column headerText="Tabela">
+                    <h:outputText value="#{porte.tabelaPortes.nome}" />
+                </p:column>
+                <p:column headerText="Excluir">
                     <center>
-                        <p:commandLink actionListener="#{porBean.editar(porte.id)}" update="cadPorte">
-                            <h:graphicImage url="/img/edit_icon.png" />
-                        </p:commandLink>
-                        <p:commandLink actionListener="#{porBean.excluir(porte.id)}">
-                            <h:graphicImage url="/img/delete_icon.png" />
-                            <p:confirm header="Excluir Porte" message="Deseja realmente excluir porte de ID #{porte.id}?" icon="pi pi-exclamation-triangle"/>
-                            <p:ajax update="cadPorte" />
+                        <p:commandLink actionListener="#{porteBean.excluir(porte.id)}" update="tabPortes">                           
+                            <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
+                            <p:confirm header="Excluir Porte" message="Deseja realmente excluir o porte selecionado?" icon="pi pi-exclamation-triangle"/>
                         </p:commandLink>
                     </center>
                 </p:column>
@@ -60,9 +55,10 @@
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
             <center>
                 <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
-                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
             </center>
-        </p:confirmDialog>   
+        </p:confirmDialog>
+
     </h:form>
 </ui:decorate>
 
