@@ -5,7 +5,7 @@ Sistema tem como objetivo principal, facilitar o calculo de procedimentos AMB e 
 <table>
   <tr>
     <td><b>Status:</b></td>
-    <td>Desenvolvimento</td>
+    <td>Em Desenvolvimento</td>
   </tr>
 </table>
 
