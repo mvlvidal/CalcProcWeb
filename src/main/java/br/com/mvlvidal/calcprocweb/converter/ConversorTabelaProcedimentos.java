@@ -1,4 +1,4 @@
-package br.com.mvlvidal.calcprocweb.util;
+package br.com.mvlvidal.calcprocweb.converter;
 
 import br.com.mvlvidal.calcprocweb.dao.TabelaDao;
 import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;

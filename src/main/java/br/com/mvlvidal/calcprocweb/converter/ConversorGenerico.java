@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.mvlvidal.calcprocweb.util;
+package br.com.mvlvidal.calcprocweb.converter;
 
 import br.com.mvlvidal.calcprocweb.model.AbstractModel;
 import javax.faces.component.UIComponent;

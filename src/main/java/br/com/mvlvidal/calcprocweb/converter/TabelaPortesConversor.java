@@ -1,4 +1,4 @@
-package br.com.mvlvidal.calcprocweb.util;
+package br.com.mvlvidal.calcprocweb.converter;
 
 import br.com.mvlvidal.calcprocweb.dao.TabelaPortesDao;
 import br.com.mvlvidal.calcprocweb.model.TabelaPortes;

@@ -1,6 +1,7 @@
 package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.TabelaPortesDao;
+import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.TabelaPortes;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,20 +18,19 @@ import javax.servlet.http.HttpServletRequest;
 public class TabelaPortesBean implements Serializable {
 
     private TabelaPortes tp1;
+    private Pesquisa pesquisa;
     private TabelaPortesDao tabelaPortesDao;
     private List<TabelaPortes> tabelasPortes;
-    private boolean editar;
 
     // CONSTRUTOR ---------------------------------------------------
     @PostConstruct
     public void init() {
 
         tp1 = new TabelaPortes();
+        pesquisa = new Pesquisa();
         tabelaPortesDao = new TabelaPortesDao();
         tabelasPortes = new ArrayList<>();
         listar();
-        this.editar = false;
-
     }
 
     // MÉTODOS -----------------------------------------------------
@@ -38,6 +38,14 @@ public class TabelaPortesBean implements Serializable {
 
         tabelasPortes = tabelaPortesDao.listar();
 
+    }
+    
+    public void pesquisar(){
+        if(this.pesquisa != null){
+            tabelasPortes = tabelaPortesDao.listar(this.pesquisa.getNome());
+        }else{
+            listar();
+        }
     }
 
     public void salvar() {
@@ -47,23 +55,10 @@ public class TabelaPortesBean implements Serializable {
         if (tp2 != null) {
             tp1 = tp2;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "TabelaPortes salvo."));
-            this.editar = false;
             tabelasPortes = new ArrayList<>();
             listar();
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Erro ao tentar salvar o porte."));
-        }
-
-    }
-
-    public void editar() {
-
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String id = request.getParameter("id");
-
-        if (id != null) {
-            tp1 = tabelaPortesDao.find(Long.parseLong(id));
-            this.editar = true;
         }
 
     }
@@ -92,13 +87,11 @@ public class TabelaPortesBean implements Serializable {
         this.tabelasPortes = tabelasPortes;
     }
 
-    public boolean isEditar() {
-        return editar;
+    public Pesquisa getPesquisa() {
+        return pesquisa;
     }
 
-    public void setEditar(boolean editar) {
-        this.editar = editar;
-    }
-   
-    
+    public void setPesquisa(Pesquisa pesquisa) {
+        this.pesquisa = pesquisa;
+    }  
 }
