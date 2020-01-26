@@ -9,27 +9,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(forClass = TabelaPortes.class, value = "tabelaPortesConversor")
-
-public class TabelaPortesConversor implements Converter {
+@FacesConverter(forClass = TabelaPortes.class, value = "tabelaPortesConverter")
+public class TabelaPortesConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {
 
         if (value != null) {
 
-            Long cod = Long.parseLong(value);
-
-            TabelaPortes tabelaPortes = new TabelaPortes();                     
-            TabelaPortesDao ediDao = new TabelaPortesDao(); 
-            List<TabelaPortes> tabelasPortes = new ArrayList<>();
-            tabelasPortes = ediDao.listar();
-            
-            for(TabelaPortes t: tabelasPortes){
-                if(t.getId().equals(cod)){
-                    tabelaPortes = t;
-                }
-            }
+            Long cod = Long.parseLong(value);          
+            TabelaPortesDao tabelaPortesDao = new TabelaPortesDao();
+            TabelaPortes tabelaPortes = tabelaPortesDao.find(cod);
 
             return tabelaPortes;
         }

@@ -39,11 +39,13 @@ public class TabelaPortesBean implements Serializable {
         tabelasPortes = tabelaPortesDao.listar();
 
     }
-    
-    public void pesquisar(){
-        if(this.pesquisa != null){
+
+    public void consultar() {
+        if (this.pesquisa != null) {
+            tabelasPortes = new ArrayList<>();
             tabelasPortes = tabelaPortesDao.listar(this.pesquisa.getNome());
-        }else{
+        } else {
+            tabelasPortes = new ArrayList<>();
             listar();
         }
     }
@@ -70,7 +72,6 @@ public class TabelaPortesBean implements Serializable {
     }
 
     // GETS E SETS -------------------------------------------------
-
     public TabelaPortes getTp1() {
         return tp1;
     }
@@ -93,5 +94,5 @@ public class TabelaPortesBean implements Serializable {
 
     public void setPesquisa(Pesquisa pesquisa) {
         this.pesquisa = pesquisa;
-    }  
+    }
 }

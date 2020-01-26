@@ -1,10 +1,21 @@
 package br.com.mvlvidal.calcprocweb.model;
 
-public class Pesquisa {
+import java.io.Serializable;
 
+public class Pesquisa implements Serializable{
+
+    private Long id;
     private String nome;
     private TabelaPortes tabelaPortes;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }    
+    
     public String getNome() {
         return nome;
     }

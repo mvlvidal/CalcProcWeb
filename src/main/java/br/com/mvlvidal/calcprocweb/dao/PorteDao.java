@@ -17,7 +17,7 @@ public class PorteDao extends GenericDao<Porte, Long>{
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
 
         Criteria criteria = sessao.createCriteria(Porte.class);
-        criteria.add(Restrictions.eq("edicao.id",id));
+        criteria.add(Restrictions.eq("tabelaPortes.id",id));
               
         return criteria.list();
     }

@@ -1,6 +1,5 @@
 package br.com.mvlvidal.calcprocweb.dao;
 
-import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.TabelaPortes;
 import java.util.List;
 import org.hibernate.Criteria;

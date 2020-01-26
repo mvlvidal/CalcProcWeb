@@ -9,46 +9,55 @@
 
     <ui:define name="title">CalcProc - Porte Médico</ui:define>
 
-    <h:form id="formListaPortes">
+    <p:growl id="growl" showDetail="true" sticky="true" /> 
+
+    <h:form id="formGeral">
+
         <p:panel>
             <f:facet name="header">
-                <h:outputLabel value="Pesquisa de Portes" styleClass="tituloPrincipal"/>
-                <p:button icon="pi pi-plus" value="Novo Porte" outcome="porte_cadastro" styleClass="btnNovo" title="Novo Porte"/>
+                <h:outputLabel value="Pesquisa de Porte" styleClass="tituloPrincipal"/>
+                <p:commandButton icon="pi pi-plus" value="Tabela de Portes" update=":dlgCadastro" oncomplete="PF('dialogCadastro').show()" styleClass="btnNovo" title="Novo Porte"/>
             </f:facet>
             <p:panelGrid columns="8" id="painel">               
-                <p:outputLabel value="Nome:"/>
-                <p:inputText value="#{porteBean.por1.nome}"/>
-                <p:commandButton icon="pi pi-search" update="formListaPortes:tabPortes"/>
-                <p:button value="Cancelar" outcome="cad-porte" rendered="#{porteBean.por1.id != null}"/>
+                <p:outputLabel value="Tabela de Portes:"/>
+                <p:autoComplete 
+                    id="acTabelaPortes"
+                    maxResults="5"
+                    minQueryLength="3"
+                    value="#{porteBean.pesquisa.tabelaPortes}"
+                    completeMethod="#{porteBean.carregaAutocomplete}"
+                    var="tabela"
+                    itemLabel="#{tabela.nome}"
+                    itemValue="#{tabela}"
+                    converter="tabelaPortesConverter"
+                    /> 
+                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{porteBean.consultar}"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="porte" value="#{porteBean.portes}" id="tabPortes" rowKey="#{porte.id}" style="text-align: center;">
-                <p:autoUpdate />
+            <p:dataTable var="porte" value="#{porteBean.portes}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">
                 <p:column headerText="Editar">
-                    <p:link outcome="porte_cadastro">
-                        <i class="pi pi-pencil" style="font-size: 2em"></i> 
-                        <f:param name="id" value="#{porte.id}"/>
-                    </p:link>
+                    <p:commandButton icon="pi pi-pencil" oncomplete="PF('dialogCadastro').show()" update=":dlgCadastro"> 
+                        <f:setPropertyActionListener value="#{porte}" target="#{porteBean.por1}" />
+                    </p:commandButton>
                 </p:column>
                 <p:column headerText="Nome">
                     <h:outputText value="#{porte.nome}" />
                 </p:column>
-                <p:column headerText="Tipo Porte">
-                    <h:outputText value="#{porte.preco}" />
-                </p:column>
-                <p:column headerText="Tabela">
+                <p:column headerText="Preço">
+                    <h:outputText value="#{porte.preco}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>               
+                <p:column headerText="Tabela de Portes">
                     <h:outputText value="#{porte.tabelaPortes.nome}" />
-                </p:column>
+                </p:column> 
                 <p:column headerText="Excluir">
-                    <center>
-                        <p:commandLink actionListener="#{porteBean.excluir(porte.id)}" update="tabPortes">                           
-                            <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
-                            <p:confirm header="Excluir Porte" message="Deseja realmente excluir o porte selecionado?" icon="pi pi-exclamation-triangle"/>
-                        </p:commandLink>
-                    </center>
-                </p:column>
+                    <p:commandButton icon="pi pi-trash" actionListener="#{porteBean.excluir(porte.id)}">
+                        <p:confirm header="Excluir Porte" message="Deseja realmente excluir o item selecionado?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </p:column> 
             </p:dataTable>
         </p:panel>
 
@@ -58,9 +67,40 @@
                 <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
             </center>
         </p:confirmDialog>
-
     </h:form>
+
+    <p:dialog 
+        id="dlgCadastro"
+        header="Cadastro de Tabela de Portes" 
+        widgetVar="dialogCadastro" 
+        modal="true"
+        appendTo="@(body)"
+        style="max-width: 800px;"
+        resizable="false">
+        <h:form id="formCadastro">
+            <p:panelGrid columns="4">
+                <p:outputLabel value="Nome:"/>
+                <p:inputText value="#{porteBean.por1.nome}" />
+                <p:outputLabel value="Preço:"/>
+                <p:inputText value="#{porteBean.por1.preco}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </p:inputText>
+                <p:outputLabel value="Tabela de Portes:"/>
+                <p:autoComplete 
+                    id="acTabelaPortes"
+                    maxResults="5"
+                    minQueryLength="3"
+                    value="#{porteBean.por1.tabelaPortes}"
+                    completeMethod="#{porteBean.carregaAutocomplete}"
+                    var="tabela"
+                    itemLabel="#{tabela.nome}"
+                    itemValue="#{tabela}"
+                    converter="tabelaPortesConverter"
+                    />                
+                <p:commandButton value="Gravar" actionListener="#{porteBean.salvar}" update=":formGeral:dtLista, :growl"/>
+                <p:button value="Fechar" onclick="PF('dialogCadastro').hide()"/>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>   
+
 </ui:decorate>
-
-
-

@@ -21,12 +21,12 @@
             <p:panelGrid columns="8" id="painel">               
                 <p:outputLabel value="Nome:"/>
                 <p:inputText value="#{tabelaPortesBean.pesquisa.nome}"/>
-                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{tabelaPortesBean.pesquisar}"/>
+                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{tabelaPortesBean.consultar}"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="tabela_portes" value="#{tabelaPortesBean.tabelasPortes}" id="dtLista" style="text-align: center;">
+            <p:dataTable var="tabela_portes" value="#{tabelaPortesBean.tabelasPortes}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">
                 <p:column headerText="Editar">
                     <p:commandButton icon="pi pi-pencil" oncomplete="PF('dialogCadastro').show()" update=":dlgCadastro"> 
                         <f:setPropertyActionListener value="#{tabela_portes}" target="#{tabelaPortesBean.tp1}" />
