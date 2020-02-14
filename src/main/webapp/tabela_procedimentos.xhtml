@@ -7,48 +7,42 @@
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="title">CalcProc - Tabela</ui:define>
+    <ui:define name="title">CalcProc - Tabela de Procedimentos</ui:define>
 
-    <h:form id="formCadTabela">
+    <p:growl id="growl" showDetail="true" sticky="true" /> 
+    
+    <h:form id="formGeral">
+    
         <p:panel>
             <f:facet name="header">
-                <h:outputLabel value="Pesquisa de Tabelas" styleClass="tituloPrincipal"/>
-                <p:button icon="pi pi-plus" outcome="tabela_cadastro" styleClass="btnNovo" title="Cadastrar nova tabela"/>
+                <h:outputLabel value="Pesquisa Tabela de Procedimentos" styleClass="tituloPrincipal"/>
+                <p:commandButton icon="pi pi-plus" value="Tabela de Procedimentos" update=":dlgCadastro" oncomplete="PF('dialogCadastro').show()" styleClass="btnNovo" title="Nova Tabela de Procedimentos"/>
             </f:facet>
-            <p:panelGrid columns="8" id="painel">               
-                <p:outputLabel value="ID:" rendered="#{tabelaProcedimentosBean.tab1.id != null}"/>
-                <p:inputText value="#{tabelaProcedimentosBean.tab1.id}" required="true" rendered="#{tabelaProcedimentosBean.tab1.id != null}" readonly="true"/>
+            <p:panelGrid columns="8" id="painel"> 
+                <p:outputLabel value="Tipo:"/>
+                <p:selectOneMenu value="#{tabelaProcedimentosBean.pesquisa.tipo}">
+                    <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                    <f:selectItems value="#{tabelaProcedimentosBean.carregaTipos()}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                </p:selectOneMenu>
                 <p:outputLabel value="Nome:"/>
-                <p:inputText value="#{tabelaProcedimentosBean.tab1.nome}"/>
-                <p:commandButton icon="pi pi-search" update="formCadTabela:tabTabelas"/>
-                <p:button value="Cancelar" outcome="cad-tabela" rendered="#{tabelaProcedimentosBean.tab1.id != null}"/>
+                <p:inputText value="#{tabelaProcedimentosBean.pesquisa.nome}"/>
+                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{tabelaProcedimentosBean.consultar}"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="tabela" value="#{tabelaProcedimentosBean.tabelas}" id="tabTabelas" rowKey="#{tabela.id}" style="text-align: center;">
-                <p:autoUpdate />
+            <p:dataTable var="resultList" value="#{tabelaProcedimentosBean.tabelas}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">
                 <p:column headerText="Editar">
-                    <p:link outcome="tabela_cadastro">
-                        <i class="pi pi-pencil" style="font-size: 2em"></i> 
-                        <f:param name="id" value="#{tabela.id}"/>
-                    </p:link>
+                    <p:commandButton icon="pi pi-pencil" oncomplete="PF('dialogCadastro').show()" update=":dlgCadastro"> 
+                        <f:setPropertyActionListener value="#{resultList}" target="#{tabelaProcedimentosBean.tabelaProcedimentos1}" />
+                    </p:commandButton>
                 </p:column>
                 <p:column headerText="Nome">
-                    <h:outputText value="#{tabela.nome}" />
+                    <h:outputText value="#{resultList.nome}" />
                 </p:column>
-                <p:column headerText="Tipo Tabela">
-                    <h:outputText value="#{tabela.tipoTab}" />
-                </p:column>
-                <p:column headerText="Excluir">
-                    <center>
-
-                        <p:commandLink actionListener="#{tabelaProcedimentosBean.excluir(tabela.id)}" update="tabTabelas">                           
-                            <h:graphicImage url="/img/delete_icon.png" alt="Excluir"/>
-                            <p:confirm header="Excluir Tabela" message="Deseja realmente excluir a tabela de ID #{tabela.id}?" icon="pi pi-exclamation-triangle"/>
-                        </p:commandLink>
-                    </center>
-                </p:column>
+                <p:column headerText="Tipo">
+                    <h:outputText value="#{resultList.tipoTab}" />
+                </p:column>               
             </p:dataTable>
         </p:panel>
 
@@ -58,10 +52,29 @@
                 <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
             </center>
         </p:confirmDialog>
-
     </h:form>
 
+    <p:dialog 
+        id="dlgCadastro"
+        header="Cadastro de Tabela de Procedimentos" 
+        widgetVar="dialogCadastro" 
+        modal="true"
+        appendTo="@(body)"
+        style="max-width: 800px;"
+        resizable="false">
+        <h:form id="formCadastro">
+            <p:panelGrid columns="4">
+                <p:outputLabel value="Nome:"/>
+                <p:inputText value="#{tabelaProcedimentosBean.tabelaProcedimentos1.nome}" />
+                <p:outputLabel value="Tipo:"/>
+                <p:selectOneMenu value="#{tabelaProcedimentosBean.tabelaProcedimentos1.tipoTab}">
+                    <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                    <f:selectItems value="#{tabelaProcedimentosBean.carregaTipos()}" var="tipo" itemLabel="#{tipo}" itemValue="#{tipo}" />
+                </p:selectOneMenu>
+                <p:commandButton value="Gravar" actionListener="#{tabelaProcedimentosBean.salvar}" update=":formGeral:dtLista, :growl"/>
+                <p:button value="Fechar" onclick="PF('dialogCadastro').hide()"/>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>   
+
 </ui:decorate>
-
-
-

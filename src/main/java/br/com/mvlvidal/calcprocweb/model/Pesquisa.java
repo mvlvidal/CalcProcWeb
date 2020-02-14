@@ -7,6 +7,7 @@ public class Pesquisa implements Serializable{
     private Long id;
     private String nome;
     private TabelaPortes tabelaPortes;
+    private String tipo;
 
     public Long getId() {
         return id;
@@ -30,6 +31,20 @@ public class Pesquisa implements Serializable{
 
     public void setTabelaPortes(TabelaPortes tabelaPortes) {
         this.tabelaPortes = tabelaPortes;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
     
     

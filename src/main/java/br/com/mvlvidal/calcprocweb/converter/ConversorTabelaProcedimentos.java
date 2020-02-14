@@ -1,6 +1,6 @@
 package br.com.mvlvidal.calcprocweb.converter;
 
-import br.com.mvlvidal.calcprocweb.dao.TabelaDao;
+import br.com.mvlvidal.calcprocweb.dao.TabelaProcedimentosDao;
 import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ConversorTabelaProcedimentos implements Converter {
 
             Long cod = Long.parseLong(value);
 
-            TabelaDao tabDao = new TabelaDao();
+            TabelaProcedimentosDao tabDao = new TabelaProcedimentosDao();
             tabela = tabDao.find(cod);
             return tabela;
         }
