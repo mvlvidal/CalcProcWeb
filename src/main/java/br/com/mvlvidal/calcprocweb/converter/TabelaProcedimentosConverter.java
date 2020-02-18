@@ -2,15 +2,13 @@ package br.com.mvlvidal.calcprocweb.converter;
 
 import br.com.mvlvidal.calcprocweb.dao.TabelaProcedimentosDao;
 import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
-import java.util.ArrayList;
-import java.util.List;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-@FacesConverter(forClass = TabelaProcedimentos.class, value = "conversorTabelaProcedimentos")
-public class ConversorTabelaProcedimentos implements Converter {
+@FacesConverter(forClass = TabelaProcedimentos.class, value = "tabelaProcedimentosConverter")
+public class TabelaProcedimentosConverter implements Converter {
 
     @Override
     public Object getAsObject(FacesContext fc, UIComponent uic, String value) {

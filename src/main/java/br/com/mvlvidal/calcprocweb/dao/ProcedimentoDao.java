@@ -1,6 +1,7 @@
 package br.com.mvlvidal.calcprocweb.dao;
 
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
+import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -13,30 +14,25 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements S
         super(Procedimento.class);
     } 
     
-    public List<Procedimento> listar(Long id) {
+    public List<Procedimento> listarPorTabela(TabelaProcedimentos tabelaProcedimento) {
         
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
 
         Criteria criteria = sessao.createCriteria(Procedimento.class);
-        criteria.add(Restrictions.eq("tabela.id",id));
+        criteria.add(Restrictions.eq("tabela",tabelaProcedimento));
         
         
         return criteria.list();
     }
     
-    public float calcularAMB() {
-
-        return 0.0f;
-    }
-    
-    public float calcularCbhpm(){
+    public List<Procedimento> listarPorDescricaoETabela(String descricao, TabelaProcedimentos tabelaProcedimento){
         
-        return 0.0f;
+        Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
+
+        Criteria criteria = sessao.createCriteria(Procedimento.class);
+        criteria.add(Restrictions.eq("tabela",tabelaProcedimento));       
+        criteria.add(Restrictions.like("descricao","%"+descricao+"%"));       
+        
+        return criteria.list();
     }
-   
-    public float calcularFilme(){
-    
-        return 0.0f;
-    }
-    
 }

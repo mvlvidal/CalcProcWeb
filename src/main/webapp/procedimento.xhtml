@@ -6,86 +6,130 @@
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
              template="WEB-INF/template.xhtml"
              xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="title">CalcProcWeb - Procedimentos</ui:define>
-    
-    #{proBean.listar()}
-    
-    <p:panel>
-        <f:facet name="header">
-            <h:outputLabel value="Pesquisa de Procedimentos" styleClass="tituloPrincipal"/>
-            <p:button icon="pi pi-plus" outcome="procedimento_cadastro" styleClass="btnNovo" title="Cadastrar novo procedimento"/>
-        </f:facet>
-        <h:form id="info">
-            <p:panelGrid columns="11">
-                <p:outputLabel value="Tabela:" />
-                <p:selectOneMenu value="#{proBean.tabela.id}" id="selectFiltro">                     
-                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/>                    
-                    <f:selectItems var="t" value="#{tabBean.tabelas}" itemLabel="#{t.id} - #{t.nome}" itemValue="#{t.id}"/>
-                </p:selectOneMenu> 
-                <p:commandButton actionListener="#{proBean.filtrarTabela}" update="tabProc" icon="pi pi-search"/>
-            </p:panelGrid>  
+
+    <ui:define name="title">CalcProc - Procedimento</ui:define>
+
+    <p:growl id="growl" showDetail="true" sticky="true" /> 
+
+    <h:form id="formGeral">
+
+        <p:panel>
+            <f:facet name="header">
+                <h:outputLabel value="Pesquisa de Procedimento" styleClass="tituloPrincipal"/>
+                <p:commandButton icon="pi pi-plus" value="Procedimentos" update=":dlgCadastro" oncomplete="PF('dialogCadastro').show()" styleClass="btnNovo" title="Novo Procedimento"/>
+            </f:facet>
+            <p:panelGrid columns="8" id="painel">               
+                <p:outputLabel value="Tabela:"/>
+                <p:autoComplete 
+                    id="acTabelaProcedimentos"
+                    maxResults="5"
+                    minQueryLength="3"
+                    value="#{procedimentoBean.pesquisa.tabelaProcedimentos}"
+                    completeMethod="#{procedimentoBean.carregaAutocomplete}"
+                    var="tabela"
+                    itemLabel="#{tabela.nome}"
+                    itemValue="#{tabela}"
+                    converter="tabelaProcedimentosConverter"
+                    /> 
+                
+                <p:outputLabel value="Descrição:"/>
+                <p:inputText value="#{procedimentoBean.pesquisa.descricao}" />
+                
+                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{procedimentoBean.consultar}"/>
+            </p:panelGrid>
 
             <p:separator />
 
-            <p:panelGrid columns="11">
-                <p:dataTable var="procedimento" style="text-align: center;" value="#{proBean.procedimentos}" widgetVar="tabelaProc" id="tabProc">
-                    <p:column headerText="Editar">
-                        <p:link  outcome="procedimento_cadastro">
-                            <i class="pi pi-pencil" style="font-size: 2em"></i> 
-                            <f:param name="id" value="1"></f:param>
-                        </p:link>
-                    </p:column>                    
-                    <p:column headerText="Código">
-                        <h:outputText value="#{procedimento.codigo}"/>
-                    </p:column>                    
-                    <p:column headerText="Descrição">
-                        <h:outputText value="#{procedimento.descricao}"/>
-                    </p:column>                    
-                    <p:column headerText="CH">
-                        <h:outputText value="#{procedimento.ch}"/>
-                    </p:column>                    
-                    <p:column headerText="CO">
-                        <h:outputText value="#{procedimento.co}"/>
-                    </p:column>                    
-                    <p:column headerText="Aux">
-                        <h:outputText value="#{procedimento.aux}"/>
-                    </p:column>                    
-                    <p:column headerText="Pote Anest.">
-                        <h:outputText value="#{procedimento.pAnestesico}"/>
-                    </p:column>                    
-                    <p:column headerText="Porte Méd.">
-                        <h:outputText value="#{procedimento.pMedico}"/>
-                    </p:column>                    
-                    <p:column headerText="% Porte Med.">
-                        <h:outputText value="#{procedimento.percentPorte}"/>
-                    </p:column>                    
-                    <p:column headerText="Qtd. Filme">
-                        <h:outputText value="#{procedimento.qtdFilme}"/>
-                    </p:column>                    
-                    <p:column headerText="Classific.">
-                        <h:outputText value="#{procedimento.classificacao}"/>
-                    </p:column>
-                    <p:column headerText="Excluir">
-                        <center>
+            <p:dataTable var="procedimento" value="#{procedimentoBean.procedimentos}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">
+                <p:column headerText="Editar">
+                    <p:commandButton icon="pi pi-pencil" oncomplete="PF('dialogCadastro').show()" update=":dlgCadastro"> 
+                        <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoBean.procedimento1}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Descrição">
+                    <h:outputText value="#{procedimento.descricao}" />
+                </p:column>
+               
+                <p:column headerText="Tabela">
+                    <h:outputText value="#{procedimento.tabela.nome}" />
+                </p:column> 
+                <p:column headerText="Excluir">
+                    <p:commandButton icon="pi pi-trash" actionListener="#{procedimentoBean.excluir(procedimento.id)}">
+                        <p:confirm header="Excluir Procedimento" message="Deseja realmente excluir o item selecionado?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </p:column> 
+            </p:dataTable>
+        </p:panel>
 
-                            <p:commandLink actionListener="#{proBean.excluir(procedimento.id)}" update="info">                         
-                                <i class="pi pi-trash" style="font-size: 2em"></i>
-                                <p:confirm header="Excluir Procedimento" message="Deseja realmente excluir o procedimento de ID #{procedimento.id}?" icon="pi pi-exclamation-triangle"/>
-                            </p:commandLink>
-                        </center>
-                    </p:column>
-                </p:dataTable>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <center>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
+            </center>
+        </p:confirmDialog>
+    </h:form>
+
+    <p:dialog 
+        id="dlgCadastro"
+        header="Cadastro de Procedimentos" 
+        widgetVar="dialogCadastro" 
+        modal="true"
+        appendTo="@(body)"
+        style="max-width: 800px;"
+        resizable="false">
+        <h:form id="formCadastro">
+            <p:panelGrid columns="4">  
+                
+                <p:outputLabel value="Tabela de Procedimentos:"/>
+                <p:autoComplete 
+                    id="acTabelaPortes"
+                    maxResults="5"
+                    minQueryLength="3"
+                    value="#{procedimentoBean.procedimento1.tabela}"
+                    completeMethod="#{procedimentoBean.carregaAutocomplete}"
+                    var="tabela"
+                    itemLabel="#{tabela.nome}"
+                    itemValue="#{tabela}"
+                    converter="tabelaProcedimentosConverter"
+                    /> 
+                
+                <p:outputLabel value="Código:"/>
+                <p:inputText value="#{procedimentoBean.procedimento1.codigo}" />
+                
+                <p:outputLabel value="Descricao:"/>
+                <p:inputText value="#{procedimentoBean.procedimento1.descricao}" />  
+                
+                <p:outputLabel value="C.H.:"/>
+                <p:inputNumber value="#{procedimentoBean.procedimento1.ch}" decimalPlaces="2"/>  
+                
+                <p:outputLabel value="C.O.:"/>
+                <p:inputNumber value="#{procedimentoBean.procedimento1.co}" decimalPlaces="2"/>  
+                
+                <p:outputLabel value="Auxilio:"/>
+                <p:inputNumber value="#{procedimentoBean.procedimento1.aux}" decimalPlaces="0"/>   
+                
+                <p:outputLabel value="Porte Anestésico:"/>
+                <p:inputNumber value="#{procedimentoBean.procedimento1.porteAnestesico}" decimalPlaces="0"/>    
+                
+                <p:outputLabel value="% Porte Médico:"/>
+                <p:inputNumber value="#{procedimentoBean.procedimento1.percentPorte}" decimalPlaces="2"/>  
+                
+                <p:outputLabel value="Porte Médico:"/>
+                <p:inputText value="#{procedimentoBean.procedimento1.porteMedico}"/> 
+                
+                <p:outputLabel value="Filme:"/>
+                <p:inputNumber value="#{procedimentoBean.procedimento1.qtdFilme}" decimalPlaces="2"/>   
+                
+                <p:outputLabel value="Classificação:"/>
+                <p:selectOneMenu value="#{procedimentoBean.procedimento1.classificacao}">
+                    <f:selectItem itemLabel="Selecione..." noSelectionOption="true" />
+                    <f:selectItems value="#{procedimentoBean.classificacoes}" var="classificacao" itemLabel="#{classificacao}" itemValue="#{classificacao}" />
+                </p:selectOneMenu> 
+                
+                <p:commandButton value="Gravar" actionListener="#{procedimentoBean.salvar}" update=":formGeral:dtLista, :growl"/>
+                <p:button value="Fechar" onclick="PF('dialogCadastro').hide()"/>
             </p:panelGrid>
-
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <center>
-                    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update="info"/>
-                    <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-times"/>
-                </center>
-            </p:confirmDialog>       
         </h:form>
-    </p:panel>
-
+    </p:dialog>   
 
 </ui:decorate>
-

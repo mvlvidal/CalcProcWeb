@@ -1,14 +1,9 @@
 package br.com.mvlvidal.calcprocweb.model;
 
-import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -33,13 +28,13 @@ public class Procedimento extends AbstractModel {
     private int aux;
 
     @Column(name = "porteAnest")
-    private int pAnestesico;
+    private int porteAnestesico;
 
     @Column(name = "percentPorte")
     private float percentPorte;
 
     @Column(name = "porteMedic", length = 3)
-    private String pMedico;
+    private String porteMedico;
 
     @Column(name = "qtdFilme")
     private float qtdFilme;
@@ -91,12 +86,12 @@ public class Procedimento extends AbstractModel {
         this.aux = aux;
     }
 
-    public int getpAnestesico() {
-        return pAnestesico;
+    public int getPorteAnestesico() {
+        return porteAnestesico;
     }
 
-    public void setpAnestesico(int pAnestesico) {
-        this.pAnestesico = pAnestesico;
+    public void setPorteAnestesico(int porteAnestesico) {
+        this.porteAnestesico = porteAnestesico;
     }
 
     public float getPercentPorte() {
@@ -107,12 +102,12 @@ public class Procedimento extends AbstractModel {
         this.percentPorte = percentPorte;
     }
 
-    public String getpMedico() {
-        return pMedico;
+    public String getPorteMedico() {
+        return porteMedico;
     }
 
-    public void setpMedico(String pMedico) {
-        this.pMedico = pMedico;
+    public void setPorteMedico(String porteMedico) {
+        this.porteMedico = porteMedico;
     }
 
     public float getQtdFilme() {

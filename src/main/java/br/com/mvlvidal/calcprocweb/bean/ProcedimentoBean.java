@@ -1,6 +1,8 @@
 package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
+import br.com.mvlvidal.calcprocweb.dao.TabelaProcedimentosDao;
+import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
 import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
@@ -11,19 +13,20 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 @ViewScoped
-@ManagedBean(name = "proBean")
+@ManagedBean(name = "procedimentoBean")
 public class ProcedimentoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Procedimento proc1;
-    private ProcedimentoDao procDao;
+    private Procedimento procedimento1;
+    private ProcedimentoDao procedimentoDao;
+    private TabelaProcedimentosDao tabelaProcedimentosDao;
     private List<Procedimento> procedimentos;
     private List<String> classificacoes;
-    private TabelaProcedimentos tabela;
+    private TabelaProcedimentos tabelaProcedimentos;
+    private Pesquisa pesquisa;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -38,54 +41,46 @@ public class ProcedimentoBean implements Serializable {
 
     @PostConstruct
     public void init() {
-
-        proc1 = new Procedimento();
-        procDao = new ProcedimentoDao();
+        
+        pesquisa = new Pesquisa();
+        procedimento1 = new Procedimento();
+        procedimentoDao = new ProcedimentoDao();
+        tabelaProcedimentosDao = new TabelaProcedimentosDao();
         procedimentos = new ArrayList<>();
-        listar();
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
-        tabela = new TabelaProcedimentos();
-        
+        tabelaProcedimentos = new TabelaProcedimentos();
+
+        consultar();
+
         //VALORES PADRÃO
-        proc1.setAux(0);
-        proc1.setCo(0.0f);
-        proc1.setQtdFilme(0.0f);
-        proc1.setpAnestesico(0);
-        proc1.setCh(0.0f);
+        //procedimento1.setAux(0);
+        //procedimento1.setCo(0.0f);
+        //procedimento1.setQtdFilme(0.0f);
+        //procedimento1.setpAnestesico(0);
+        //procedimento1.setCh(0.0f);
     }
 
     //MÉTODOS
     public void salvar() {
-        
-        Procedimento proc2 = procDao.salvar(proc1);
 
-        if (proc2 != null) {
-            proc1 = proc2;
+        Procedimento procedimento2 = procedimentoDao.salvar(procedimento1);
+
+        if (procedimento2 != null) {
+            procedimento1 = procedimento2;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Procedimento salvo."));
-            procedimentos = new ArrayList<>();
-            listar();
-        }else{
+            consultar();
+        } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Erro ao tentar salvar o procedimento."));
         }
+
     }
 
-    public void editar() {
-        
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String id = request.getParameter("id");
-        
-        if(id != null){
-            proc1 = procDao.find(Long.parseLong(id));
+    public void excluir(Long id) {
+        if (id != null) {
+            procedimentoDao.deletar(id);
+            consultar();
         }
-    }
-
-    public String excluir(Long id) {
-        if (id != null || id != 0) {
-            procDao.deletar(id);
-            return "cad-procedimento";
-        }
-        return "";
     }
 
     public List<String> carregaClassif() {
@@ -98,26 +93,24 @@ public class ProcedimentoBean implements Serializable {
         return lista;
     }
 
-    public String filtrarTabela() {
+    public void consultar() {
 
-        procedimentos = new ArrayList<>();
-        
-        TabelaProcedimentos tab2 = tabela;
+        System.out.println(pesquisa.getTabelaProcedimentos());
 
-        if (tab2.getId() == 0) {
-            listar();
+        if (pesquisa.getTabelaProcedimentos() != null) {
+            procedimentos = procedimentoDao.listarPorTabela(pesquisa.getTabelaProcedimentos());
         } else {
-            procedimentos = procDao.listar(tabela.getId());
-            //TODO Mensagem tabela sem procedimentos cadastrados
+            if (pesquisa.getTabelaProcedimentos() != null && pesquisa.getDescricao() != null && !pesquisa.getDescricao().isEmpty()) {
+                procedimentos = procedimentoDao.listarPorDescricaoETabela(pesquisa.getDescricao(), pesquisa.getTabelaProcedimentos());
+            } else {
+                procedimentos = procedimentoDao.listar();
+            }
         }
 
-        return "cad-procedimento";
     }
-    
-    public void listar(){
-     
-        procedimentos = procDao.listar();
-        
+
+    public List<TabelaProcedimentos> carregaAutocomplete(String nome) {
+        return tabelaProcedimentosDao.listarPorNome(nome);
     }
 
     public void calcularProcedimento() {
@@ -125,12 +118,12 @@ public class ProcedimentoBean implements Serializable {
     }
 
     //GETS e SETS
-    public Procedimento getProc1() {
-        return proc1;
+    public Procedimento getProcedimento1() {
+        return procedimento1;
     }
 
-    public void setProc1(Procedimento proc1) {
-        this.proc1 = proc1;
+    public void setProcedimento1(Procedimento procedimento1) {
+        this.procedimento1 = procedimento1;
     }
 
     public List<Procedimento> getProcedimentos() {
@@ -189,12 +182,26 @@ public class ProcedimentoBean implements Serializable {
         this.uco = uco;
     }
 
-    public TabelaProcedimentos getTabela() {
-        return tabela;
+    public TabelaProcedimentos getTabelaProcedimentos() {
+        return tabelaProcedimentos;
     }
 
-    public void setTabela(TabelaProcedimentos tabela) {
-        this.tabela = tabela;
+    public void setTabelaProcedimentos(TabelaProcedimentos tabelaProcedimentos) {
+        this.tabelaProcedimentos = tabelaProcedimentos;
+    }
+
+    /**
+     * @return the pesquisa
+     */
+    public Pesquisa getPesquisa() {
+        return pesquisa;
+    }
+
+    /**
+     * @param pesquisa the pesquisa to set
+     */
+    public void setPesquisa(Pesquisa pesquisa) {
+        this.pesquisa = pesquisa;
     }
 
 }
