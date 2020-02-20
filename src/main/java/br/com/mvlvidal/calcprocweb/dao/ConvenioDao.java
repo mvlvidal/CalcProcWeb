@@ -21,7 +21,7 @@ public class ConvenioDao extends GenericDao<Convenio, Long>{
         super(Convenio.class);
     }
     
-    public List<Convenio> listar(String nome){
+    public List<Convenio> listarPorNome(String nome){
         
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
 

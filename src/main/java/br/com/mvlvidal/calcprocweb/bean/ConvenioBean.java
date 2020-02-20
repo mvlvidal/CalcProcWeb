@@ -69,7 +69,7 @@ public class ConvenioBean implements Serializable {
     public void consultar() {
 
         if (pesquisa.getNome() != null && !pesquisa.getNome().isEmpty()) {
-            convenios = convenioDao.listar(pesquisa.getNome());
+            convenios = convenioDao.listarPorNome(pesquisa.getNome());
         } else {
             listar();
         }
@@ -82,7 +82,7 @@ public class ConvenioBean implements Serializable {
     }
 
     public List<Convenio> carregaAutocomplete(String nome) {
-        return convenioDao.listar(nome);
+        return convenioDao.listarPorNome(nome);
     }
     
     public List<TabelaProcedimentos> carregaAutoCompleteTabelaProcedimentos(String nome){

@@ -1,7 +1,9 @@
 package br.com.mvlvidal.calcprocweb.bean;
 
+import br.com.mvlvidal.calcprocweb.dao.ConvenioDao;
 import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
 import br.com.mvlvidal.calcprocweb.dao.TabelaProcedimentosDao;
+import br.com.mvlvidal.calcprocweb.model.Convenio;
 import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
 import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
@@ -27,6 +29,7 @@ public class ProcedimentoBean implements Serializable {
     private List<String> classificacoes;
     private TabelaProcedimentos tabelaProcedimentos;
     private Pesquisa pesquisa;
+    private ConvenioDao convenioDao;
 
     //Variáveis Calculo Geral
     private float totalProc;
@@ -50,6 +53,7 @@ public class ProcedimentoBean implements Serializable {
         classificacoes = new ArrayList<>();
         classificacoes = carregaClassif();
         tabelaProcedimentos = new TabelaProcedimentos();
+        convenioDao = new ConvenioDao();
 
         consultar();
 
@@ -112,6 +116,12 @@ public class ProcedimentoBean implements Serializable {
     public List<TabelaProcedimentos> carregaAutocomplete(String nome) {
         return tabelaProcedimentosDao.listarPorNome(nome);
     }
+    
+    public List<Convenio> carregaAutocompleteConvenio(String nome) {
+        return convenioDao.listarPorNome(nome);
+    }
+    
+    
 
     public void calcularProcedimento() {
 

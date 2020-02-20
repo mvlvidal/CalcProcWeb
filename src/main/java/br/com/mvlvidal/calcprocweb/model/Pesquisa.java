@@ -5,11 +5,13 @@ import java.io.Serializable;
 public class Pesquisa implements Serializable{
 
     private Long id;
+    private Long codigo;
     private String nome;
     private String descricao;
     private TabelaPortes tabelaPortes;
     private String tipo;
     private TabelaProcedimentos tabelaProcedimentos;
+    private Convenio convenio;
 
     public Long getId() {
         return id;
@@ -75,6 +77,34 @@ public class Pesquisa implements Serializable{
      */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    /**
+     * @return the codigo
+     */
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(Long codigo) {
+        this.codigo = codigo;
+    }
+
+    /**
+     * @return the convenio
+     */
+    public Convenio getConvenio() {
+        return convenio;
+    }
+
+    /**
+     * @param convenio the convenio to set
+     */
+    public void setConvenio(Convenio convenio) {
+        this.convenio = convenio;
     }
     
     
