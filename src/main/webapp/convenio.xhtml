@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="WEB-INF/template.xhtml"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">CalcProc - Convênio</ui:define>
+
+    <p:growl id="growl" showDetail="true" sticky="true" /> 
+
+    <h:form id="formGeral">
+
+        <p:panel>
+            <f:facet name="header">
+                <h:outputLabel value="Pesquisa de Convenio" styleClass="tituloPrincipal"/>
+                <p:commandButton icon="pi pi-plus" value="Convenio" update=":dlgCadastro" oncomplete="PF('dialogCadastro').show()" styleClass="btnNovo" title="Novo Convenio"/>
+            </f:facet>
+            <p:panelGrid columns="8" id="painel">               
+                <p:outputLabel value="Nome:"/>
+                <p:inputText value="#{convenioBean.convenio1.nome}" /> 
+                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{convenioBean.consultar}"/>
+            </p:panelGrid>
+
+            <p:separator />
+
+            <p:dataTable var="convenio" value="#{convenioBean.convenios}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">
+                <p:column headerText="Editar">
+                    <p:commandButton icon="pi pi-pencil" oncomplete="PF('dialogCadastro').show()" update=":dlgCadastro"> 
+                        <f:setPropertyActionListener value="#{convenio}" target="#{convenioBean.convenio1}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{convenio.nome}" />
+                </p:column>
+                <p:column headerText="Tabela SADT">
+                    <h:outputText value="#{convenio.tabSadt.nome}" />
+                </p:column>               
+                <p:column headerText="Tabela HM">
+                    <h:outputText value="#{convenio.tabHm.nome}" />
+                </p:column> 
+                <p:column headerText="Excluir">
+                    <p:commandButton icon="pi pi-trash" actionListener="#{convenioBean.excluir(convenio.id)}">
+                        <p:confirm header="Excluir Convenio" message="Deseja realmente excluir o item selecionado?" icon="pi pi-exclamation-triangle"/>
+                    </p:commandButton>
+                </p:column> 
+            </p:dataTable>
+        </p:panel>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <center>
+                <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                <p:commandButton value="Não" styleClass="ui-confirmdialog-no" icon="pi pi-close"/>
+            </center>
+        </p:confirmDialog>
+    </h:form>
+
+    <p:dialog 
+        id="dlgCadastro"
+        header="Cadastro de Convenios" 
+        widgetVar="dialogCadastro" 
+        modal="true"
+        appendTo="@(body)"
+        style="max-width: 800px;"
+        resizable="false">
+        <h:form id="formCadastro">
+
+            <p:accordionPanel >
+                <p:tab title="Parametros Básicos">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Nome:"/>
+                        <p:inputText value="#{convenioBean.convenio1.nome}" />
+                        <p:outputLabel value="Tabela HM:"/>
+                        <p:autoComplete 
+                            
+                            maxResults="5"
+                            minQueryLength="3"
+                            value="#{convenioBean.convenio1.tabHm}"
+                            completeMethod="#{convenioBean.carregaAutoCompleteTabelaProcedimentos}"
+                            var="tabela"
+                            itemLabel="#{tabela.nome}"
+                            itemValue="#{tabela}"
+                            converter="tabelaProcedimentosConverter"
+                            />  
+                        <p:outputLabel value="Tabela SADT:"/>
+                        <p:autoComplete 
+                            
+                            maxResults="5"
+                            minQueryLength="3"
+                            value="#{convenioBean.convenio1.tabSadt}"
+                            completeMethod="#{convenioBean.carregaAutoCompleteTabelaProcedimentos}"
+                            var="tabela"
+                            itemLabel="#{tabela.nome}"
+                            itemValue="#{tabela}"
+                            converter="tabelaProcedimentosConverter"
+                            />  
+                        <p:outputLabel value="Valor Filme:"/> 
+                        <p:inputText value="#{convenioBean.convenio1.valorFilme}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:tab>
+
+                <p:tab title="Parâmetros AMB">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Valor CH HM:"/> 
+                        <p:inputText value="#{convenioBean.convenio1.valorChHm}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </p:inputText>
+                        <p:outputLabel value="Valor CH SADT:"/> 
+                        <p:inputText value="#{convenioBean.convenio1.valorChSadt}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:tab>
+                <p:tab title="Parâmetros CBHPM">
+                    <p:panelGrid columns="4">
+                        
+                        <p:outputLabel value="UCO HM:"/> 
+                        <p:inputText value="#{convenioBean.convenio1.ucoHm}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </p:inputText>
+                        
+                        <p:outputLabel value="Tabela Portes HM:"/>
+                        <p:autoComplete                             
+                            maxResults="5"
+                            minQueryLength="3"
+                            value="#{convenioBean.convenio1.tabelaPortesHm}"
+                            completeMethod="#{convenioBean.carregaAutoCompleteTabelaPortes}"
+                            var="tabela"
+                            itemLabel="#{tabela.nome}"
+                            itemValue="#{tabela}"
+                            converter="tabelaPortesConverter"
+                            />
+
+                        <p:outputLabel value="% Porte HM:"/> 
+                        <p:inputText value="#{convenioBean.convenio1.percPorteHm}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </p:inputText>
+                        
+                        <p:outputLabel value="UCO SADT:"/> 
+                        <p:inputText value="#{convenioBean.convenio1.ucoSadt}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </p:inputText>
+                        
+                        <p:outputLabel value="Tabela Portes SADT:"/>
+                        <p:autoComplete                            
+                            maxResults="5"
+                            minQueryLength="3"
+                            value="#{convenioBean.convenio1.tabelaPortesSadt}"
+                            completeMethod="#{convenioBean.carregaAutoCompleteTabelaPortes}"
+                            var="tabela"
+                            itemLabel="#{tabela.nome}"
+                            itemValue="#{tabela}"
+                            converter="tabelaPortesConverter"
+                            />  
+
+                        <p:outputLabel value="% Porte SADT:"/> 
+                        <p:inputText value="#{convenioBean.convenio1.percPorteSadt}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </p:inputText>
+                    </p:panelGrid>
+                </p:tab>
+
+            </p:accordionPanel>
+            
+            <p:separator />
+            
+            <p:panelGrid columns="2">
+                <p:commandButton value="Gravar" actionListener="#{convenioBean.salvar}" update=":formGeral:dtLista, :growl"/>
+                <p:button value="Fechar" onclick="PF('dialogCadastro').hide()"/>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>   
+
+</ui:decorate>

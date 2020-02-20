@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.ConvenioDao;
+import br.com.mvlvidal.calcprocweb.dao.TabelaPortesDao;
+import br.com.mvlvidal.calcprocweb.dao.TabelaProcedimentosDao;
 import br.com.mvlvidal.calcprocweb.model.Convenio;
+import br.com.mvlvidal.calcprocweb.model.Pesquisa;
+import br.com.mvlvidal.calcprocweb.model.TabelaPortes;
+import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -25,24 +24,27 @@ import javax.servlet.http.HttpServletRequest;
 @ViewScoped
 public class ConvenioBean implements Serializable {
 
-    private Convenio co1;
+    private Convenio convenio1;
     private ConvenioDao convenioDao;
     private List<Convenio> convenios;
-    private boolean editar;
+    private Pesquisa pesquisa;
+    private TabelaProcedimentosDao tabelaProcedimentosDao;
+    private TabelaPortesDao tabelaPortesDao;
 
     // CONSTRUTOR ---------------------------------------------------
     @PostConstruct
     public void init() {
 
-        co1 = new Convenio();
+        tabelaProcedimentosDao = new TabelaProcedimentosDao();
+        tabelaPortesDao = new TabelaPortesDao();
+        pesquisa = new Pesquisa();
+        convenio1 = new Convenio();
         convenioDao = new ConvenioDao();
         convenios = new ArrayList<>();
         listar();
-        this.editar = false;
     }
 
     // MÉTODOS -----------------------------------------------------
-    
     public void listar() {
 
         convenios = convenioDao.listar();
@@ -51,47 +53,53 @@ public class ConvenioBean implements Serializable {
 
     public void salvar() {
 
-        Convenio co2 = convenioDao.salvar(co1);
+        Convenio convenio2 = convenioDao.salvar(convenio1);
 
-        if (co2 != null) {
-            co1 = co2;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Convênio salvo."));
-            this.editar = false;
+        if (convenio2 != null) {
+            convenio1 = convenio2;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Convenio salvo."));
             convenios = new ArrayList<>();
             listar();
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Erro ao tentar salvar o convênio."));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Erro ao tentar salvar o porte."));
         }
 
     }
 
-    public void editar() {
+    public void consultar() {
 
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String id = request.getParameter("id");
-
-        if (id != null) {
-            co1 = convenioDao.find(Long.parseLong(id));
-            this.editar = true;
+        if (pesquisa.getNome() != null && !pesquisa.getNome().isEmpty()) {
+            convenios = convenioDao.listar(pesquisa.getNome());
+        } else {
+            listar();
         }
 
     }
 
     public void excluir(Long id) {
         convenioDao.deletar(id);
-        convenios = new ArrayList<>();
         listar();
     }
-    
-    
-    // GETS E SETS -------------------------------------------------
 
-    public Convenio getCo1() {
-        return co1;
+    public List<Convenio> carregaAutocomplete(String nome) {
+        return convenioDao.listar(nome);
+    }
+    
+    public List<TabelaProcedimentos> carregaAutoCompleteTabelaProcedimentos(String nome){
+        return tabelaProcedimentosDao.listarPorNome(nome);
     }
 
-    public void setCo1(Convenio co1) {
-        this.co1 = co1;
+    public List<TabelaPortes> carregaAutoCompleteTabelaPortes(String nome){
+        return tabelaPortesDao.listar(nome);
+    }
+    
+    // GETS E SETS -------------------------------------------------
+    public Convenio getConvenio1() {
+        return convenio1;
+    }
+
+    public void setConvenio1(Convenio convenio1) {
+        this.convenio1 = convenio1;
     }
 
     public List<Convenio> getConvenios() {
@@ -102,12 +110,18 @@ public class ConvenioBean implements Serializable {
         this.convenios = convenios;
     }
 
-    public boolean isEditar() {
-        return editar;
+    /**
+     * @return the pesquisa
+     */
+    public Pesquisa getPesquisa() {
+        return pesquisa;
     }
 
-    public void setEditar(boolean editar) {
-        this.editar = editar;
+    /**
+     * @param pesquisa the pesquisa to set
+     */
+    public void setPesquisa(Pesquisa pesquisa) {
+        this.pesquisa = pesquisa;
     }
-       
+
 }
