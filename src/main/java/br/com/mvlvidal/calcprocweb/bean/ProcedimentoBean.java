@@ -115,17 +115,7 @@ public class ProcedimentoBean implements Serializable {
 
     public List<TabelaProcedimentos> carregaAutocomplete(String nome) {
         return tabelaProcedimentosDao.listarPorNome(nome);
-    }
-    
-    public List<Convenio> carregaAutocompleteConvenio(String nome) {
-        return convenioDao.listarPorNome(nome);
-    }
-    
-    
-
-    public void calcularProcedimento() {
-
-    }
+    } 
 
     //GETS e SETS
     public Procedimento getProcedimento1() {

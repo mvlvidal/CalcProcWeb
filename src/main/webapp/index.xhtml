@@ -9,12 +9,13 @@
 
     <ui:define name="title">CalcProcWeb - Inicio</ui:define>   
 
+    <p:growl id="growl" showDetail="true" sticky="true" />    
+    
     <h:form id="formGeral">
 
         <p:panel>
             <f:facet name="header">
-                <h:outputLabel value="Calculo de Procedimentos" styleClass="tituloPrincipal"/>
-                <p:commandButton icon="pi pi-plus" value="Tabela de Portes" update=":dlgCadastro" oncomplete="PF('dialogCadastro').show()" styleClass="btnNovo" title="Novo Porte"/>
+                <h:outputLabel value="Calculo de Procedimentos" styleClass="tituloPrincipal"/>               
             </f:facet>
             <p:panelGrid columns="8" id="painel">                
                 <p:outputLabel value="Convênio:"/>
@@ -22,23 +23,23 @@
                     id="acConvenio"
                     maxResults="5"
                     minQueryLength="3"
-                    value="#{procedimentoBean.pesquisa.convenio}"
-                    completeMethod="#{procedimentoBean.carregaAutocompleteConvenio}"
+                    value="#{calculoProcedimentosBean.pesquisa.convenio}"
+                    completeMethod="#{calculoProcedimentosBean.carregaAutocompleteConvenio}"
                     var="convenio"
                     itemLabel="#{convenio.nome}"
                     itemValue="#{convenio}"
                     converter="convenioConverter"
                     /> 
                 <p:outputLabel value="Código:"/>
-                <p:inputText id="pesquisa-codigo" value="#{procedimentoBean.pesquisa.codigo}"/> 
+                <p:inputText id="pesquisa-codigo" value="#{calculoProcedimentosBean.pesquisa.codigo}"/> 
                 <p:outputLabel value="Descrição:"/>
-                <p:inputText id="pesquisa-descricao" value="#{procedimentoBean.pesquisa.descricao}"/> 
-                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{porteBean.consultar}"/>
+                <p:inputText id="pesquisa-descricao" value="#{calculoProcedimentosBean.pesquisa.descricao}"/> 
+                <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{calculoProcedimentosBean.consultar}"/>
             </p:panelGrid>
 
             <p:separator />
 
-            <p:dataTable var="procedimento" value="#{procedimentoBean.procedimentos}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">               
+            <p:dataTable var="procedimento" value="#{calculoProcedimentosBean.procedimentos}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">               
                 <p:column headerText="Código">
                     <h:outputText value="#{procedimento.codigo}" />
                 </p:column>  
@@ -49,13 +50,30 @@
                     <h:outputText value="#{procedimento.classificacao}" />
                 </p:column> 
                 <p:column headerText="Visualizar">
-                    <p:commandButton icon="pi pi-eye" oncomplete="PF('dialogCadastro').show()" update=":dlgCadastro"> 
-                        <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoBean.procedimento1}" />
+                    <p:commandButton icon="pi pi-eye" oncomplete="PF('dialogVisualizacao').show()" update=":dlgVisualizacao"> 
+                        <f:setPropertyActionListener value="#{procedimento}" target="#{calculoProcedimentosBean.procedimento}" />
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
         </p:panel>
     </h:form>
 
+    <p:dialog 
+        id="dlgVisualizacao"
+        header="#{calculoProcedimentosBean.procedimento.codigo} - #{calculoProcedimentosBean.procedimento.descricao} (#{calculoProcedimentosBean.pesquisa.convenio.nome})" 
+        widgetVar="dialogVisualizacao" 
+        modal="true"
+        appendTo="@(body)"
+        style="max-width: 800px;"
+        resizable="false">
+        <h:form id="formCadastro">
+            <p:panelGrid columns="4">
+                <p:outputLabel value="Descricao"/>
+                <p:inputText value="#{calculoProcedimentosBean.procedimento.descricao}" readonly="true"/>                             
+                <p:button value="Fechar" onclick="PF('dialogVisualizacao').hide()"/>
+            </p:panelGrid>
+        </h:form>
+    </p:dialog>  
+    
 </ui:decorate>
 
