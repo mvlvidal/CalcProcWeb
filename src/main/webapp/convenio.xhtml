@@ -35,12 +35,12 @@
                 <p:column headerText="Nome">
                     <h:outputText value="#{convenio.nome}" />
                 </p:column>
-                <p:column headerText="Tabela SADT">
-                    <h:outputText value="#{convenio.tabSadt.nome}" />
-                </p:column>               
                 <p:column headerText="Tabela HM">
                     <h:outputText value="#{convenio.tabHm.nome}" />
                 </p:column> 
+                <p:column headerText="Tabela SADT">
+                    <h:outputText value="#{convenio.tabSadt.nome}" />
+                </p:column>                               
                 <p:column headerText="Excluir">
                     <p:commandButton icon="pi pi-trash" actionListener="#{convenioBean.excluir(convenio.id)}">
                         <p:confirm header="Excluir Convenio" message="Deseja realmente excluir o item selecionado?" icon="pi pi-exclamation-triangle"/>

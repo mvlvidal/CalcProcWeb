@@ -37,11 +37,11 @@ public class Convenio extends AbstractModel{
     @Column(name = "valorChSadt")
     private Float valorChSadt;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idTabelaHm")
     private TabelaProcedimentos tabHm;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idTabelaSadt")
     private TabelaProcedimentos tabSadt;
 
@@ -54,11 +54,11 @@ public class Convenio extends AbstractModel{
     @Column(name = "valorFilme")
     private Float valorFilme;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idTabelaPortesHm")
     private TabelaPortes tabelaPortesHm;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idTabelaPortesSadt")
     private TabelaPortes tabelaPortesSadt;
 

@@ -10,7 +10,6 @@ import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
 import br.com.mvlvidal.calcprocweb.model.Convenio;
 import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
-import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -51,21 +50,18 @@ public class CalculoProcedimentosBean implements Serializable {
     }
 
     public void consultar() {
-
-        TabelaProcedimentos tabHm = pesquisa.getConvenio().getTabHm();
-        TabelaProcedimentos tabSadt = pesquisa.getConvenio().getTabSadt();
         
         if(pesquisa.getConvenio() != null && pesquisa.getCodigo() != null && pesquisa.getDescricao() != null && !pesquisa.getDescricao().isEmpty()){
-            procedimentos = procedimentoDao.listarPorCódigoDescricaoETabelas(pesquisa.getCodigo(), pesquisa.getDescricao(), tabHm, tabSadt);
+            procedimentos = procedimentoDao.listarPorCódigoDescricaoETabelas(pesquisa.getCodigo(), pesquisa.getDescricao(), pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
         }else{
             if(pesquisa.getConvenio() != null && pesquisa.getCodigo() != null){
-                procedimentos = procedimentoDao.listarPorCódigoETabelas(pesquisa.getCodigo(), tabHm, tabSadt);
+                procedimentos = procedimentoDao.listarPorCódigoETabelas(pesquisa.getCodigo(), pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
             }else{
                 if(pesquisa.getConvenio() != null && pesquisa.getDescricao() != null && !pesquisa.getDescricao().isEmpty()){
-                    procedimentos = procedimentoDao.listarPorDescricaoETabelas(pesquisa.getDescricao(), tabHm, tabSadt);
+                    procedimentos = procedimentoDao.listarPorDescricaoETabelas(pesquisa.getDescricao(), pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
                 }else{
                     if(pesquisa.getConvenio() != null){
-                        procedimentos = procedimentoDao.listarPorTabelas(tabHm, tabSadt);
+                        procedimentos = procedimentoDao.listarPorTabelas(pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
                     }
                 }
             }
