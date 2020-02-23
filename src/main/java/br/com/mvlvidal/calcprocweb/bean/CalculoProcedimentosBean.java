@@ -6,9 +6,12 @@
 package br.com.mvlvidal.calcprocweb.bean;
 
 import br.com.mvlvidal.calcprocweb.dao.ConvenioDao;
+import br.com.mvlvidal.calcprocweb.dao.PorteDao;
 import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
+import br.com.mvlvidal.calcprocweb.model.Calculo;
 import br.com.mvlvidal.calcprocweb.model.Convenio;
 import br.com.mvlvidal.calcprocweb.model.Pesquisa;
+import br.com.mvlvidal.calcprocweb.model.Porte;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
 import java.io.Serializable;
 import java.util.List;
@@ -27,8 +30,11 @@ public class CalculoProcedimentosBean implements Serializable {
     private Pesquisa pesquisa;
     private Procedimento procedimento;
     private ProcedimentoDao procedimentoDao;
+    private PorteDao porteDao;
+    private Porte porte;
     private ConvenioDao convenioDao;
     private Convenio convenio;
+    private Calculo calculo;
 
     private List<Procedimento> procedimentos;
     private List<Convenio> convenios;
@@ -42,6 +48,9 @@ public class CalculoProcedimentosBean implements Serializable {
         procedimentoDao = new ProcedimentoDao();
         convenioDao = new ConvenioDao();
         convenio = new Convenio();
+        calculo = new Calculo();
+        porteDao = new PorteDao();
+        porte = new Porte();
     }
 
     // ----------------------- MÉTODOS ------------------------------//
@@ -71,6 +80,14 @@ public class CalculoProcedimentosBean implements Serializable {
 
     public void calcularProcedimento() {
 
+        this.convenio = pesquisa.getConvenio();
+        
+        porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesHm(), procedimento.getPorteMedico());
+        
+        calculo.setValorPorteMedico(porte.getPreco() * convenio.getUcoHm());
+        
+        //calculo.setValorPorteMedico(procedimento.g);
+        
     }
 
     // ----------------------- GETS E SETS --------------------------//
@@ -136,6 +153,34 @@ public class CalculoProcedimentosBean implements Serializable {
 
     public void setPesquisa(Pesquisa pesquisa) {
         this.pesquisa = pesquisa;
+    }
+
+    /**
+     * @return the calculo
+     */
+    public Calculo getCalculo() {
+        return calculo;
+    }
+
+    /**
+     * @param calculo the calculo to set
+     */
+    public void setCalculo(Calculo calculo) {
+        this.calculo = calculo;
+    }
+
+    /**
+     * @return the porte
+     */
+    public Porte getPorte() {
+        return porte;
+    }
+
+    /**
+     * @param porte the porte to set
+     */
+    public void setPorte(Porte porte) {
+        this.porte = porte;
     }
     
     

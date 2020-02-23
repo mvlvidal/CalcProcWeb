@@ -63,12 +63,19 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements S
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
 
         Criteria criteria = sessao.createCriteria(Procedimento.class);
-        criteria.add(Restrictions.like("codigo", "%" + codigo + "%"));
+        criteria.add(Restrictions.eq("codigo",codigo));
+        Criterion classificacaoHm = Restrictions.eq("classificacao", "HM");
+        Criterion classificacaoSadt = Restrictions.eq("classificacao", "SADT");
         Criterion tabelaHm = Restrictions.eq("tabela", tabHm);
         Criterion tabelaSadt = Restrictions.eq("tabela", tabSadt);
-        LogicalExpression orCriterio = Restrictions.or(tabelaHm,tabelaSadt);
+        
+        LogicalExpression andCriterioHm = Restrictions.and(tabelaHm, classificacaoHm);
+        LogicalExpression andCriterioSadt = Restrictions.and(tabelaSadt, classificacaoSadt);
+        
+        LogicalExpression orCriterio = Restrictions.or(andCriterioHm,andCriterioSadt);
+        
         criteria.add(orCriterio);
-
+        
         return criteria.list();
 
     }
@@ -79,9 +86,16 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements S
 
         Criteria criteria = sessao.createCriteria(Procedimento.class);
         criteria.add(Restrictions.like("descricao", "%" + descricao + "%"));
+        Criterion classificacaoHm = Restrictions.eq("classificacao", "HM");
+        Criterion classificacaoSadt = Restrictions.eq("classificacao", "SADT");
         Criterion tabelaHm = Restrictions.eq("tabela", tabHm);
         Criterion tabelaSadt = Restrictions.eq("tabela", tabSadt);
-        LogicalExpression orCriterio = Restrictions.or(tabelaHm,tabelaSadt);
+        
+        LogicalExpression andCriterioHm = Restrictions.and(tabelaHm, classificacaoHm);
+        LogicalExpression andCriterioSadt = Restrictions.and(tabelaSadt, classificacaoSadt);
+        
+        LogicalExpression orCriterio = Restrictions.or(andCriterioHm,andCriterioSadt);
+        
         criteria.add(orCriterio);
 
         return criteria.list();
@@ -93,11 +107,18 @@ public class ProcedimentoDao extends GenericDao<Procedimento, Long> implements S
         Session sessao = br.com.mvlvidal.calcprocweb.dao.HibernateUtil.getSession();
 
         Criteria criteria = sessao.createCriteria(Procedimento.class);
-        criteria.add(Restrictions.like("codigo", "%" + codigo + "%"));
+        criteria.add(Restrictions.eq("codigo",codigo));
         criteria.add(Restrictions.like("descricao", "%" + descricao + "%"));
+        Criterion classificacaoHm = Restrictions.eq("classificacao", "HM");
+        Criterion classificacaoSadt = Restrictions.eq("classificacao", "SADT");
         Criterion tabelaHm = Restrictions.eq("tabela", tabHm);
         Criterion tabelaSadt = Restrictions.eq("tabela", tabSadt);
-        LogicalExpression orCriterio = Restrictions.or(tabelaHm,tabelaSadt);
+        
+        LogicalExpression andCriterioHm = Restrictions.and(tabelaHm, classificacaoHm);
+        LogicalExpression andCriterioSadt = Restrictions.and(tabelaSadt, classificacaoSadt);
+        
+        LogicalExpression orCriterio = Restrictions.or(andCriterioHm,andCriterioSadt);
+        
         criteria.add(orCriterio);
 
         return criteria.list();
