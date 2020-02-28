@@ -24,6 +24,8 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class ConvenioBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private Convenio convenio1;
     private ConvenioDao convenioDao;
     private List<Convenio> convenios;

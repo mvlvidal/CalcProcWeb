@@ -13,6 +13,7 @@ import br.com.mvlvidal.calcprocweb.model.Convenio;
 import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.Porte;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
+import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -59,35 +60,66 @@ public class CalculoProcedimentosBean implements Serializable {
     }
 
     public void consultar() {
-        
-        if(pesquisa.getConvenio() != null && pesquisa.getCodigo() != null && pesquisa.getDescricao() != null && !pesquisa.getDescricao().isEmpty()){
+
+        if (pesquisa.getConvenio() != null && pesquisa.getCodigo() != null && pesquisa.getDescricao() != null && !pesquisa.getDescricao().isEmpty()) {
             procedimentos = procedimentoDao.listarPorCódigoDescricaoETabelas(pesquisa.getCodigo(), pesquisa.getDescricao(), pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
-        }else{
-            if(pesquisa.getConvenio() != null && pesquisa.getCodigo() != null){
+        } else {
+            if (pesquisa.getConvenio() != null && pesquisa.getCodigo() != null) {
                 procedimentos = procedimentoDao.listarPorCódigoETabelas(pesquisa.getCodigo(), pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
-            }else{
-                if(pesquisa.getConvenio() != null && pesquisa.getDescricao() != null && !pesquisa.getDescricao().isEmpty()){
+            } else {
+                if (pesquisa.getConvenio() != null && pesquisa.getDescricao() != null && !pesquisa.getDescricao().isEmpty()) {
                     procedimentos = procedimentoDao.listarPorDescricaoETabelas(pesquisa.getDescricao(), pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
-                }else{
-                    if(pesquisa.getConvenio() != null){
+                } else {
+                    if (pesquisa.getConvenio() != null) {
                         procedimentos = procedimentoDao.listarPorTabelas(pesquisa.getConvenio().getTabHm(), pesquisa.getConvenio().getTabSadt());
                     }
                 }
             }
         }
-        
+
     }
 
-    public void calcularProcedimento() {
+    public void calcularProcedimento(Procedimento p) {
 
+        this.procedimento = p;
+        
         this.convenio = pesquisa.getConvenio();
-        
-        porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesHm(), procedimento.getPorteMedico());
-        
-        calculo.setValorPorteMedico(porte.getPreco() * convenio.getUcoHm());
-        
-        //calculo.setValorPorteMedico(procedimento.g);
-        
+
+        TabelaProcedimentos tabProc = procedimento.getTabela();
+
+        if (tabProc.getTipoTab().equals("CBHPM")) {
+            calculoCbhpm();
+        } else {
+            calculoAmb();
+        }
+
+    }
+
+    public void calculoAmb() {
+
+        System.out.println("AMB");
+
+    }
+
+    public void calculoCbhpm() {
+        System.out.println("CBHPM");
+
+        if (procedimento.getClassificacao().equals("HM")) {
+            this.porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesHm().getId(), procedimento.getPorteMedico());
+            this.calculo.setValorPorteMedico((this.porte.getPreco() * this.procedimento.getPercentPorte() )* convenio.getPercPorteHm());
+            this.calculo.setValorCo(this.procedimento.getCo() * this.convenio.getUcoHm());
+        } else {
+            if (procedimento.getClassificacao().equals("SADT")) {
+                this.porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesSadt().getId(), procedimento.getPorteMedico());
+            }
+        }
+
+    }
+    
+    public void resetarVisualizacao(){
+        this.procedimento = new Procedimento();
+        this.convenio = new Convenio();
+        this.calculo = new Calculo();
     }
 
     // ----------------------- GETS E SETS --------------------------//
@@ -182,7 +214,5 @@ public class CalculoProcedimentosBean implements Serializable {
     public void setPorte(Porte porte) {
         this.porte = porte;
     }
-    
-    
 
 }
