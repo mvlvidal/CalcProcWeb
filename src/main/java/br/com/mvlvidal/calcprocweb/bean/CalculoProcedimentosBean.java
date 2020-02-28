@@ -17,8 +17,10 @@ import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -52,6 +54,8 @@ public class CalculoProcedimentosBean implements Serializable {
         calculo = new Calculo();
         porteDao = new PorteDao();
         porte = new Porte();
+
+        zerarValores();
     }
 
     // ----------------------- MÉTODOS ------------------------------//
@@ -82,7 +86,7 @@ public class CalculoProcedimentosBean implements Serializable {
     public void calcularProcedimento(Procedimento p) {
 
         this.procedimento = p;
-        
+
         this.convenio = pesquisa.getConvenio();
 
         TabelaProcedimentos tabProc = procedimento.getTabela();
@@ -105,21 +109,49 @@ public class CalculoProcedimentosBean implements Serializable {
         System.out.println("CBHPM");
 
         if (procedimento.getClassificacao().equals("HM")) {
+
             this.porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesHm().getId(), procedimento.getPorteMedico());
-            this.calculo.setValorPorteMedico((this.porte.getPreco() * this.procedimento.getPercentPorte() )* convenio.getPercPorteHm());
+            this.calculo.setValorPorteMedico((this.porte.getPreco() * this.procedimento.getPercentPorte()) * convenio.getPercPorteHm());
             this.calculo.setValorCo(this.procedimento.getCo() * this.convenio.getUcoHm());
+
         } else {
             if (procedimento.getClassificacao().equals("SADT")) {
+
                 this.porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesSadt().getId(), procedimento.getPorteMedico());
+
+                if (this.porte != null) {
+                    this.calculo.setValorPorteMedico((this.porte.getPreco() * this.procedimento.getPercentPorte()) * convenio.getPercPorteSadt());
+                    this.calculo.setValorCo(this.procedimento.getCo() * this.convenio.getUcoSadt());
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "O Porte Médico do procedimento selecionado, não foi encontrado na tabela de portes."));
+                }
+
             }
         }
 
     }
-    
-    public void resetarVisualizacao(){
+
+    public void resetarVisualizacao() {
+
         this.procedimento = new Procedimento();
         this.convenio = new Convenio();
-        this.calculo = new Calculo();
+
+        zerarValores();
+    }
+
+    public void zerarValores() {
+
+        calculo.setSubtotal(0.0f);
+        calculo.setValorAuxilio1(0.0f);
+        calculo.setTotal(0.0f);
+        calculo.setValorAuxilio1(0.0f);
+        calculo.setValorAuxilio2(0.0f);
+        calculo.setValorAuxilio3(0.0f);
+        calculo.setValorCh(0.0f);
+        calculo.setValorCo(0.0f);
+        calculo.setValorFilme(0.0f);
+        calculo.setValorPorteMedico(0.0f);
+
     }
 
     // ----------------------- GETS E SETS --------------------------//
