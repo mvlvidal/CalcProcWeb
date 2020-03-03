@@ -3,11 +3,9 @@ package br.com.mvlvidal.calcprocweb.bean;
 import br.com.mvlvidal.calcprocweb.dao.ConvenioDao;
 import br.com.mvlvidal.calcprocweb.dao.ProcedimentoDao;
 import br.com.mvlvidal.calcprocweb.dao.TabelaProcedimentosDao;
-import br.com.mvlvidal.calcprocweb.model.Convenio;
 import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
 import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -18,7 +16,7 @@ import javax.faces.context.FacesContext;
 
 @ViewScoped
 @ManagedBean(name = "procedimentoBean")
-public class ProcedimentoBean implements Serializable {
+public class ProcedimentoBean{
 
     private static final long serialVersionUID = 1L;
 

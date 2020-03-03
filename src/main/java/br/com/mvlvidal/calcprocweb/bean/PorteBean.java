@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
 
 @ViewScoped
 @ManagedBean(name = "porteBean")
-public class PorteBean implements Serializable {
+public class PorteBean{
 
     private Porte por1;
     private PorteDao porteDao;

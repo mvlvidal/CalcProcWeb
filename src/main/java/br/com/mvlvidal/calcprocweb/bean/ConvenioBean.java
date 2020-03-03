@@ -22,9 +22,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @ViewScoped
-public class ConvenioBean implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class ConvenioBean{
     
     private Convenio convenio1;
     private ConvenioDao convenioDao;

@@ -29,7 +29,7 @@ import javax.faces.context.FacesContext;
  */
 @ViewScoped
 @ManagedBean(name = "calculoProcedimentosBean")
-public class CalculoProcedimentosBean implements Serializable {
+public class CalculoProcedimentosBean{
 
     private Pesquisa pesquisa;
     private Procedimento procedimento;
@@ -155,12 +155,12 @@ public class CalculoProcedimentosBean implements Serializable {
 
         List<Float> valores = new ArrayList<>();
 
-        for (int i = 1; i < aux; i++) {
+        for (int i = 1; i < aux+1; i++) {
             if (i == 1) {
                 valores.add(calculo.getValorPorteMedico() * 0.3f);
+            }else{
+                valores.add(calculo.getValorPorteMedico() * 0.2f);
             }
-
-            valores.add(calculo.getValorPorteMedico() * 0.2f);
         }
 
         calculo.setValoresAuxilio(valores);
@@ -170,10 +170,7 @@ public class CalculoProcedimentosBean implements Serializable {
     }
 
     public boolean validarPorteAnestesico() {
-        if (procedimento.getPorteAnestesico() < 6) {
-            return false;
-        }
-        return true;
+        return procedimento.getPorteAnestesico() < 6;
     }
 
     public void resetarVisualizacao() {

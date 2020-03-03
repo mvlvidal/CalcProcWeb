@@ -14,9 +14,7 @@ import javax.faces.context.FacesContext;
 
 @ViewScoped
 @ManagedBean(name = "tabelaProcedimentosBean")
-public class TabelaProcedimentosBean implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class TabelaProcedimentosBean{
 
     private TabelaProcedimentos tabelaProcedimentos1;
     private TabelaProcedimentosDao tabelaProcedimentosDao;
