@@ -6,6 +6,7 @@
 package br.com.mvlvidal.calcprocweb.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -17,11 +18,10 @@ public class Calculo implements Serializable{
     private Float valorPorteMedico;
     private Float valorFilme;
     private Float valorCh;
-    private Float valorAuxilio1;
-    private Float valorAuxilio2;
-    private Float valorAuxilio3;
+    private List<Float> valoresAuxilio;
     private Float total;
     private Float subtotal;
+    private Integer qtdAuxilio;
 
     public Float getValorCo() {
         return valorCo;
@@ -53,31 +53,7 @@ public class Calculo implements Serializable{
 
     public void setValorCh(Float valorCh) {
         this.valorCh = valorCh;
-    }
-
-    public Float getValorAuxilio1() {
-        return valorAuxilio1;
-    }
-
-    public void setValorAuxilio1(Float valorAuxilio1) {
-        this.valorAuxilio1 = valorAuxilio1;
-    }
-
-    public Float getValorAuxilio2() {
-        return valorAuxilio2;
-    }
-
-    public void setValorAuxilio2(Float valorAuxilio2) {
-        this.valorAuxilio2 = valorAuxilio2;
-    }
-
-    public Float getValorAuxilio3() {
-        return valorAuxilio3;
-    }
-
-    public void setValorAuxilio3(Float valorAuxilio3) {
-        this.valorAuxilio3 = valorAuxilio3;
-    }
+    } 
 
     /**
      * @return the total
@@ -106,5 +82,34 @@ public class Calculo implements Serializable{
     public void setSubtotal(Float subtotal) {
         this.subtotal = subtotal;
     }
-   
+
+    /**
+     * @return the valoresAuxilio
+     */
+    public List<Float> getValoresAuxilio() {
+        return valoresAuxilio;
+    }
+
+    /**
+     * @param valoresAuxilio the valoresAuxilio to set
+     */
+    public void setValoresAuxilio(List<Float> valoresAuxilio) {
+        this.valoresAuxilio = valoresAuxilio;
+    }
+
+    /**
+     * @return the qtdAuxilio
+     */
+    public Integer getQtdAuxilio() {
+        return qtdAuxilio;
+    }
+
+    /**
+     * @param qtdAuxilio the qtdAuxilio to set
+     */
+    public void setQtdAuxilio(Integer qtdAuxilio) {
+        this.qtdAuxilio = qtdAuxilio;
+    }
+
+    
 }

@@ -15,6 +15,7 @@ import br.com.mvlvidal.calcprocweb.model.Porte;
 import br.com.mvlvidal.calcprocweb.model.Procedimento;
 import br.com.mvlvidal.calcprocweb.model.TabelaProcedimentos;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -106,22 +107,31 @@ public class CalculoProcedimentosBean implements Serializable {
     }
 
     public void calculoCbhpm() {
-        System.out.println("CBHPM");
 
         if (procedimento.getClassificacao().equals("HM")) {
 
-            this.porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesHm().getId(), procedimento.getPorteMedico());
-            this.calculo.setValorPorteMedico((this.porte.getPreco() * this.procedimento.getPercentPorte()) * convenio.getPercPorteHm());
-            this.calculo.setValorCo(this.procedimento.getCo() * this.convenio.getUcoHm());
+            porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesHm().getId(), procedimento.getPorteMedico());
+
+            if (this.porte != null) {
+                calculo.setValorPorteMedico((porte.getPreco() * procedimento.getPercentPorte()) * convenio.getPercPorteHm());
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "O Porte Médico do procedimento selecionado, não foi encontrado na tabela de portes."));
+            }
+
+            calculo.setValorCo(procedimento.getCo() * convenio.getUcoHm());
+
+            calculo.setSubtotal(calculo.getValorCo() + calculo.getValorPorteMedico());
+
+            calcularAuxilio();
 
         } else {
             if (procedimento.getClassificacao().equals("SADT")) {
 
-                this.porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesSadt().getId(), procedimento.getPorteMedico());
+                porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesSadt().getId(), procedimento.getPorteMedico());
 
-                if (this.porte != null) {
-                    this.calculo.setValorPorteMedico((this.porte.getPreco() * this.procedimento.getPercentPorte()) * convenio.getPercPorteSadt());
-                    this.calculo.setValorCo(this.procedimento.getCo() * this.convenio.getUcoSadt());
+                if (porte != null) {
+                    calculo.setValorPorteMedico((porte.getPreco() * procedimento.getPercentPorte()) * convenio.getPercPorteSadt());
+                    calculo.setValorCo(procedimento.getCo() * convenio.getUcoSadt());
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "O Porte Médico do procedimento selecionado, não foi encontrado na tabela de portes."));
                 }
@@ -129,6 +139,41 @@ public class CalculoProcedimentosBean implements Serializable {
             }
         }
 
+    }
+
+    public void calcularAuxilio() {
+
+        Integer aux = 0;
+
+        if (calculo.getQtdAuxilio() > 0) {
+            aux = calculo.getQtdAuxilio();
+        } else {
+            if (procedimento.getAux() > 0) {
+                aux = procedimento.getAux();
+            }
+        }
+
+        List<Float> valores = new ArrayList<>();
+
+        for (int i = 1; i < aux; i++) {
+            if (i == 1) {
+                valores.add(calculo.getValorPorteMedico() * 0.3f);
+            }
+
+            valores.add(calculo.getValorPorteMedico() * 0.2f);
+        }
+
+        calculo.setValoresAuxilio(valores);
+
+        calculo.setQtdAuxilio(0);
+
+    }
+
+    public boolean validarPorteAnestesico() {
+        if (procedimento.getPorteAnestesico() < 6) {
+            return false;
+        }
+        return true;
     }
 
     public void resetarVisualizacao() {
@@ -142,15 +187,13 @@ public class CalculoProcedimentosBean implements Serializable {
     public void zerarValores() {
 
         calculo.setSubtotal(0.0f);
-        calculo.setValorAuxilio1(0.0f);
+        calculo.setValoresAuxilio(new ArrayList<Float>());
         calculo.setTotal(0.0f);
-        calculo.setValorAuxilio1(0.0f);
-        calculo.setValorAuxilio2(0.0f);
-        calculo.setValorAuxilio3(0.0f);
         calculo.setValorCh(0.0f);
         calculo.setValorCo(0.0f);
         calculo.setValorFilme(0.0f);
         calculo.setValorPorteMedico(0.0f);
+        calculo.setQtdAuxilio(0);
 
     }
 

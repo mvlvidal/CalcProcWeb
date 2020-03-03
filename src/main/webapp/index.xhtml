@@ -31,7 +31,7 @@
                     converter="convenioConverter"
                     /> 
                 <p:outputLabel value="Código:"/>
-                <p:inputText id="pesquisa-codigo" value="#{calculoProcedimentosBean.pesquisa.codigo}" type="number"/> 
+                <p:inputText id="pesquisa-codigo" value="#{calculoProcedimentosBean.pesquisa.codigo}"/> 
                 <p:outputLabel value="Descrição:"/>
                 <p:inputText id="pesquisa-descricao" value="#{calculoProcedimentosBean.pesquisa.descricao}"/> 
                 <p:commandButton icon="pi pi-search" update=":formGeral:dtLista" actionListener="#{calculoProcedimentosBean.consultar}"/>
@@ -50,7 +50,7 @@
                     <h:outputText value="#{procedimento.classificacao}" />
                 </p:column> 
                 <p:column headerText="Visualizar">
-                    <p:commandButton icon="pi pi-eye" oncomplete="PF('dialogVisualizacao').show()" action="#{calculoProcedimentosBean.calcularProcedimento(procedimento)}" update=":dlgVisualizacao">
+                    <p:commandButton icon="pi pi-eye" oncomplete="PF('dialogVisualizacao').show()" action="#{calculoProcedimentosBean.calcularProcedimento(procedimento)}" update=":dlgVisualizacao, #{p:component('growl')}">
                         <f:setPropertyActionListener value="#{procedimento}" target="#{calculoProcedimentosBean.procedimento}" />
                     </p:commandButton>
                 </p:column>
@@ -64,34 +64,45 @@
         widgetVar="dialogVisualizacao" 
         modal="true"
         appendTo="@(body)"
-        style="max-width: 800px;"
         resizable="false">
         <h:form id="formCadastro">
-            <p:panelGrid columns="4">
-                <p:outputLabel value="Código:"/>
-                <p:outputLabel value="#{calculoProcedimentosBean.procedimento.codigo}"/>
-                <p:outputLabel value="Descricao:"/>
-                <p:outputLabel value="#{calculoProcedimentosBean.procedimento.descricao}"/> 
-                <p:outputLabel value="Valor Porte:"/>
-                <p:outputLabel value="#{calculoProcedimentosBean.calculo.valorPorteMedico}" style="text-align: right;">
-                    <f:convertNumber pattern="R$ #,##0.00"/>
-                </p:outputLabel> 
-                <p:outputLabel value="Valor CO:"/>
-                <p:outputLabel value="#{calculoProcedimentosBean.calculo.valorCo}" style="text-align: right;">
-                    <f:convertNumber pattern="R$ #,##0.00"/>
-                </p:outputLabel> 
-                <p:outputLabel value="1º Auxilio:"/>
-                <p:outputLabel value="#{calculoProcedimentosBean.calculo.valorAuxilio1}" style="text-align: right;">
-                    <f:convertNumber pattern="R$ #,##0.00"/>
-                </p:outputLabel> 
-                <p:outputLabel value="2º Auxilio:"/>
-                <p:outputLabel value="#{calculoProcedimentosBean.calculo.valorAuxilio2}" style="text-align: right;">
-                    <f:convertNumber pattern="R$ #,##0.00"/>
-                </p:outputLabel> 
-                <p:outputLabel value="3º Auxilio:"/>
-                <p:outputLabel value="#{calculoProcedimentosBean.calculo.valorAuxilio3}" style="text-align: right;">
-                    <f:convertNumber pattern="R$ #,##0.00"/>
-                </p:outputLabel>                 
+            <p:panelGrid>
+                <p:row>
+                    <p:column>
+                        <p:outputLabel value="Código:" style="font-weight: bold"/><br />
+                        <p:inputText value="#{calculoProcedimentosBean.procedimento.codigo}" readonly="true" style="text-align: center;"/>   
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Descricao:" style="font-weight: bold"/><br />
+                        <p:inputText value="#{calculoProcedimentosBean.procedimento.descricao}" readonly="true"/> 
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Valor Porte:" style="font-weight: bold"/><br />
+                        <p:inputText value="#{calculoProcedimentosBean.calculo.valorPorteMedico}" style="text-align: right;" readonly="true">
+                            <f:convertNumber pattern="R$ #,##0.00"/>
+                        </p:inputText> 
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Valor CO:" style="font-weight: bold"/><br />
+                        <p:inputText value="#{calculoProcedimentosBean.calculo.valorCo}" style="text-align: right;" readonly="true">
+                            <f:convertNumber pattern="R$ #,##0.00"/>
+                        </p:inputText>    
+                    </p:column>
+                </p:row>
+
+                <p:row rendered="#{calculoProcedimentosBean.procedimento.aux > 0}">
+                    <p:column>
+                        <p:outputLabel value="Auxilio:" style="font-weight: bold"/><br />
+                        <p:inputText value="#{calculoProcedimentosBean.calculo.qtdAuxilio}" rendered="#{calculoProcedimentosBean.validarPorteAnestesico ? true : false}"/>
+                        <p:commandButton icon="pi pi-refresh" title="Recalcular Auxilio" action="#{calculoProcedimentosBean.calcularAuxilio}" update="listaAuxilios" rendered="#{calculoProcedimentosBean.validarPorteAnestesico ? true : false}"/>
+                        <p:dataList id="listaAuxilios" value="#{calculoProcedimentosBean.calculo.valoresAuxilio}" var="auxilio" type="ordered" > 
+                            <h:outputText value="#{auxilio}">
+                                <f:convertNumber pattern="R$ #,##0.00"/>
+                            </h:outputText>
+                        </p:dataList>    
+                    </p:column>
+                </p:row>
+
             </p:panelGrid>
 
             <p:separator />
