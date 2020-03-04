@@ -13,10 +13,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeRequestContext;
 
 @ViewScoped
 @ManagedBean(name = "procedimentoBean")
-public class ProcedimentoBean{
+public class ProcedimentoBean {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,7 +44,7 @@ public class ProcedimentoBean{
 
     @PostConstruct
     public void init() {
-        
+
         pesquisa = new Pesquisa();
         procedimento1 = new Procedimento();
         procedimentoDao = new ProcedimentoDao();
@@ -72,6 +74,8 @@ public class ProcedimentoBean{
             procedimento1 = procedimento2;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Procedimento salvo."));
             consultar();
+            PrimeFaces.current().executeScript("PF('formCadastro').hide()");
+   
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Erro ao tentar salvar o procedimento."));
         }
@@ -113,7 +117,7 @@ public class ProcedimentoBean{
 
     public List<TabelaProcedimentos> carregaAutocomplete(String nome) {
         return tabelaProcedimentosDao.listarPorNome(nome);
-    } 
+    }
 
     //GETS e SETS
     public Procedimento getProcedimento1() {

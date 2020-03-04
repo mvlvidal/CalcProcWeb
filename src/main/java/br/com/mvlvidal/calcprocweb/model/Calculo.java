@@ -22,6 +22,7 @@ public class Calculo implements Serializable{
     private Float total;
     private Float subtotal;
     private Integer qtdAuxilio;
+    private Float valorPorteAnestesico;
 
     public Float getValorCo() {
         return valorCo;
@@ -109,6 +110,20 @@ public class Calculo implements Serializable{
      */
     public void setQtdAuxilio(Integer qtdAuxilio) {
         this.qtdAuxilio = qtdAuxilio;
+    }
+
+    /**
+     * @return the valorPorteAnestesico
+     */
+    public Float getValorPorteAnestesico() {
+        return valorPorteAnestesico;
+    }
+
+    /**
+     * @param valorPorteAnestesico the valorPorteAnestesico to set
+     */
+    public void setValorPorteAnestesico(Float valorPorteAnestesico) {
+        this.valorPorteAnestesico = valorPorteAnestesico;
     }
 
     

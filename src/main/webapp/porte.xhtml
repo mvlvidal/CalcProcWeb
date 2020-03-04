@@ -36,7 +36,7 @@
 
             <p:separator />
 
-            <p:dataTable var="porte" value="#{porteBean.portes}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros.">
+            <p:dataTable var="porte" value="#{porteBean.portes}" id="dtLista" style="text-align: center;" emptyMessage="Não há registros." paginator="true" rows="10">
                 <p:column headerText="Editar">
                     <p:commandButton icon="pi pi-pencil" oncomplete="PF('dialogCadastro').show()" update=":dlgCadastro"> 
                         <f:setPropertyActionListener value="#{porte}" target="#{porteBean.por1}" />

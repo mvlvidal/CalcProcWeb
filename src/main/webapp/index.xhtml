@@ -66,7 +66,7 @@
         appendTo="@(body)"
         resizable="false">
         <h:form id="formCadastro">
-            <p:panelGrid columns="6">
+            <p:panelGrid columns="6" style="width: 100%">
                 <p:outputLabel value="Código: " style="font-weight: bold"/>
                 <h:outputText value="#{calculoProcedimentosBean.procedimento.codigo}" style="text-align: center;"/> 
 
@@ -98,21 +98,27 @@
 
             <p:separator />
 
-            <p:panel header="Calculo">
-                <p:panelGrid columns="6">
-                    <p:outputLabel value="Valor Porte: " style="font-weight: bold"/>
+            <p:panel header="Calculo" >
+                <p:panelGrid columns="6" style="width: 100%">
+                    <p:outputLabel value="Porte Médico: " style="font-weight: bold"/>
 
                     <h:outputText value="#{calculoProcedimentosBean.calculo.valorPorteMedico}" style="text-align: right;">
                         <f:convertNumber pattern="R$ #,##0.00"/>
                     </h:outputText> 
 
-                    <p:outputLabel value="Valor CO: " style="font-weight: bold"/>
+                    <p:outputLabel value="Porte Anestésico: " style="font-weight: bold"/>
+
+                    <h:outputText value="#{calculoProcedimentosBean.calculo.valorPorteAnestesico}" style="text-align: right;">
+                        <f:convertNumber pattern="R$ #,##0.00"/>
+                    </h:outputText> 
+
+                    <p:outputLabel value="Custo Operacional: " style="font-weight: bold"/>
 
                     <h:outputText value="#{calculoProcedimentosBean.calculo.valorCo}" style="text-align: right;">
                         <f:convertNumber pattern="R$ #,##0.00"/>
                     </h:outputText> 
 
-                    <p:outputLabel value="Valor Filme: " style="font-weight: bold"/>
+                    <p:outputLabel value="Filme: " style="font-weight: bold"/>
 
                     <h:outputText value="#{calculoProcedimentosBean.calculo.valorFilme}" style="text-align: right;">
                         <f:convertNumber pattern="R$ #,##0.00"/>
@@ -137,6 +143,15 @@
                     </p:row>
                 </p:panelGrid>
 
+            </p:panel>
+
+            <p:separator />
+
+            <p:panel>
+                <p:outputLabel value="Total: " style="font-weight: bold"/>
+                <h:outputText value="#{calculoProcedimentosBean.calculo.total}" style="text-align: right;">
+                    <f:convertNumber pattern="R$ #,##0.00"/>
+                </h:outputText>  
             </p:panel>
 
             <p:separator />

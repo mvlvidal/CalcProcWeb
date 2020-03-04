@@ -5,7 +5,6 @@ import br.com.mvlvidal.calcprocweb.dao.TabelaPortesDao;
 import br.com.mvlvidal.calcprocweb.model.Pesquisa;
 import br.com.mvlvidal.calcprocweb.model.Porte;
 import br.com.mvlvidal.calcprocweb.model.TabelaPortes;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -13,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.PrimeFaces;
 
 @ViewScoped
 @ManagedBean(name = "porteBean")
@@ -54,6 +54,9 @@ public class PorteBean{
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Porte salvo."));
             portes = new ArrayList<>();
             listar();
+            PrimeFaces current = PrimeFaces.current();
+            current.executeScript("PF('dialogCadastro').hide();");
+            por1 = new Porte();
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Erro ao tentar salvar o porte."));
         }

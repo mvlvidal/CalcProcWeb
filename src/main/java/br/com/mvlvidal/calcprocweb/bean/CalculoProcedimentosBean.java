@@ -29,7 +29,7 @@ import javax.faces.context.FacesContext;
  */
 @ViewScoped
 @ManagedBean(name = "calculoProcedimentosBean")
-public class CalculoProcedimentosBean{
+public class CalculoProcedimentosBean {
 
     private Pesquisa pesquisa;
     private Procedimento procedimento;
@@ -98,6 +98,19 @@ public class CalculoProcedimentosBean{
             calculoAmb();
         }
 
+        List<Float> valoresAuxilio = calculo.getValoresAuxilio();
+        
+        for (Float v : valoresAuxilio) {
+            calculo.setSubtotal(calculo.getSubtotal() + v);
+        }
+        
+        calculo.setTotal(
+                calculo.getValorCh() + 
+                calculo.getValorCo() + 
+                calculo.getValorFilme() + 
+                calculo.getValorPorteAnestesico() + 
+                calculo.getValorPorteMedico() + 
+                calculo.getSubtotal());
     }
 
     public void calculoAmb() {
@@ -123,6 +136,11 @@ public class CalculoProcedimentosBean{
             calculo.setSubtotal(calculo.getValorCo() + calculo.getValorPorteMedico());
 
             calcularAuxilio();
+            
+            if(procedimento.getPorteAnestesico() > 0){
+                calcularPorteAnestesico();
+            }
+            
 
         } else {
             if (procedimento.getClassificacao().equals("SADT")) {
@@ -135,6 +153,12 @@ public class CalculoProcedimentosBean{
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atenção!", "O Porte Médico do procedimento selecionado, não foi encontrado na tabela de portes."));
                 }
+                
+                if(procedimento.getPorteAnestesico() > 0){
+                    calcularPorteAnestesico();
+                }
+                
+                calculo.setValorFilme(procedimento.getQtdFilme() * convenio.getValorFilme());
 
             }
         }
@@ -155,10 +179,10 @@ public class CalculoProcedimentosBean{
 
         List<Float> valores = new ArrayList<>();
 
-        for (int i = 1; i < aux+1; i++) {
+        for (int i = 1; i < aux + 1; i++) {
             if (i == 1) {
                 valores.add(calculo.getValorPorteMedico() * 0.3f);
-            }else{
+            } else {
                 valores.add(calculo.getValorPorteMedico() * 0.2f);
             }
         }
@@ -166,6 +190,62 @@ public class CalculoProcedimentosBean{
         calculo.setValoresAuxilio(valores);
 
         calculo.setQtdAuxilio(0);
+
+    }
+
+    public void calcularPorteAnestesico() {
+
+        Integer[] portesAnestesicosAmb = {0, 175, 250, 370, 500, 750, 1100, 1600, 1750}; //Valores em CH's
+        String[] portesAnestesicosCbhpm = {"", "3A", "3C", "4C", "6B", "7C", "9B", "10C", "12A"};
+
+        Integer portesAnestesicoAmb = 0;
+        String portesAnestesicoCbhpm = "";
+        
+        TabelaProcedimentos tabela = procedimento.getTabela();
+
+        if (tabela.getTipoTab().equals("AMB")) {
+
+            portesAnestesicoAmb = portesAnestesicosAmb[procedimento.getPorteAnestesico()];
+
+            if (procedimento.getClassificacao().equals("HM")) {
+
+                calculo.setValorPorteAnestesico(convenio.getValorChHm() * portesAnestesicoAmb);
+
+            } else {
+                if (procedimento.getClassificacao().equals("SADT")) {
+
+                    calculo.setValorPorteAnestesico(convenio.getValorChSadt() * portesAnestesicoAmb);
+
+                }
+            }
+
+        } else {
+
+            if (tabela.getTipoTab().equals("CBHPM")) {
+
+                portesAnestesicoCbhpm = portesAnestesicosCbhpm[procedimento.getPorteAnestesico()];
+
+                if (procedimento.getClassificacao().equals("HM")) {
+
+                    porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesHm().getId(), portesAnestesicoCbhpm);
+                    
+                    calculo.setValorPorteAnestesico(porte.getPreco() * convenio.getPercPorteHm());
+
+                } else {
+
+                    if (procedimento.getClassificacao().equals("SADT")) {
+
+                        porte = porteDao.buscarPorTabelaENome(convenio.getTabelaPortesSadt().getId(), portesAnestesicoCbhpm);
+
+                        calculo.setValorPorteAnestesico(porte.getPreco() * convenio.getPercPorteHm());
+
+                    }
+
+                }
+
+            }
+
+        }
 
     }
 
@@ -191,6 +271,8 @@ public class CalculoProcedimentosBean{
         calculo.setValorFilme(0.0f);
         calculo.setValorPorteMedico(0.0f);
         calculo.setQtdAuxilio(0);
+        calculo.setValorPorteAnestesico(0.0f);
+        calculo.setSubtotal(0.0f);
 
     }
 
